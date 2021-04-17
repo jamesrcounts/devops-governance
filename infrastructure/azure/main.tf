@@ -1,9 +1,8 @@
 locals {
-  project = "tfaz"
+  repository = "devops-governance"
 
   tags = {
-    project = local.project
+    repository = local.repository
   }
 }
 
-resource "random_pet" "fido" {}
