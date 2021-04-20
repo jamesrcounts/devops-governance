@@ -7,6 +7,7 @@ variable "required_tags" {
   description = "(Required) Tags to assign to each resource."
   type        = object({
     repository = string
+    project = string
   })
 }
 
