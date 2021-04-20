@@ -5,13 +5,14 @@ variable "location" {
 
 variable "required_tags" {
   description = "(Required) Tags to assign to each resource."
-  type        = object({
+  type = object({
     repository = string
-    project = string
+    project    = string
   })
 }
 
 variable "optional_tags" {
+  default     = {}
   description = "(Optional) Tags to assign to each resource."
   type        = map(string)
 } 
