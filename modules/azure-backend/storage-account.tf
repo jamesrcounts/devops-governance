@@ -1,7 +1,7 @@
 resource "azurerm_storage_account" "state" {
   account_kind              = "StorageV2"
-  account_replication_type  = "GZRS"
-  account_tier              = "Standard"
+  account_replication_type  = "RAZGRS"
+  account_tier              = "Premium"
   allow_blob_public_access  = false
   enable_https_traffic_only = true
   location                  = azurerm_resource_group.state.location
