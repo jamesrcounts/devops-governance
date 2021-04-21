@@ -27,7 +27,7 @@ resource "azurerm_storage_account" "state" {
 resource "azurerm_role_assignment" "cmk_crypto_user" {
   principal_id         = azurerm_storage_account.state.identity.0.principal_id
   role_definition_name = "Key Vault Crypto User"
-  scope                = azurerm_key_vault_key.generated[local.cmk_state_name].id
+  scope                = "${azurerm_key_vault.backend.id}/${azurerm_key_vault_key.generated[local.cmk_state_name].versionless_id}"
 }
 
 resource "azurerm_storage_account_customer_managed_key" "state" {
