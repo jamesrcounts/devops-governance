@@ -1,5 +1,6 @@
 locals {
-  generated_keys = ["cmk-state-${local.project_id}"]
+  cmk_state_name = "cmk-state-${local.project_id}"
+  generated_keys = [local.cmk_state_name]
 }
 
 resource "azurerm_key_vault" "backend" {
