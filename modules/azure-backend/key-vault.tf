@@ -17,7 +17,7 @@ resource "azurerm_key_vault" "backend" {
 }
 
 resource "azurerm_key_vault_key" "generated" {
-  for_each = [local.cmk_state_name]
+  for_each = toset(local.generated_keys)
 
   name         = each.key
   key_vault_id = azurerm_key_vault.backend.id
