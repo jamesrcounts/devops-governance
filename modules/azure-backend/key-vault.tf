@@ -1,5 +1,5 @@
 locals {
-  cmk_state_name = "cmk-state-${local.project_id}"
+  cmk_state_name = "cmk-state"
   generated_keys = [local.cmk_state_name]
 }
 
@@ -17,7 +17,7 @@ resource "azurerm_key_vault" "backend" {
 }
 
 resource "azurerm_key_vault_key" "generated" {
-  for_each = toset(local.generated_keys)
+  for_each = [local.cmk_state_name]
 
   name         = each.key
   key_vault_id = azurerm_key_vault.backend.id
