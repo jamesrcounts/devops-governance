@@ -30,3 +30,7 @@ Using Terraform to manage projects that use Terraform.
 
 * Goal of setting up pipeline is to get ready to move to private build agents.  Which in turn enables us to put up the storage account firewalls.
 * To get the pipeline working, start with microsoft hosted agents.  But you will need a devops project for that.
+* Generate a PAT and add it to your environment according to the azuredevops provider [instructions][1]
+
+
+[1]: https://registry.terraform.io/providers/microsoft/azuredevops/latest/docs
