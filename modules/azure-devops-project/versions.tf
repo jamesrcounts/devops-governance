@@ -8,6 +8,3 @@ terraform {
     }
   }
 }
-
-provider "azuredevops" {
-}
