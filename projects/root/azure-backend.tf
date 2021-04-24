@@ -4,6 +4,6 @@ module "azure_backend" {
   location = "centralus"
   required_tags = {
     repository = "jamesrcounts/devops-governance"
-    project    = "terraform-root"
+    project    = local.project
   }
 }
