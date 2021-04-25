@@ -5,3 +5,7 @@ output "backend_config" {
     storage_account_name = azurerm_storage_account.state.name
   }
 }
+
+output "resource_group_id" {
+  value = azurerm_resource_group.state.id
+}
