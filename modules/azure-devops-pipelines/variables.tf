@@ -5,17 +5,17 @@ variable "project" {
 
 variable "repository" {
   description = "(Required) The repository id."
-  type = string
+  type        = string
 }
 
 variable "service_principal" {
- description = "(Required) An Azure service principal.  Used to configure a an AzureRM service connection in Azure DevOps." 
- sensitive = true
- type = object({
-   client_id=string
-   client_secret=string
-   subscription_id=string
-   subscription_name=string
-   tenant_id=string
- })
+  description = "(Required) An Azure service principal.  Used to configure a an AzureRM service connection in Azure DevOps."
+  sensitive   = true
+  type = object({
+    client_id         = string
+    client_secret     = string
+    subscription_id   = string
+    subscription_name = string
+    tenant_id         = string
+  })
 }
