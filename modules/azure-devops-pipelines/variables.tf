@@ -3,6 +3,11 @@ variable "project" {
   type        = string
 }
 
+variable "repository" {
+  description = "(Required) The repository id."
+  type = string
+}
+
 variable "service_principal" {
  description = "(Required) An Azure service principal.  Used to configure a an AzureRM service connection in Azure DevOps." 
  sensitive = true
