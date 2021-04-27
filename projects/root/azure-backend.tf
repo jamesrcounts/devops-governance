@@ -4,7 +4,6 @@ module "azure_backend" {
   location = "centralus"
   required_tags = {
     project    = local.project
-    repository = "jamesrcounts/devops-governance"
-    project    = local.project
+    repository = local.repository
   }
 }
