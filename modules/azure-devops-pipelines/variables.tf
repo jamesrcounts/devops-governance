@@ -19,3 +19,8 @@ variable "service_principal" {
     tenant_id         = string
   })
 }
+
+variable "yml_path" {
+  description = "(Required) The path of the Yaml file describing the build definition."
+  type        = string
+}
