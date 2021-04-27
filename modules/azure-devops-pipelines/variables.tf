@@ -1,3 +1,9 @@
+variable "branch_name" {
+  default     = "main"
+  description = "(Optional) The branch name for which builds are triggered. Defaults to main."
+  type        = string
+}
+
 variable "project" {
   description = "(Required) Specifies the Azure DevOps project name."
   type        = string
@@ -21,6 +27,7 @@ variable "service_principal" {
 }
 
 variable "yml_path" {
-  description = "(Required) The path of the Yaml file describing the build definition."
+  default     = "azure-pipelines.yml"
+  description = "(Optional) The path of the Yaml file describing the build definition. Defaults to azure-pipelines.yml"
   type        = string
 }

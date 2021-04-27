@@ -9,7 +9,7 @@ resource "azuredevops_build_definition" "build" {
   repository {
     repo_type             = "GitHub"
     repo_id               = var.repository
-    branch_name           = "main"
+    branch_name           = var.branch_name
     yml_path              = var.yml_path
     service_connection_id = azuredevops_serviceendpoint_github.endpoint.id
   }
