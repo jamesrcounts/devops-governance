@@ -8,8 +8,8 @@ module "azure_devops_pipelines" {
   yml_path          = "projects/root/azure-pipelines.yml"
 
   backend = {
-    blob_name            = var.container_name
-    container_name       = var.key
+    blob_name            = var.key
+    container_name       = var.container_name
     resource_group_name  = var.resource_group_name
     storage_account_name = var.storage_account_name
   }
