@@ -1,3 +1,13 @@
+variable "backend" {
+  description = "(Required) The AzureRM backend configuration for this Terraform pipeline."
+  type = object({
+    blob_name            = string
+    container_name       = string
+    storage_account_name = string
+    resource_group_name  = string
+  })
+}
+
 variable "branch_name" {
   default     = "main"
   description = "(Optional) The branch name for which builds are triggered. Defaults to main."
