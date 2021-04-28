@@ -42,7 +42,7 @@ Using Terraform to manage projects that use Terraform.
 * Azure DevOps needs a github service connection to connect the pipeline to the repository.
 * The easiest way to set this up is with a GitHub PAT.
   * For local runs load this into the env as AZDO_GITHUB_SERVICE_CONNECTION_PAT
-  * to inject into an azure devops secret, load as a TF_VAR_
+  * to inject into an azure devops secret, load as a TF_VAR_ in the makefile, and update the pipeline appropriately
 
 ### Setup pipeline
 
