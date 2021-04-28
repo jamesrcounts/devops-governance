@@ -6,4 +6,11 @@ module "azure_devops_pipelines" {
   repository        = local.repository
   service_principal = module.azure_credentials.service_principal
   yml_path          = "projects/root/azure-pipelines.yml"
+
+  backend = {
+    blob_name            = var.container_name
+    container_name       = var.key
+    resource_group_name  = var.resource_group_name
+    storage_account_name = var.storage_account_name
+  }
 }

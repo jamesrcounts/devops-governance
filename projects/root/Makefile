@@ -16,4 +16,4 @@ validate:
 	terraform validate
 
 apply: fmt connect validate
-	terraform apply 
+	terraform apply -var-file azurerm.backend.tfvars
