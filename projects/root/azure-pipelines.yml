@@ -11,6 +11,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
+  - group: terraform-backend
   - name: TF_IN_AUTOMATION
     value: true
   - name: project_folder
@@ -60,7 +61,7 @@ stages:
                   -backend-config="resource_group_name=${TF_STORAGE_RG}" \
                   -backend-config="storage_account_name=${TF_STORAGE_ACCOUNT}" \
                   -backend-config="container_name=${TF_STORAGE_BLOB_CONTAINER}" \
-                  -backend-config="key=${PROJECT}.tfstate" 
+                  -backend-config="key=${TF_STORAGE_BLOB_NAME}" 
 
                 echo "Sanity Check"
                 terraform validate
