@@ -42,6 +42,7 @@
 	"extensions": [
 		"editorconfig.editorconfig",
 		"hashicorp.terraform",
+		"ms-azure-devops.azure-pipelines",
 		"ms-azuretools.vscode-azureterraform",
 		"ms-azuretools.vscode-docker",
 		"ms-vscode.azurecli",
