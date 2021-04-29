@@ -85,6 +85,10 @@ stages:
 
                 terraform plan \
                   -input=false \
+                  -var="container_name=$(TF_STORAGE_BLOB_CONTAINER)" \
+                  -var="key=$(TF_STORAGE_BLOB_NAME)" \
+                  -var="resource_group_name=$(TF_STORAGE_RG)" \
+                  -var="storage_account_name=$(TF_STORAGE_ACCOUNT)" \
                   -var="github_pat=$(GITHUB_PAT)" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
