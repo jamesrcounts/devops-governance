@@ -1,4 +1,4 @@
-resource "azuredevops_variable_group" "variablegroup" {
+resource "azuredevops_variable_group" "terraform_backend" {
   project_id   = azuredevops_project.project.id
   name         = "terraform-backend"
   description  = "Specifies the values for the AzureRM terraform backend."
