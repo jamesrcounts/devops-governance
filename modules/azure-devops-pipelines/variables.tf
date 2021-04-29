@@ -14,6 +14,11 @@ variable "branch_name" {
   type        = string
 }
 
+variable "github_pat" {
+  description = "A GitHub personal access token. Used to configure an Azure DevOps service connection."
+  sensitive   = true
+}
+
 variable "project" {
   description = "(Required) Specifies the Azure DevOps project name."
   type        = string
