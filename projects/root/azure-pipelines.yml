@@ -12,6 +12,7 @@ pool:
 
 variables:
   - group: terraform-backend
+  - group: github
   - name: TF_IN_AUTOMATION
     value: true
   - name: project_folder
@@ -84,9 +85,9 @@ stages:
 
                 terraform plan \
                   -input=false \
-                  -var="shared_image_version=$(sig_image_version)" \
+                  -var="github_pat=$(GITHUB_PAT)" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
-      
+
           - task: ArchiveFiles@2
             displayName: 'Create Plan Artifact'
             inputs:

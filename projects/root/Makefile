@@ -1,7 +1,7 @@
 SECRET_VARS := secrets.auto.tfvars
 default: apply
 
-config: $(SECRET_VARS)
+config:
 	@echo "github_pat=\"${AZDO_GITHUB_SERVICE_CONNECTION_PAT}\"" > $(SECRET_VARS)
 
 fmt:
@@ -21,3 +21,5 @@ validate:
 
 apply: config fmt connect validate
 	terraform apply -var-file azurerm.backend.tfvars
+
+fresh: init apply
