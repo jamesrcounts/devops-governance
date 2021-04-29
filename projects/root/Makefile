@@ -1,8 +1,8 @@
-SECRET_VARS := secrets.auto.tfvars
 default: apply
 
 config:
-	@echo "github_pat=\"${AZDO_GITHUB_SERVICE_CONNECTION_PAT}\"" > $(SECRET_VARS)
+	@echo "github_pat=\"${AZDO_GITHUB_SERVICE_CONNECTION_PAT}\"" > github.secrets.auto.tfvars
+	@echo "azdo_pat=\"${AZDO_PERSONAL_ACCESS_TOKEN}\"" > azdo.secrets.auto.tfvars
 
 fmt:
 	terraform fmt -recursive
