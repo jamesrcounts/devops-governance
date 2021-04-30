@@ -78,6 +78,8 @@ stages:
               ARM_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
               ARM_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
               ARM_TENANT_ID: $(AZURE_TENANT_ID)
+              AZUREDEVOPS_PAT: $(AZUREDEVOPS_PAT)
+              GITHUB_PAT: $(GITHUB_PAT)
             inputs:
               targetType: 'inline'
               workingDirectory: $(project_folder)
