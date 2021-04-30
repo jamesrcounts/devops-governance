@@ -89,6 +89,7 @@ stages:
                 terraform plan \
                   -input=false \
                   -var="azuredevops_pat=${AZUREDEVOPS_PAT}" \
+                  -var="azuredevops_url=${AZUREDEVOPS_URL}" \
                   -var="container_name=${TF_STORAGE_BLOB_CONTAINER}" \
                   -var="key=${TF_STORAGE_BLOB_NAME}" \
                   -var="resource_group_name=${TF_STORAGE_RG}" \
