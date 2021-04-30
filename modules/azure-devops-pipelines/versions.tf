@@ -8,3 +8,7 @@ terraform {
     }
   }
 }
+
+provider "azuredevops" {
+  personal_access_token = var.azuredevops_pat
+}

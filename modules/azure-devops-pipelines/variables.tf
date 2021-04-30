@@ -1,3 +1,8 @@
+variable "azuredevops_pat" {
+  description = "(Required) An Azure DevOps personal access token. Used to configure an Azure DevOps service connection."
+  sensitive   = true
+}
+
 variable "backend" {
   description = "(Required) The AzureRM backend configuration for this Terraform pipeline."
   type = object({
@@ -15,7 +20,7 @@ variable "branch_name" {
 }
 
 variable "github_pat" {
-  description = "A GitHub personal access token. Used to configure an Azure DevOps service connection."
+  description = "(Required) A GitHub personal access token. Used to configure an Azure DevOps service connection."
   sensitive   = true
 }
 
