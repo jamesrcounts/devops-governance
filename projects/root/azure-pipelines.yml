@@ -11,8 +11,9 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  - group: terraform-backend
+  - group: azuredevops
   - group: github
+  - group: terraform-backend
   - name: TF_IN_AUTOMATION
     value: true
   - name: project_folder
@@ -85,6 +86,7 @@ stages:
 
                 terraform plan \
                   -input=false \
+                  -var="azuredevops_pat=$(AZUREDEVOPS_PAT)"
                   -var="container_name=$(TF_STORAGE_BLOB_CONTAINER)" \
                   -var="key=$(TF_STORAGE_BLOB_NAME)" \
                   -var="resource_group_name=$(TF_STORAGE_RG)" \
