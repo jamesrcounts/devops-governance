@@ -10,5 +10,6 @@ terraform {
 }
 
 provider "azuredevops" {
-  personal_access_token = var.azuredevops_pat
+  org_service_url       = var.azuredevops.url
+  personal_access_token = var.azuredevops.pat
 }

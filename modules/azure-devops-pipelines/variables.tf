@@ -1,6 +1,10 @@
-variable "azuredevops_pat" {
-  description = "(Required) An Azure DevOps personal access token. Used to configure an Azure DevOps service connection."
+variable "azuredevops" {
+  description = "(Required) Azure DevOps provider configuration."
   sensitive   = true
+  type = object({
+    pat = string
+    url = string
+  })
 }
 
 variable "backend" {

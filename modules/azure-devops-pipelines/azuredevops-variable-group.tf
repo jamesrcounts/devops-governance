@@ -7,6 +7,11 @@ resource "azuredevops_variable_group" "azuredevops" {
   variable {
     is_secret    = true
     name         = "AZUREDEVOPS_PAT"
-    secret_value = var.azuredevops_pat
+    secret_value = var.azuredevops.pat
+  }
+
+  variable {
+    name  = "AZUREDEVOPS_URL"
+    value = var.azuredevops.url
   }
 }
