@@ -84,7 +84,9 @@ stages:
               targetType: 'inline'
               workingDirectory: $(project_folder)
               script: |
-                set -euo pipefail
+                set -euox pipefail
+
+                env
 
                 terraform plan \
                   -input=false \
