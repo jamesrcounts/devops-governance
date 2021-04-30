@@ -84,13 +84,11 @@ stages:
               targetType: 'inline'
               workingDirectory: $(project_folder)
               script: |
-                set -euox pipefail
-
-                env
+                set -euo pipefail
 
                 terraform plan \
                   -input=false \
-                  -var="azuredevops_pat=${AZUREDEVOPS_PAT}"
+                  -var="azuredevops_pat=${AZUREDEVOPS_PAT}" \
                   -var="container_name=${TF_STORAGE_BLOB_CONTAINER}" \
                   -var="key=${TF_STORAGE_BLOB_NAME}" \
                   -var="resource_group_name=${TF_STORAGE_RG}" \
