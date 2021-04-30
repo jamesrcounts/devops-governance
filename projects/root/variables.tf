@@ -1,10 +1,15 @@
+variable "azuredevops_pat" {
+  description = "(Required) An Azure DevOps personal access token. Used to configure an Azure DevOps service connection."
+  sensitive   = true
+}
+
 variable "container_name" {
   description = "The storage account blob container containing the terraform state file."
   type        = string
 }
 
 variable "github_pat" {
-  description = "A GitHub personal access token. Used to configure an Azure DevOps service connection."
+  description = "(Required) A GitHub personal access token. Used to configure an Azure DevOps service connection."
   sensitive   = true
 }
 
