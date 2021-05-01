@@ -88,6 +88,10 @@ stages:
               script: |
                 set -euo pipefail
 
+                if [ ${BUILD_REASON} == 'PullRequest' ]; then
+                  export TF_CLI_ARGS="-lock=false"
+                fi
+
                 terraform plan \
                   -input=false \
                   -var="azuredevops_pat=${AZUREDEVOPS_PAT}" \
@@ -100,6 +104,7 @@ stages:
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
           - task: ArchiveFiles@2
+            condition: ne(variables['Build.Reason'], 'PullRequest')
             displayName: 'Create Plan Artifact'
             inputs:
               rootFolderOrFile: '$(project_folder)'
@@ -110,6 +115,7 @@ stages:
               replaceExistingArchive: true
 
           - task: PublishBuildArtifacts@1
+            condition: ne(variables['Build.Reason'], 'PullRequest')
             displayName: 'Publish Plan Artifact'
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
@@ -120,6 +126,7 @@ stages:
 
     jobs:
       - deployment: terraform
+        condition: ne(variables['Build.Reason'], 'PullRequest')
         displayName: 'Change Infrastructure'
         environment: 'terraform-root'
         strategy:
