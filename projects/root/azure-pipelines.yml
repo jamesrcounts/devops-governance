@@ -6,6 +6,9 @@ trigger:
     include:
       - main
 
+pr:
+  - main
+
 pool:
   vmImage: ubuntu-latest
 
