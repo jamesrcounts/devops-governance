@@ -1,3 +1,4 @@
 locals {
-  project = "terraform-root"
+  project    = "terraform-root"
+  repository = "jamesrcounts/devops-governance"
 }

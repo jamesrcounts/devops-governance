@@ -18,11 +18,12 @@
 	"runArgs": ["--env-file",".devcontainer/devcontainer.env"],
     "remoteEnv": {
 		// Sets environment variables required for terrafom remote backend
-		"TF_BACKEND_RESOURCE_GROUP" : "${containerEnv:TF_BACKEND_RESOURCE_GROUP}",
-		"TF_BACKEND_LOCATION": "${containerEnv:TF_BACKEND_LOCATION}",
-		"TF_BACKEND_STORAGE_ACCOUNT" : "${containerEnv:TF_BACKEND_STORAGE_ACCOUNT}",                
+		"AZDO_ORG_SERVICE_URL": "${containerEnv:AZDO_ORG_SERVICE_URL}",
 		"TF_BACKEND_CONTAINER" : "${containerEnv:TF_BACKEND_CONTAINER}",
-		"TF_BACKEND_KEY" : "${containerEnv:TF_BACKEND_KEY}"
+		"TF_BACKEND_KEY" : "${containerEnv:TF_BACKEND_KEY}",
+		"TF_BACKEND_LOCATION": "${containerEnv:TF_BACKEND_LOCATION}",
+		"TF_BACKEND_RESOURCE_GROUP" : "${containerEnv:TF_BACKEND_RESOURCE_GROUP}",
+		"TF_BACKEND_STORAGE_ACCOUNT" : "${containerEnv:TF_BACKEND_STORAGE_ACCOUNT}"                
 
 		// Use 'TF_VAR' prefix to set input variables for terraform templates
 		// "TF_VAR_rg_name":  "${containerEnv:TF_VAR_RG_NAME}"
@@ -41,6 +42,7 @@
 	"extensions": [
 		"editorconfig.editorconfig",
 		"hashicorp.terraform",
+		"ms-azure-devops.azure-pipelines",
 		"ms-azuretools.vscode-azureterraform",
 		"ms-azuretools.vscode-docker",
 		"ms-vscode.azurecli",

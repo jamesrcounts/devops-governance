@@ -1,20 +1,173 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+name: 0.0.$(Rev:r)
 
 trigger:
-- main
-- azure-devops
+  batch: true
+  branches:
+    include:
+      - main
+
+pr:
+  - main
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  - group: azuredevops
+  - group: github
+  - group: terraform-backend
+  - name: TF_IN_AUTOMATION
+    value: true
+  - name: project_folder
+    value: projects/root
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+  - stage: 'build'
+
+    jobs:
+      - job: 
+        displayName: 'Infrastructure Plan'
+        steps:
+          - checkout: self
+            fetchDepth: 1
+
+          - task: AzureCLI@2
+            displayName: 'Prepare Credentials'
+            inputs:
+              addSpnToEnvironment: true
+              azureSubscription: 'Azure'
+              scriptLocation: 'inlineScript'
+              scriptType: 'bash'
+              inlineScript: |
+                set -euo pipefail
+
+                echo "##vso[task.setvariable variable=AZURE_CLIENT_ID;issecret=true]${servicePrincipalId}"
+                echo "##vso[task.setvariable variable=AZURE_CLIENT_SECRET;issecret=true]${servicePrincipalKey}"
+                echo "##vso[task.setvariable variable=AZURE_SUBSCRIPTION_ID;issecret=true]$(az account show --query 'id' -o tsv)"
+                echo "##vso[task.setvariable variable=AZURE_TENANT_ID;issecret=true]${tenantId}"
+
+          - task: Bash@3
+            displayName: 'Terraform Init'
+            env:
+              ARM_CLIENT_ID: $(AZURE_CLIENT_ID)
+              ARM_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
+              ARM_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+              ARM_TENANT_ID: $(AZURE_TENANT_ID)
+            inputs:
+              targetType: 'inline'
+              workingDirectory: $(project_folder)
+              script: |
+                set -euo pipefail
+                
+                echo "Initialize"
+                terraform init \
+                  -input=false \
+                  -backend-config="resource_group_name=${TF_STORAGE_RG}" \
+                  -backend-config="storage_account_name=${TF_STORAGE_ACCOUNT}" \
+                  -backend-config="container_name=${TF_STORAGE_BLOB_CONTAINER}" \
+                  -backend-config="key=${TF_STORAGE_BLOB_NAME}" 
+
+                echo "Sanity Check"
+                terraform validate
+
+                echo "Show Terraform Version"
+                terraform -v
+
+          - task: Bash@3
+            displayName: 'Terraform Plan'
+            env:
+              ARM_CLIENT_ID: $(AZURE_CLIENT_ID)
+              ARM_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
+              ARM_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+              ARM_TENANT_ID: $(AZURE_TENANT_ID)
+              AZUREDEVOPS_PAT: $(AZUREDEVOPS_PAT)
+              GITHUB_PAT: $(GITHUB_PAT)
+            inputs:
+              targetType: 'inline'
+              workingDirectory: $(project_folder)
+              script: |
+                set -euo pipefail
+
+                if [ ${BUILD_REASON} == 'PullRequest' ]; then
+                  export TF_CLI_ARGS="-lock=false"
+                fi
+
+                terraform plan \
+                  -input=false \
+                  -var="azuredevops_pat=${AZUREDEVOPS_PAT}" \
+                  -var="azuredevops_url=${AZUREDEVOPS_URL}" \
+                  -var="container_name=${TF_STORAGE_BLOB_CONTAINER}" \
+                  -var="key=${TF_STORAGE_BLOB_NAME}" \
+                  -var="resource_group_name=${TF_STORAGE_RG}" \
+                  -var="storage_account_name=${TF_STORAGE_ACCOUNT}" \
+                  -var="github_pat=${GITHUB_PAT}" \
+                  -out ${BUILD_BUILDNUMBER}.tfplan
+
+          - task: ArchiveFiles@2
+            condition: ne(variables['Build.Reason'], 'PullRequest')
+            displayName: 'Create Plan Artifact'
+            inputs:
+              rootFolderOrFile: '$(project_folder)'
+              includeRootFolder: false
+              archiveType: 'tar'
+              tarCompression: 'gz'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).tgz'
+              replaceExistingArchive: true
+
+          - task: PublishBuildArtifacts@1
+            condition: ne(variables['Build.Reason'], 'PullRequest')
+            displayName: 'Publish Plan Artifact'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'plan'
+              publishLocation: 'Container'
+
+  - stage: deploy
+
+    jobs:
+      - deployment: terraform
+        condition: ne(variables['Build.Reason'], 'PullRequest')
+        displayName: 'Change Infrastructure'
+        environment: 'terraform-root'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: ExtractFiles@1
+                  displayName: 'Extract Plan Artifact'
+                  inputs:
+                    archiveFilePatterns: '$(Pipeline.Workspace)/plan/$(Build.BuildNumber).tgz'
+                    destinationFolder: '$(project_folder)/'
+                    cleanDestinationFolder: true
+
+                - task: AzureCLI@2
+                  displayName: 'Prepare Credentials'
+                  inputs:
+                    addSpnToEnvironment: true
+                    azureSubscription: 'Azure'
+                    scriptLocation: 'inlineScript'
+                    scriptType: 'bash'
+                    inlineScript: |
+                      set -euo pipefail
+
+                      echo "##vso[task.setvariable variable=AZURE_CLIENT_ID;issecret=true]${servicePrincipalId}"
+                      echo "##vso[task.setvariable variable=AZURE_CLIENT_SECRET;issecret=true]${servicePrincipalKey}"
+                      echo "##vso[task.setvariable variable=AZURE_SUBSCRIPTION_ID;issecret=true]$(az account show --query 'id' -o tsv)"
+                      echo "##vso[task.setvariable variable=AZURE_TENANT_ID;issecret=true]${tenantId}"
+
+                - task: Bash@3
+                  displayName: 'Terraform Apply'
+                  env:
+                    ARM_CLIENT_ID: $(AZURE_CLIENT_ID)
+                    ARM_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
+                    ARM_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+                    ARM_TENANT_ID: $(AZURE_TENANT_ID)
+                  inputs:
+                    targetType: 'inline'
+                    workingDirectory: $(project_folder)
+                    script: |
+                      set -euo pipefail
+      
+                      terraform apply \
+                        -input=false \
+                        ${BUILD_BUILDNUMBER}.tfplan
