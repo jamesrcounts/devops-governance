@@ -50,6 +50,7 @@ Using Terraform to manage projects that use Terraform.
 * To get the pipeline working, start with microsoft hosted agents.  But you will need a devops project for that.
 * Generate a PAT and add it to your environment according to the azuredevops provider [instructions][1]
 * But to have a pipeline you'll need a service connection, so go back and setup your Azure Credentials first.
+* You still need to create the environment by hand or let the pipeline create it on the first run and configure afterward.  Creating ahead of time seems better.
 
 
 [1]: https://registry.terraform.io/providers/microsoft/azuredevops/latest/docs
