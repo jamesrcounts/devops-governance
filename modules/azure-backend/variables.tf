@@ -15,4 +15,9 @@ variable "optional_tags" {
   default     = {}
   description = "(Optional) Tags to assign to each resource."
   type        = map(string)
-} 
+}
+
+variable "backend_config_filename" {
+  default     = null
+  description = "(Optional) When provided a filename this module will write the backend config to that file in tfvars format.  Defaults to null."
+}

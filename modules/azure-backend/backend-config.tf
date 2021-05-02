@@ -1,5 +1,7 @@
 resource "local_file" "azurerm_backend_tfvars" {
-  filename = "azurerm.backend.tfvars"
+  for_each = var.backend_config_filename[*]
+
+  filename = each.key
   content  = data.template_file.backend_config.rendered
 }
 
