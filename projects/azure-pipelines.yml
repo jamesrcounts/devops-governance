@@ -156,6 +156,8 @@ stages:
                       echo "##vso[task.setvariable variable=AZURE_SUBSCRIPTION_ID;issecret=true]$(az account show --query 'id' -o tsv)"
                       echo "##vso[task.setvariable variable=AZURE_TENANT_ID;issecret=true]${tenantId}"
 
+                - template: '../pipeline-templates/pin-terraform.yml'
+
                 - task: Bash@3
                   displayName: 'Terraform Apply'
                   env:
