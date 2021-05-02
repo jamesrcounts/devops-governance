@@ -96,7 +96,8 @@ stages:
               ARM_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
               ARM_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
               ARM_TENANT_ID: $(AZURE_TENANT_ID)
-              AZUREDEVOPS_PAT: $(AZUREDEVOPS_PAT)
+              AZDO_PERSONAL_ACCESS_TOKEN: $(AZUREDEVOPS_PAT)
+              AZDO_ORG_SERVICE_URL: $(AZUREDEVOPS_URL)
               GITHUB_PAT: $(GITHUB_PAT)
             inputs:
               targetType: 'inline'
@@ -110,8 +111,8 @@ stages:
 
                 terraform plan \
                   -input=false \
-                  -var="azuredevops_pat=${AZUREDEVOPS_PAT}" \
-                  -var="azuredevops_url=${AZUREDEVOPS_URL}" \
+                  -var="azuredevops_pat=${AZDO_PERSONAL_ACCESS_TOKEN}" \
+                  -var="azuredevops_url=${AZDO_ORG_SERVICE_URL}" \
                   -var="github_pat=${GITHUB_PAT}" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
