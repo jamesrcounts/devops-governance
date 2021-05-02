@@ -1,6 +1,8 @@
 terraform {
   required_version = ">= 0.15.1"
 
+  backend "azurerm" {}
+
   required_providers {
     azuread = {
       source  = "hashicorp/azuread"
