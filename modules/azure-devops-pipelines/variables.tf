@@ -50,6 +50,12 @@ variable "service_principal" {
   })
 }
 
+variable "terraform_version" {
+  default     = "0.15.1"
+  description = "(Optional) The version of terraform to use.  Valid values are: '0.15.1'.  Defaults to '0.15.1'."
+  type        = string
+}
+
 variable "yml_path" {
   default     = "azure-pipelines.yml"
   description = "(Optional) The path of the Yaml file describing the build definition. Defaults to azure-pipelines.yml"

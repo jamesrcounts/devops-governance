@@ -16,10 +16,11 @@ variables:
   - group: azuredevops
   - group: github
   - group: terraform-backend
+  - group: terraform-version
   - name: TF_IN_AUTOMATION
     value: true
   - name: project_folder
-    value: projects/root
+    value: projects
 
 stages:
   - stage: 'build'
@@ -31,20 +32,9 @@ stages:
           - checkout: self
             fetchDepth: 1
 
-          - task: AzureCLI@2
-            displayName: 'Prepare Credentials'
-            inputs:
-              addSpnToEnvironment: true
-              azureSubscription: 'Azure'
-              scriptLocation: 'inlineScript'
-              scriptType: 'bash'
-              inlineScript: |
-                set -euo pipefail
+          - template: '../pipeline-templates/prepare-credentials.yml'
 
-                echo "##vso[task.setvariable variable=AZURE_CLIENT_ID;issecret=true]${servicePrincipalId}"
-                echo "##vso[task.setvariable variable=AZURE_CLIENT_SECRET;issecret=true]${servicePrincipalKey}"
-                echo "##vso[task.setvariable variable=AZURE_SUBSCRIPTION_ID;issecret=true]$(az account show --query 'id' -o tsv)"
-                echo "##vso[task.setvariable variable=AZURE_TENANT_ID;issecret=true]${tenantId}"
+          - template: '../pipeline-templates/pin-terraform.yml'
 
           - task: Bash@3
             displayName: 'Terraform Init'
@@ -70,8 +60,9 @@ stages:
                 echo "Sanity Check"
                 terraform validate
 
-                echo "Show Terraform Version"
+                echo "Show Terraform Version and Providers"
                 terraform -v
+                terraform providers
 
           - task: Bash@3
             displayName: 'Terraform Plan'
@@ -80,7 +71,8 @@ stages:
               ARM_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
               ARM_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
               ARM_TENANT_ID: $(AZURE_TENANT_ID)
-              AZUREDEVOPS_PAT: $(AZUREDEVOPS_PAT)
+              AZDO_PERSONAL_ACCESS_TOKEN: $(AZUREDEVOPS_PAT)
+              AZDO_ORG_SERVICE_URL: $(AZUREDEVOPS_URL)
               GITHUB_PAT: $(GITHUB_PAT)
             inputs:
               targetType: 'inline'
@@ -94,17 +86,13 @@ stages:
 
                 terraform plan \
                   -input=false \
-                  -var="azuredevops_pat=${AZUREDEVOPS_PAT}" \
-                  -var="azuredevops_url=${AZUREDEVOPS_URL}" \
-                  -var="container_name=${TF_STORAGE_BLOB_CONTAINER}" \
-                  -var="key=${TF_STORAGE_BLOB_NAME}" \
-                  -var="resource_group_name=${TF_STORAGE_RG}" \
-                  -var="storage_account_name=${TF_STORAGE_ACCOUNT}" \
+                  -var="azuredevops_pat=${AZDO_PERSONAL_ACCESS_TOKEN}" \
+                  -var="azuredevops_url=${AZDO_ORG_SERVICE_URL}" \
                   -var="github_pat=${GITHUB_PAT}" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
           - task: ArchiveFiles@2
-            condition: ne(variables['Build.Reason'], 'PullRequest')
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
             displayName: 'Create Plan Artifact'
             inputs:
               rootFolderOrFile: '$(project_folder)'
@@ -115,7 +103,7 @@ stages:
               replaceExistingArchive: true
 
           - task: PublishBuildArtifacts@1
-            condition: ne(variables['Build.Reason'], 'PullRequest')
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
             displayName: 'Publish Plan Artifact'
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
@@ -126,7 +114,7 @@ stages:
 
     jobs:
       - deployment: terraform
-        condition: ne(variables['Build.Reason'], 'PullRequest')
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
         displayName: 'Change Infrastructure'
         environment: 'terraform-root'
         strategy:
@@ -140,20 +128,9 @@ stages:
                     destinationFolder: '$(project_folder)/'
                     cleanDestinationFolder: true
 
-                - task: AzureCLI@2
-                  displayName: 'Prepare Credentials'
-                  inputs:
-                    addSpnToEnvironment: true
-                    azureSubscription: 'Azure'
-                    scriptLocation: 'inlineScript'
-                    scriptType: 'bash'
-                    inlineScript: |
-                      set -euo pipefail
+                - template: '../pipeline-templates/prepare-credentials.yml'
 
-                      echo "##vso[task.setvariable variable=AZURE_CLIENT_ID;issecret=true]${servicePrincipalId}"
-                      echo "##vso[task.setvariable variable=AZURE_CLIENT_SECRET;issecret=true]${servicePrincipalKey}"
-                      echo "##vso[task.setvariable variable=AZURE_SUBSCRIPTION_ID;issecret=true]$(az account show --query 'id' -o tsv)"
-                      echo "##vso[task.setvariable variable=AZURE_TENANT_ID;issecret=true]${tenantId}"
+                - template: '../pipeline-templates/pin-terraform.yml'
 
                 - task: Bash@3
                   displayName: 'Terraform Apply'

@@ -1,11 +1,11 @@
 variable "azuredevops_pat" {
-  description = "(Required) An Azure DevOps personal access token. Used to configure the Azure DevOps Terraform Provider."
+  description = "(Required) An Azure DevOps personal access token. Used to configure a variable group for the Azure DevOps Terraform Provider."
   sensitive   = true
   type        = string
 }
 
 variable "azuredevops_url" {
-  description = "(Required) An Azure DevOps organization URL. Used to configure the Azure DevOps Terraform Provider."
+  description = "(Required) An Azure DevOps organization URL. Used to configure a variable group for the Azure DevOps Terraform Provider."
   type        = string
 }
 
