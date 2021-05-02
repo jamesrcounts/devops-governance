@@ -7,16 +7,10 @@ module "azure_devops_pipelines" {
   repository        = local.repository
   service_principal = module.azure_credentials.service_principal
   yml_path          = "projects/azure-pipelines.yml"
+  backend           = module.azure_backend.backend_config
 
   azuredevops = {
     pat = var.azuredevops_pat
     url = var.azuredevops_url
-  }
-
-  backend = {
-    blob_name            = "terraform-root.tfstate"
-    container_name       = module.azure_backend.backend_config.container_name
-    resource_group_name  = module.azure_backend.backend_config.resource_group_name
-    storage_account_name = module.azure_backend.backend_config.storage_account_name
   }
 }
