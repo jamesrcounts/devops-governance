@@ -1,5 +1,5 @@
 module "azure_devops_pipelines" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=refactor"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=main"
 
   branch_name       = "refactor"
   github_pat        = var.github_pat
