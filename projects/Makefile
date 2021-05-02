@@ -18,9 +18,6 @@ validate:
 	terraform validate
 
 apply: config fmt validate
-	terraform apply -var-file azurerm.backend.tfvars
+	terraform apply -var "backend_config_filename=azurerm.backend.tfvars"
 
-local: fmt validate
-	terraform apply
-
-all: init local
+all: init apply
