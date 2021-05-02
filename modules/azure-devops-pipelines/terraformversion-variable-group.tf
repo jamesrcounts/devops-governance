@@ -1,7 +1,7 @@
 resource "azuredevops_variable_group" "terraformversion" {
   project_id   = azuredevops_project.project.id
-  name         = "azuredevops"
-  description  = "Specifies the credentials for the Azure DevOps Terraform provider."
+  name         = "terraform-version"
+  description  = "Specifies the terraform version and signature."
   allow_access = false
 
   variable {
