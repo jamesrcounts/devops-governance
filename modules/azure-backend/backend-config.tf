@@ -6,9 +6,9 @@ resource "local_file" "azurerm_backend_tfvars" {
 data "template_file" "backend_config" {
   template = file("${path.module}/templates/backend-config.tfvars.hcl")
   vars = {
-    container_name       = "state"
-    key                  = "terraform.tfstate"
-    resource_group_name  = "rg-backend-nice-chimp"
-    storage_account_name = "sanicechimp"
+    container_name       = azurerm_storage_container.state.name
+    key                  = local.blob_name
+    resource_group_name  = azurerm_resource_group.state.name
+    storage_account_name = azurerm_storage_account.state.name
   }
 }
