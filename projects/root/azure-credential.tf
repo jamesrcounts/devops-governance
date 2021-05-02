@@ -1,5 +1,5 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=main"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=azure-credentials-0.0.2"
 
   active_password = "primary"
   project         = local.project
