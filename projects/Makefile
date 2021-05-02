@@ -17,7 +17,7 @@ clean:
 validate:
 	terraform validate
 
-apply: config fmt validate
-	terraform apply -var "backend_config_filename=azurerm.backend.tfvars"
+plan: config fmt validate
+	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -out plan.tfplan
 
-all: init apply
+all: init plan

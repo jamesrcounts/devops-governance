@@ -33,3 +33,4 @@ override.tf.json
 modules/**/.terraform.lock.hcl
 modules/**/versions.tf
 projects/azurerm.backend.tfvars
+*.tfplan
