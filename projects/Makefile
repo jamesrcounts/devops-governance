@@ -1,4 +1,4 @@
-default: apply
+default: local
 
 config:
 	@echo "github_pat=\"${AZDO_GITHUB_SERVICE_CONNECTION_PAT}\"" > github.secrets.auto.tfvars
@@ -23,4 +23,5 @@ validate:
 apply: config fmt connect validate
 	terraform apply -var-file azurerm.backend.tfvars
 
-fresh: init apply
+local: fmt validate
+	terraform apply

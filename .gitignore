@@ -29,3 +29,6 @@ override.tf.json
 # example: *tfplan*
 **/.DS_Store
 *.secrets.auto.tfvars
+
+modules/**/.terraform.lock.hcl
+modules/**/versions.tf
