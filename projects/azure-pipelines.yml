@@ -85,8 +85,9 @@ stages:
                 echo "Sanity Check"
                 terraform validate
 
-                echo "Show Terraform Version"
+                echo "Show Terraform Version and Providers"
                 terraform -v
+                terraform providers
 
           - task: Bash@3
             displayName: 'Terraform Plan'
@@ -111,15 +112,11 @@ stages:
                   -input=false \
                   -var="azuredevops_pat=${AZUREDEVOPS_PAT}" \
                   -var="azuredevops_url=${AZUREDEVOPS_URL}" \
-                  -var="container_name=${TF_STORAGE_BLOB_CONTAINER}" \
-                  -var="key=${TF_STORAGE_BLOB_NAME}" \
-                  -var="resource_group_name=${TF_STORAGE_RG}" \
-                  -var="storage_account_name=${TF_STORAGE_ACCOUNT}" \
                   -var="github_pat=${GITHUB_PAT}" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
           - task: ArchiveFiles@2
-            condition: ne(variables['Build.Reason'], 'PullRequest')
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
             displayName: 'Create Plan Artifact'
             inputs:
               rootFolderOrFile: '$(project_folder)'
@@ -130,7 +127,7 @@ stages:
               replaceExistingArchive: true
 
           - task: PublishBuildArtifacts@1
-            condition: ne(variables['Build.Reason'], 'PullRequest')
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
             displayName: 'Publish Plan Artifact'
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
@@ -141,7 +138,7 @@ stages:
 
     jobs:
       - deployment: terraform
-        condition: ne(variables['Build.Reason'], 'PullRequest')
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
         displayName: 'Change Infrastructure'
         environment: 'terraform-root'
         strategy:
