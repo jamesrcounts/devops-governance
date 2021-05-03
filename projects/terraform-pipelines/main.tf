@@ -1,8 +1,10 @@
 locals {
-  location = "centralus"
+  location   = "centralus"
+  project    = var.project
+  repository = var.repository
 
   required_tags = {
-    project    = var.project
-    repository = var.repository
+    project    = local.project
+    repository = local.repository
   }
 }
