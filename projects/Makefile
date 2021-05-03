@@ -10,6 +10,8 @@ fmt:
 
 init:
 	terraform init --upgrade -backend-config azurerm.backend.tfvars
+	terraform -v
+	terraform providers
 	
 clean:
 	terraform destroy -auto-approve
