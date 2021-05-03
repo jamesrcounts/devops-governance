@@ -6,6 +6,7 @@ module "azure_credentials" {
 
   owner_scope = {
     backend = module.azure_backend.resource_group_id
+    env     = module.azure_env.resource_group_id
   }
 
   update_triggers = {
