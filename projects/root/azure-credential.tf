@@ -1,8 +1,9 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=azure-credentials-0.0.2"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=terraform-pipelines"
 
-  active_password = "primary"
-  project         = local.project
+  application_administrator_script_name = "Add-AzureAdRoles.${local.project}.ps1"
+  active_password                       = "primary"
+  project                               = local.project
 
   owner_scope = {
     subscription = data.azurerm_subscription.current.id
