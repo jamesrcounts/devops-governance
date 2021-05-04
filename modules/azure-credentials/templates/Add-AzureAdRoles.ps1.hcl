@@ -1,5 +1,7 @@
 #!/usr/bin/env pwsh
 
+Connect-AzureAD
+
 $dsiplayName = 'Application Administrator'
 
 # Fetch Application Administrator role instance
