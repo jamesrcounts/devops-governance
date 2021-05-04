@@ -1,5 +1,5 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=terraform-pipelines"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=main"
 
   application_administrator_script_name = var.application_administrator_script_name
   active_password                       = "primary"

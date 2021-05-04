@@ -1,5 +1,5 @@
 module "azure_devops_pipelines" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=terraform-pipelines"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=main"
 
   backend           = module.azure_backend.backend_config
   branch_name       = "main"
