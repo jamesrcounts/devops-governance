@@ -1,7 +1,7 @@
 module "azure_credentials" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=terraform-pipelines"
 
-  application_administrator_script_name = "Add-AzureAdRoles.${local.project}.ps1"
+  application_administrator_script_name = var.application_administrator_script_name
   active_password                       = "primary"
   project                               = local.project
 

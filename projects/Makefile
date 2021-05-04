@@ -20,8 +20,8 @@ validate:
 	terraform validate
 
 plan: config fmt validate
-	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -out plan.tfplan
-
+	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -var "application_administrator_script_name=Add-AzureAdRoles.terraform-root.ps1" -out plan.tfplan
+	
 apply:
 	terraform apply plan.tfplan
 	rm plan.tfplan
