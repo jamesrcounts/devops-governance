@@ -34,3 +34,4 @@ modules/**/.terraform.lock.hcl
 modules/**/versions.tf
 projects/azurerm.backend.tfvars
 *.tfplan
+projects/Add-AzureAdRoles.*.ps1
