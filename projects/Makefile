@@ -22,4 +22,8 @@ validate:
 plan: config fmt validate
 	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -out plan.tfplan
 
+apply:
+	terraform apply plan.tfplan
+	rm plan.tfplan
+
 all: init plan

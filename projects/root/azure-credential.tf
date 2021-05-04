@@ -5,7 +5,7 @@ module "azure_credentials" {
   project         = local.project
 
   owner_scope = {
-    backend = module.azure_backend.resource_group_id
+    subscription = data.azurerm_subscription.current.id
   }
 
   update_triggers = {
@@ -13,3 +13,5 @@ module "azure_credentials" {
     secondary = "20210424"
   }
 }
+
+data "azurerm_subscription" "current" {}
