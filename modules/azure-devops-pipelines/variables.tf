@@ -1,5 +1,6 @@
 variable "azuredevops" {
-  description = "(Required) Azure DevOps provider configuration."
+  description = "(Optional) Azure DevOps provider configuration. When present, this module will create a variable group containing these credentials."
+  default     = null
   sensitive   = true
   type = object({
     pat = string

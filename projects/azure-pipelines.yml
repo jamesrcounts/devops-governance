@@ -7,7 +7,11 @@ trigger:
       - main
 
 pr:
-  - main
+  autoCancel: true
+  drafts: true
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: ubuntu-latest

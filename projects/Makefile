@@ -10,6 +10,8 @@ fmt:
 
 init:
 	terraform init --upgrade -backend-config azurerm.backend.tfvars
+	terraform -v
+	terraform providers
 	
 clean:
 	terraform destroy -auto-approve
@@ -17,7 +19,11 @@ clean:
 validate:
 	terraform validate
 
-apply: config fmt validate
-	terraform apply -var "backend_config_filename=azurerm.backend.tfvars"
+plan: config fmt validate
+	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -var "application_administrator_script_name=Add-AzureAdRoles.terraform-root.ps1" -out plan.tfplan
+	
+apply:
+	terraform apply plan.tfplan
+	rm plan.tfplan
 
-all: init apply
+all: init plan

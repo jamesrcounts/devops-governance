@@ -3,6 +3,11 @@ variable "active_password" {
   type        = string
 }
 
+variable "application_administrator_script_name" {
+  default     = null
+  description = "(Optional) When provided a filename this module will write a powershell script to assign Application Administrator role to these credentials.  Defaults to null."
+}
+
 variable "owner_scope" {
   description = "(Optional) A map of friendly names to resource ids that the principal created by this module will have Onwer rights to manage."
   type        = map(string)

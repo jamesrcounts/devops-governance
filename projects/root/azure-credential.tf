@@ -1,11 +1,12 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=azure-credentials-0.0.2"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=main"
 
-  active_password = "primary"
-  project         = local.project
+  application_administrator_script_name = var.application_administrator_script_name
+  active_password                       = "primary"
+  project                               = local.project
 
   owner_scope = {
-    backend = module.azure_backend.resource_group_id
+    subscription = data.azurerm_subscription.current.id
   }
 
   update_triggers = {
@@ -13,3 +14,5 @@ module "azure_credentials" {
     secondary = "20210424"
   }
 }
+
+data "azurerm_subscription" "current" {}
