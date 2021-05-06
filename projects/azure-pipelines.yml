@@ -5,6 +5,9 @@ trigger:
   branches:
     include:
       - main
+  paths:
+    include:
+      - projects
 
 pr:
   autoCancel: true
@@ -12,6 +15,9 @@ pr:
   branches:
     include:
       - main
+  paths:
+    include:
+      - projects
 
 pool:
   vmImage: ubuntu-latest
