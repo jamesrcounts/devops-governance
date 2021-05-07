@@ -120,6 +120,13 @@ stages:
               ArtifactName: 'plan'
               publishLocation: 'Container'
 
+          - task: PublishPipelineArtifact@1
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+            displayName: 'Publish Plan Artifact'
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)'
+              artifactName: 'drop'
+
   - stage: deploy
 
     jobs:
