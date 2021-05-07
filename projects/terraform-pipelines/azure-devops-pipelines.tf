@@ -7,5 +7,5 @@ module "azure_devops_pipelines" {
   project           = local.project
   repository        = local.repository
   service_principal = module.azure_credentials.service_principal
-  yml_path          = "projects/azure-pipelines.yml"
+  yml_path          = "azure-pipelines.yml"
 }
