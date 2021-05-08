@@ -27,7 +27,7 @@ variables:
   - group: github
   - group: terraform-backend
   - group: terraform-version
-  - name: TF_IN_AUTOMATION
+  - name: tf_in_automation
     value: true
   - name: project_folder
     value: projects
