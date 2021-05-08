@@ -1,6 +1,7 @@
 module "azure_devops_pipelines" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=azure-devops-pipelines-0.0.3"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=upload-config"
 
+  azure_env_rg_name = module.azure_env.resource_group.name
   backend           = module.azure_backend.backend_config
   branch_name       = "azureaiconf.6.21"
   github_pat        = var.github_pat
