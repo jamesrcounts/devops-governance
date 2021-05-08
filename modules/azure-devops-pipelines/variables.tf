@@ -8,6 +8,12 @@ variable "azuredevops" {
   })
 }
 
+variable "azure_env_rg_name" {
+  description = "(Optional) Azure environment resource group name. When present, this module will create a variable group containing this information."
+  default     = null
+  type        = string
+}
+
 variable "backend" {
   description = "(Required) The AzureRM backend configuration for this Terraform pipeline."
   type = object({
@@ -52,8 +58,8 @@ variable "service_principal" {
 }
 
 variable "terraform_version" {
-  default     = "0.15.1"
-  description = "(Optional) The version of terraform to use.  Valid values are: '0.15.1'.  Defaults to '0.15.1'."
+  default     = "0.15.3"
+  description = "(Optional) The version of terraform to use.  Valid values are: '[0.15.1, 0.15.3]'.  Defaults to '0.15.3'."
   type        = string
 }
 

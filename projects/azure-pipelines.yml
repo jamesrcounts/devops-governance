@@ -27,7 +27,7 @@ variables:
   - group: github
   - group: terraform-backend
   - group: terraform-version
-  - name: TF_IN_AUTOMATION
+  - name: tf_in_automation
     value: true
   - name: project_folder
     value: projects
@@ -43,36 +43,8 @@ stages:
             fetchDepth: 1
 
           - template: '../pipeline-templates/prepare-credentials.yml'
-
           - template: '../pipeline-templates/pin-terraform.yml'
-
-          - task: Bash@3
-            displayName: 'Terraform Init'
-            env:
-              ARM_CLIENT_ID: $(AZURE_CLIENT_ID)
-              ARM_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
-              ARM_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
-              ARM_TENANT_ID: $(AZURE_TENANT_ID)
-            inputs:
-              targetType: 'inline'
-              workingDirectory: $(project_folder)
-              script: |
-                set -euo pipefail
-                
-                echo "Initialize"
-                terraform init \
-                  -input=false \
-                  -backend-config="resource_group_name=${TF_STORAGE_RG}" \
-                  -backend-config="storage_account_name=${TF_STORAGE_ACCOUNT}" \
-                  -backend-config="container_name=${TF_STORAGE_BLOB_CONTAINER}" \
-                  -backend-config="key=${TF_STORAGE_BLOB_NAME}" 
-
-                echo "Sanity Check"
-                terraform validate
-
-                echo "Show Terraform Version and Providers"
-                terraform -v
-                terraform providers
+          - template: '../pipeline-templates/terraform-init.yml'
 
           - task: Bash@3
             displayName: 'Terraform Plan'
@@ -101,24 +73,7 @@ stages:
                   -var="github_pat=${GITHUB_PAT}" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
-          - task: ArchiveFiles@2
-            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-            displayName: 'Create Plan Artifact'
-            inputs:
-              rootFolderOrFile: '$(project_folder)'
-              includeRootFolder: false
-              archiveType: 'tar'
-              tarCompression: 'gz'
-              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).tgz'
-              replaceExistingArchive: true
-
-          - task: PublishBuildArtifacts@1
-            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-            displayName: 'Publish Plan Artifact'
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-              ArtifactName: 'plan'
-              publishLocation: 'Container'
+          - template: '../pipeline-templates/publish-plan.yml'
 
   - stage: deploy
 
@@ -131,15 +86,8 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: ExtractFiles@1
-                  displayName: 'Extract Plan Artifact'
-                  inputs:
-                    archiveFilePatterns: '$(Pipeline.Workspace)/plan/$(Build.BuildNumber).tgz'
-                    destinationFolder: '$(project_folder)/'
-                    cleanDestinationFolder: true
-
+                - template: '../pipeline-templates/extract-plan.yml'
                 - template: '../pipeline-templates/prepare-credentials.yml'
-
                 - template: '../pipeline-templates/pin-terraform.yml'
 
                 - task: Bash@3

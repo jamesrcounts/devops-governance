@@ -1,3 +1,6 @@
-output "resource_group_id" {
-  value = azurerm_resource_group.env.id
+output "resource_group" {
+  value = {
+    id   = azurerm_resource_group.env.id
+    name = azurerm_resource_group.env.name
+  }
 }
