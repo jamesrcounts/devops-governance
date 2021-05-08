@@ -3,7 +3,7 @@ module "azure_devops_pipelines" {
 
   azure_env_rg_name = module.azure_env.resource_group.name
   backend           = module.azure_backend.backend_config
-  branch_name       = "azureaiconf.6.21"
+  branch_name       = "main"
   github_pat        = var.github_pat
   project           = local.project
   repository        = local.repository
