@@ -8,6 +8,14 @@ variable "azuredevops" {
   })
 }
 
+variable "azure_env" {
+  description = "(Optional) Azure Environment Configuration. When present, this module will create a variable group containing this information."
+  default     = null
+  type = object({
+    resource_group_name = string
+  })
+}
+
 variable "backend" {
   description = "(Required) The AzureRM backend configuration for this Terraform pipeline."
   type = object({
