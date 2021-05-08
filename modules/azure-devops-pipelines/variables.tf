@@ -8,10 +8,10 @@ variable "azuredevops" {
   })
 }
 
-variable "azure_env_rg_name" {
-  description = "(Optional) Azure environment resource group name. When present, this module will create a variable group containing this information."
+variable "azure_env" {
+  description = "(Optional) Azure environment configuration. When present, this module will create a variable group containing this information."
   default     = null
-  type        = string
+  type        = map(string)
 }
 
 variable "backend" {
