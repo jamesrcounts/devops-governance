@@ -1,5 +1,5 @@
 resource "azuredevops_variable_group" "azureenv" {
-  for_each = toset(var.azure_env[*])
+  for_each = toset(var.azure_env_rg_name[*])
 
   allow_access = false
   description  = "Specifies the target environment for the Terraform configuration."
@@ -7,7 +7,7 @@ resource "azuredevops_variable_group" "azureenv" {
   project_id   = azuredevops_project.project.id
 
   variable {
-    name         = "AZURE_ENV_RG"
-    secret_value = each.value.resource_group_name
+    name  = "AZURE_ENV_RG"
+    value = each.value
   }
 }
