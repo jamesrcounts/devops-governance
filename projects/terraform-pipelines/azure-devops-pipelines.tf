@@ -1,5 +1,5 @@
 module "azure_devops_pipelines" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=upload-config"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=main"
 
   azure_env_rg_name = module.azure_env.resource_group.name
   backend           = module.azure_backend.backend_config
