@@ -12,10 +12,10 @@ resource "azuredevops_variable_group" "azureenv" {
   project_id   = azuredevops_project.project.id
 
   dynamic "variable" {
-    for_each = var.azure_env[*]
+    for_each = var.azure_env
     content {
-      name  = variable.value.key
-      value = variable.value.value
+      name  = variable.key
+      value = variable.value
     }
   }
 }
