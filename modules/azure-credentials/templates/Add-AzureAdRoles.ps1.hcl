@@ -1,4 +1,6 @@
 #!/usr/bin/env pwsh
+$ErrorActionPreference = "Stop"
+
 function Add-AzureADRole {
     param (
         [Parameter(Mandatory)]
@@ -7,7 +9,7 @@ function Add-AzureADRole {
     
     # Fetch Application Administrator role instance
     $role = Get-AzureADDirectoryRole | `
-    Where-Object {$_.DisplayName -eq $DisplayName}
+        Where-Object {$_.DisplayName -eq $DisplayName}
 
     # If role instance does not exist, instantiate it based on the role template
     if ($null -eq $role) {
@@ -29,8 +31,10 @@ function Add-AzureADRole {
         -ObjectId $role.ObjectId `
         -RefObjectId ${principal_id}
 
+    Write-Host "Added ${DisplayName}"
 }
 
 Connect-AzureAD
-Add-AzureADRole -DisplayName 'Application Administrator'
-
+%{ for role in roles ~}
+Add-AzureADRole -DisplayName '$role'
+%{ endfor ~}
