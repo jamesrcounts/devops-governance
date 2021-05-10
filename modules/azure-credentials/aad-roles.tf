@@ -8,7 +8,7 @@ resource "local_file" "add_azureadroles_ps1" {
     "${path.module}/templates/Add-AzureAdRoles.ps1.hcl",
     {
       principal_id = azuread_service_principal.sp.id,
-      roles        = ["Application Administrator"]
+      roles        = var.aad_roles
     }
   )
 }

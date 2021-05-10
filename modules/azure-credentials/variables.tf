@@ -1,3 +1,9 @@
+variable "aad_roles" {
+  default     = []
+  description = "(Optional) When provided a list of AAD roles this module will write a powershell script to assign those roles to these credentials.  Requried when `application_administrator_script_name` is set."
+  type        = list(string)
+}
+
 variable "active_password" {
   description = "(Required) Indicates which password clients should use, primary or secondary."
   type        = string
@@ -6,6 +12,7 @@ variable "active_password" {
 variable "application_administrator_script_name" {
   default     = null
   description = "(Optional) When provided a filename this module will write a powershell script to assign Application Administrator role to these credentials.  Defaults to null."
+  type        = string
 }
 
 variable "owner_scope" {
