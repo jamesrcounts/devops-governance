@@ -20,7 +20,7 @@ validate:
 	terraform validate
 
 plan: config fmt validate
-	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -var "application_administrator_script_name=Add-AzureAdRoles.terraform-root.ps1" -out plan.tfplan
+	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -var "terraform_root_aad_script_name=Add-AzureAdRoles.terraform-root.ps1" -var "container_pipelines_aad_script_name=Add-AzureAdRoles.container-pipelines.ps1" -out plan.tfplan
 	
 apply:
 	terraform apply plan.tfplan

@@ -1,9 +1,10 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=azure-credentials-0.0.3"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=container-pipelines"
 
-  application_administrator_script_name = var.application_administrator_script_name
-  active_password                       = "primary"
-  project                               = local.project
+  aad_roles       = ["Application Administrator"]
+  aad_script_name = var.aad_script_name
+  active_password = "primary"
+  project         = local.project
 
   owner_scope = {
     subscription = data.azurerm_subscription.current.id
@@ -11,7 +12,7 @@ module "azure_credentials" {
 
   update_triggers = {
     primary   = "20210424"
-    secondary = "20210424"
+    secondary = "20210510"
   }
 }
 
