@@ -4,13 +4,11 @@ resource "local_file" "add_azureadroles_ps1" {
   for_each = toset(var.application_administrator_script_name[*])
 
   filename = each.key
-  content  = data.template_file.add_azureadroles_ps1.rendered
+  content = templatefile(
+    "${path.module}/templates/Add-AzureAdRoles.ps1.hcl",
+    {
+      principal_id = azuread_service_principal.sp.id,
+      roles        = ["Application Administrator"]
+    }
+  )
 }
-
-data "template_file" "add_azureadroles_ps1" {
-  template = file("${path.module}/templates/Add-AzureAdRoles.ps1.hcl")
-  vars = {
-    principal_id = azuread_service_principal.sp.id
-  }
-}
-
