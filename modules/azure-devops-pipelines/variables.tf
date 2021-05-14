@@ -68,3 +68,9 @@ variable "yml_path" {
   description = "(Optional) The path of the Yaml file describing the build definition. Defaults to azure-pipelines.yml"
   type        = string
 }
+
+variable "pipelines" {
+  default     = null
+  description = "(Optional) Additional pipelines to create in the Azure DevOps project."
+  type        = map(string)
+}
