@@ -19,7 +19,7 @@ resource "azuredevops_build_definition" "builds" {
   for_each = local.pipelines
 
   project_id = azuredevops_project.project.id
-  name       = "${each.key} - ${var.project}"
+  name       = each.key
 
   ci_trigger {
     use_yaml = true
