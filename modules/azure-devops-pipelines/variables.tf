@@ -63,14 +63,8 @@ variable "terraform_version" {
   type        = string
 }
 
-variable "yml_path" {
-  default     = "azure-pipelines.yml"
-  description = "(Optional) The path of the Yaml file describing the build definition. Defaults to azure-pipelines.yml"
-  type        = string
-}
-
 variable "pipelines" {
   default     = null
-  description = "(Optional) Additional pipelines to create in the Azure DevOps project."
+  description = "(Optional) Additional pipelines to create in the Azure DevOps project. Keys will be used as pipeline names, values as the path to the pipeline YAML."
   type        = map(string)
 }
