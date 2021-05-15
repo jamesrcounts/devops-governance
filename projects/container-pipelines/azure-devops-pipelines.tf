@@ -21,7 +21,8 @@ module "azure_devops_pipelines" {
     infrastructure = "infrastructure/azure-pipelines.yml"
     captainkube    = "captainkube/azure-build-pipeline.yml"
     nodebrady      = "nodebrady/ci-pipeline.yml"
-    parrot         = "parrot/azure-pipelines.docker.yaml"
+    parrot_docker  = "parrot/azure-pipelines.docker.yaml"
+    parrot_helm    = "parrot/azure-pipelines.helm.yaml"
     phippy         = "phippy/ci-pipeline.yml"
   }
 }
