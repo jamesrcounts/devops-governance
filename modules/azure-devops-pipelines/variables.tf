@@ -30,6 +30,15 @@ variable "branch_name" {
   type        = string
 }
 
+variable "container_registry" {
+  default     = null
+  description = "(Optional) The resource group and name of an Azure Container Registry. Used to configure a container registry service connection. Defaults to null."
+  type = object({
+    acr_name            = string
+    resource_group_name = string
+  })
+}
+
 variable "github_pat" {
   description = "(Required) A GitHub personal access token. Used to configure an Azure DevOps service connection."
   sensitive   = true
