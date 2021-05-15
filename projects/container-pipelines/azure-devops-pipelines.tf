@@ -7,9 +7,16 @@ module "azure_devops_pipelines" {
   project           = local.project
   repository        = local.repository
   service_principal = module.azure_credentials.service_principal
-  yml_path          = "infrastructure/azure-pipelines.yml"
 
   azure_env = {
     AZURE_ENV_RG = module.azure_env.resource_group.name
+  }
+
+  pipelines = {
+    infrastructure = "infrastructure/azure-pipelines.yml"
+    captainkube    = "captainkube/azure-build-pipeline.yml"
+    nodebrady      = "nodebrady/ci-pipeline.yml"
+    parrot         = "parrot/azure-pipelines.docker.yaml"
+    phippy         = "phippy/ci-pipeline.yml"
   }
 }
