@@ -12,6 +12,11 @@ module "azure_devops_pipelines" {
     AZURE_ENV_RG = module.azure_env.resource_group.name
   }
 
+  container_registry = {
+    acr_name            = replace("cr-${module.azure_env.instance_id}", "-", "")
+    resource_group_name = module.azure_env.resource_group.name
+  }
+
   pipelines = {
     infrastructure = "infrastructure/azure-pipelines.yml"
     captainkube    = "captainkube/azure-build-pipeline.yml"
