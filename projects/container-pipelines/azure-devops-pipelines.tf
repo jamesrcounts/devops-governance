@@ -23,6 +23,7 @@ module "azure_devops_pipelines" {
     nodebrady      = "nodebrady/ci-pipeline.yml"
     parrot_docker  = "parrot/azure-pipelines.docker.yaml"
     parrot_helm    = "parrot/azure-pipelines.helm.yaml"
+    parrot_deploy  = "parrot/azure-pipelines.deploy.yaml"
     phippy         = "phippy/ci-pipeline.yml"
   }
 }
