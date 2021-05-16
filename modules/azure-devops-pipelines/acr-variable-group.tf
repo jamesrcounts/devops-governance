@@ -10,4 +10,9 @@ resource "azuredevops_variable_group" "acr" {
     name  = "CONTAINER_REGISTRY_NAME"
     value = var.container_registry.acr_name
   }
+
+  variable {
+    name  = "LOGIN_SERVER"
+    value = "${var.container_registry.acr_name}.azurecr.io"
+  }
 }
