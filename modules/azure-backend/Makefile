@@ -4,7 +4,7 @@ fmt:
 	terraform fmt
 
 init:
-	terraform init -backend=false
+	terraform init -upgrade -backend=false
 
 validate: init fmt
 	terraform validate
