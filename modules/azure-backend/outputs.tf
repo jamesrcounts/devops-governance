@@ -7,6 +7,9 @@ output "backend_config" {
   }
 }
 
-output "resource_group_id" {
-  value = azurerm_resource_group.state.id
+output "resource_group" {
+  value = {
+    id   = azurerm_resource_group.state.id
+    name = azurerm_resource_group.state.name
+  }
 }
