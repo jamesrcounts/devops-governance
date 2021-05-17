@@ -7,7 +7,7 @@ module "azure_credentials" {
   project         = var.project
 
   owner_scope = {
-    backend = module.azure_backend.resource_group_id
+    backend = module.azure_backend.resource_group.id
     env     = module.azure_env.resource_group.id
   }
 
