@@ -13,8 +13,8 @@ module "azure_devops_pipelines" {
   }
 
   container_registry = {
-    acr_name            = replace("cr-${module.azure_env.instance_id}", "-", "")
-    resource_group_name = module.azure_env.resource_group.name
+    acr_name            = module.acr.name
+    resource_group_name = module.azure_backend.resource_group.name
   }
 
   pipelines = {
