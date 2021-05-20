@@ -17,3 +17,9 @@ output "resource_group" {
     name = azurerm_resource_group.state.name
   }
 }
+
+output "key_vault" {
+  value = {
+    name = azurerm_key_vault.config.name
+  }
+}
