@@ -30,6 +30,15 @@ variable "branch_name" {
   type        = string
 }
 
+variable "config_keyvault" {
+  default     = null
+  description = "(Optional) The resource group and name of an Azure Key Vault. Used to configure a variable group. Defaults to null."
+  type = object({
+    key_vault_name      = string
+    resource_group_name = string
+  })
+}
+
 variable "container_registry" {
   default     = null
   description = "(Optional) The resource group and name of an Azure Container Registry. Used to configure a container registry service connection. Defaults to null."
