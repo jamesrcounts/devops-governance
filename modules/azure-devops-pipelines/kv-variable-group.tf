@@ -7,7 +7,7 @@ resource "azuredevops_variable_group" "kv" {
   for_each = toset(local.key_vaults)
 
   project_id   = azuredevops_project.project.id
-  name         = "keyvault"
+  name         = "key-vault"
   description  = "Specifies the name and location of the Azure Key Vault for configuration data."
   allow_access = false
 
@@ -17,7 +17,7 @@ resource "azuredevops_variable_group" "kv" {
   }
 
   variable {
-    name  = "RESOURCE_GROUP_NAME"
+    name  = "KEYVAULT_RESOURCE_GROUP_NAME"
     value = var.config_keyvault.resource_group_name
   }
 }
