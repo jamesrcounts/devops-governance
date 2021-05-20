@@ -12,6 +12,11 @@ module "azure_devops_pipelines" {
     AZURE_ENV_RG = module.azure_env.resource_group.name
   }
 
+  config_keyvault = {
+    key_vault_name      = module.azure_backend.key_vault.name
+    resource_group_name = module.azure_backend.resource_group.name
+  }
+
   container_registry = {
     acr_name            = module.acr.name
     resource_group_name = module.azure_backend.resource_group.name
