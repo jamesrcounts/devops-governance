@@ -24,6 +24,9 @@ module "azure_devops_pipelines" {
 
   pipelines = {
     infrastructure = "infrastructure/azure-pipelines.yml"
+    base           = "infrastructure/azure-pipelines.yml"
+    kubernetes-dev = "infrastructure/azure-pipelines.kubernetes-dev.yml"
+    kubernetes-prd = "infrastructure/azure-pipelines.kubernetes-prd.yml"
     captainkube    = "captainkube/azure-build-pipeline.yml"
     nodebrady      = "nodebrady/ci-pipeline.yml"
     parrot_docker  = "parrot/azure-pipelines.docker.yaml"
