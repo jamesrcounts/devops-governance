@@ -23,7 +23,6 @@ module "azure_devops_pipelines" {
   }
 
   pipelines = {
-    infrastructure = "infrastructure/azure-pipelines.yml"
     base           = "infrastructure/azure-pipelines.yml"
     kubernetes-dev = "infrastructure/azure-pipelines.kubernetes-dev.yml"
     kubernetes-prd = "infrastructure/azure-pipelines.kubernetes-prd.yml"
