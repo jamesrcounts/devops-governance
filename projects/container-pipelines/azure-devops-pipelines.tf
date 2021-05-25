@@ -2,7 +2,7 @@ module "azure_devops_pipelines" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=container-pipelines"
 
   backend           = module.azure_backend.backend_config
-  branch_name       = "main"
+  branch_name       = "azureaiconf.6.21"
   github_pat        = var.github_pat
   project           = local.project
   repository        = local.repository
@@ -23,14 +23,19 @@ module "azure_devops_pipelines" {
   }
 
   pipelines = {
-    base           = "infrastructure/azure-pipelines.yml"
-    kubernetes-dev = "infrastructure/azure-pipelines.kubernetes-dev.yml"
-    kubernetes-prd = "infrastructure/azure-pipelines.kubernetes-prd.yml"
-    captainkube    = "captainkube/azure-build-pipeline.yml"
-    nodebrady      = "nodebrady/ci-pipeline.yml"
-    parrot_docker  = "parrot/azure-pipelines.docker.yaml"
-    parrot_helm    = "parrot/azure-pipelines.helm.yaml"
-    parrot_deploy  = "parrot/azure-pipelines.deploy.yaml"
-    phippy         = "phippy/ci-pipeline.yml"
+    base                 = "infrastructure/azure-pipelines.yml"
+    kubernetes-dev       = "infrastructure/azure-pipelines.kubernetes-dev.yml"
+    kubernetes-prd       = "infrastructure/azure-pipelines.kubernetes-prd.yml"
+    "captainkube-deploy" = "captainkube/azure-pipelines.deploy.yml"
+    "captainkube-docker" = "captainkube/azure-pipelines.docker.yml"
+    "captainkube-chart"  = "captainkube/azure-pipelines.helm.yml"
+    nodebrady            = "nodebrady/ci-pipeline.yml"
+    parrot_docker        = "parrot/azure-pipelines.docker.yaml"
+    "parrot-docker"      = "parrot/azure-pipelines.docker.yaml"
+    parrot_helm          = "parrot/azure-pipelines.helm.yaml"
+    "parrot-helm"        = "parrot/azure-pipelines.helm.yaml"
+    parrot_deploy        = "parrot/azure-pipelines.deploy.yaml"
+    "parrot-deploy"      = "parrot/azure-pipelines.deploy.yaml"
+    phippy               = "phippy/ci-pipeline.yml"
   }
 }
