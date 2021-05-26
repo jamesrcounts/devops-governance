@@ -11,6 +11,8 @@ resource "azurerm_storage_account" "state" {
   tags                      = local.tags
 
   blob_properties {
+    versioning_enabled = true
+
     delete_retention_policy {
       days = 30
     }
