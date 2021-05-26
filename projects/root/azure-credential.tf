@@ -3,7 +3,7 @@ module "azure_credentials" {
 
   aad_roles       = ["Application Administrator"]
   aad_script_name = var.aad_script_name
-  active_password = "secondary"
+  active_password = "primary"
   project         = local.project
 
   owner_scope = {
@@ -11,7 +11,7 @@ module "azure_credentials" {
   }
 
   update_triggers = {
-    primary   = "20210424"
+    primary   = "20210526"
     secondary = "20210521"
   }
 }
