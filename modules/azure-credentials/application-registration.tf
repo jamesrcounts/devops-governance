@@ -1,7 +1,12 @@
 resource "azuread_application" "app" {
-  available_to_other_tenants = false
-  display_name               = "${var.project} (Managed by Terraform)"
-  oauth2_allow_implicit_flow = false
-  prevent_duplicate_names    = true
-  public_client              = false
+  display_name                   = "${var.project} (Managed by Terraform)"
+  fallback_public_client_enabled = false
+  prevent_duplicate_names        = true
+  sign_in_audience               = "AzureADMyOrg"
+
+  web {
+    implicit_grant {
+      access_token_issuance_enabled = false
+    }
+  }
 }

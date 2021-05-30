@@ -4,6 +4,8 @@ config:
 	@echo "github_pat=\"${AZDO_GITHUB_SERVICE_CONNECTION_PAT}\"" > github.secrets.auto.tfvars
 	@echo "azuredevops_pat=\"${AZDO_PERSONAL_ACCESS_TOKEN}\"" > azdo.secrets.auto.tfvars
 	@echo "azuredevops_url=\"${AZDO_ORG_SERVICE_URL}\"" >> azdo.secrets.auto.tfvars
+	@echo "aws_access_key_id=\"${AWS_ACCESS_KEY_ID}\"" > aws.secrets.auto.tfvars
+	@echo "aws_secret_access_key=\"${AWS_SECRET_ACCESS_KEY}\"" >> aws.secrets.auto.tfvars
 
 fmt:
 	terraform fmt -recursive
@@ -20,10 +22,15 @@ validate:
 	terraform validate
 
 plan: config fmt validate
-	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -var "application_administrator_script_name=Add-AzureAdRoles.terraform-root.ps1" -out plan.tfplan
+	terraform plan -var "backend_config_filename=azurerm.backend.tfvars" -var "terraform_root_aad_script_name=Add-AzureAdRoles.terraform-root.ps1" -var "container_pipelines_aad_script_name=Add-AzureAdRoles.container-pipelines.ps1" -out plan.tfplan
 	
 apply:
 	terraform apply plan.tfplan
 	rm plan.tfplan
 
 all: init plan
+
+login:
+	az login
+	az account set --subscription "Jim Counts (MSDN)"
+	az account show --output table

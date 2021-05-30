@@ -8,10 +8,10 @@ variable "azuredevops" {
   })
 }
 
-variable "azure_env_rg_name" {
-  description = "(Optional) Azure environment resource group name. When present, this module will create a variable group containing this information."
+variable "azure_env" {
+  description = "(Optional) Azure environment configuration. When present, this module will create a variable group containing this information."
   default     = null
-  type        = string
+  type        = map(string)
 }
 
 variable "backend" {
@@ -28,6 +28,24 @@ variable "branch_name" {
   default     = "main"
   description = "(Optional) The branch name for which builds are triggered. Defaults to main."
   type        = string
+}
+
+variable "config_keyvault" {
+  default     = null
+  description = "(Optional) The resource group and name of an Azure Key Vault. Used to configure a variable group. Defaults to null."
+  type = object({
+    key_vault_name      = string
+    resource_group_name = string
+  })
+}
+
+variable "container_registry" {
+  default     = null
+  description = "(Optional) The resource group and name of an Azure Container Registry. Used to configure a container registry service connection. Defaults to null."
+  type = object({
+    acr_name            = string
+    resource_group_name = string
+  })
 }
 
 variable "github_pat" {
@@ -58,13 +76,13 @@ variable "service_principal" {
 }
 
 variable "terraform_version" {
-  default     = "0.15.3"
-  description = "(Optional) The version of terraform to use.  Valid values are: '[0.15.1, 0.15.3]'.  Defaults to '0.15.3'."
+  default     = "0.15.4"
+  description = "(Optional) The version of terraform to use.  Valid values are: '[0.15.1, 0.15.3, 0.15.4]'.  Defaults to '0.15.4'."
   type        = string
 }
 
-variable "yml_path" {
-  default     = "azure-pipelines.yml"
-  description = "(Optional) The path of the Yaml file describing the build definition. Defaults to azure-pipelines.yml"
-  type        = string
+variable "pipelines" {
+  default     = null
+  description = "(Optional) Additional pipelines to create in the Azure DevOps project. Keys will be used as pipeline names, values as the path to the pipeline YAML."
+  type        = map(string)
 }

@@ -3,4 +3,3 @@ resource "azurerm_storage_container" "state" {
   name                  = "state"
   storage_account_name  = azurerm_storage_account.state.name
 }
-

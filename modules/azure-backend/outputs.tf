@@ -7,6 +7,19 @@ output "backend_config" {
   }
 }
 
-output "resource_group_id" {
-  value = azurerm_resource_group.state.id
+output "log_analytics_workspace_id" {
+  value = azurerm_log_analytics_workspace.diagnostics.id
+}
+
+output "resource_group" {
+  value = {
+    id   = azurerm_resource_group.state.id
+    name = azurerm_resource_group.state.name
+  }
+}
+
+output "key_vault" {
+  value = {
+    name = azurerm_key_vault.config.name
+  }
 }
