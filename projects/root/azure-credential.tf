@@ -1,5 +1,5 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=container-pipelines"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=main"
 
   aad_roles       = ["Application Administrator"]
   aad_script_name = var.aad_script_name
