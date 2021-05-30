@@ -3,6 +3,6 @@ resource "azuread_application_password" "password" {
 
   application_object_id = azuread_application.app.id
   display_name          = "Managed by Terraform"
-  end_date_relative     = "240h"
+  end_date              = timeadd(each.value, "240h")
 }
 
