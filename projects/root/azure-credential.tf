@@ -11,8 +11,8 @@ module "azure_credentials" {
   }
 
   update_triggers = {
-    primary   = "20210526"
-    secondary = "20210521"
+    primary   = "2021-05-26T00:00:00Z"
+    secondary = "2021-05-21T00:00:00Z"
   }
 }
 
