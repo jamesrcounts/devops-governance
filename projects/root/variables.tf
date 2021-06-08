@@ -4,6 +4,15 @@ variable "aad_script_name" {
   type        = string
 }
 
+variable "aws" {
+  description = "(Required) Specifies the credentials for the AWS Terraform provider."
+  sensitive   = true
+  type = object({
+    id  = string
+    key = string
+  })
+}
+
 variable "azuredevops_pat" {
   description = "(Required) An Azure DevOps personal access token. Used to configure the Azure DevOps Terraform Provider."
   sensitive   = true
