@@ -1,5 +1,5 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=azure-credentials-0.0.2"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=azure-credentials-0.0.4"
 
   active_password = "secondary"
   project         = var.project
@@ -10,7 +10,7 @@ module "azure_credentials" {
   }
 
   update_triggers = {
-    primary   = "20210424"
-    secondary = "20210526"
+    primary   = "2021-06-08T00:00:00Z"
+    secondary = "2021-06-08T00:00:00Z"
   }
 }
