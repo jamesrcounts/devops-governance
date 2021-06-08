@@ -56,6 +56,8 @@ stages:
               AZDO_PERSONAL_ACCESS_TOKEN: $(AZUREDEVOPS_PAT)
               AZDO_ORG_SERVICE_URL: $(AZUREDEVOPS_URL)
               GITHUB_PAT: $(GITHUB_PAT)
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
             inputs:
               targetType: 'inline'
               workingDirectory: $(project_folder)
@@ -71,6 +73,8 @@ stages:
                   -var="azuredevops_pat=${AZDO_PERSONAL_ACCESS_TOKEN}" \
                   -var="azuredevops_url=${AZDO_ORG_SERVICE_URL}" \
                   -var="github_pat=${GITHUB_PAT}" \
+                  -var="aws_access_key_id=${AWS_ACCESS_KEY_ID}" \
+                  -var="aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
           - template: '../pipeline-templates/publish-plan.yml'
