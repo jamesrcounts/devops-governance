@@ -63,7 +63,7 @@ stages:
               targetType: 'inline'
               workingDirectory: $(project_folder)
               script: |
-                set -euox pipefail
+                set -euo pipefail
 
                 if [ ${BUILD_REASON} == 'PullRequest' ]; then
                   export TF_CLI_ARGS="-lock=false"
