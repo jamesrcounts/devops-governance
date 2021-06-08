@@ -11,8 +11,8 @@ module "azure_devops_pipelines" {
   azure_env = {
     AZURE_ENV_RG = module.azure_env.resource_group.name
   }
-  pipelines = {
-    terraform-root = "infrastructure/azure-pipelines.yml"
-  }
 
+  pipelines = {
+    agw-vm = "infrastructure/azure-pipelines.yml"
+  }
 }
