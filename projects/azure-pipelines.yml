@@ -23,6 +23,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
+  - group: aws
   - group: azuredevops
   - group: github
   - group: terraform-backend
