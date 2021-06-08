@@ -28,7 +28,9 @@
 		// Use 'TF_VAR' prefix to set input variables for terraform templates
 		// "TF_VAR_rg_name":  "${containerEnv:TF_VAR_RG_NAME}"
 		"AZDO_PERSONAL_ACCESS_TOKEN":"${localEnv:AZDO_PERSONAL_ACCESS_TOKEN}",
-		"AZDO_GITHUB_SERVICE_CONNECTION_PAT":"${localEnv:AZDO_GITHUB_SERVICE_CONNECTION_PAT}"
+		"AZDO_GITHUB_SERVICE_CONNECTION_PAT":"${localEnv:AZDO_GITHUB_SERVICE_CONNECTION_PAT}",
+		"AWS_ACCESS_KEY_ID":"${localEnv:AWS_ACCESS_KEY_ID}",
+		"AWS_SECRET_ACCESS_KEY":"${localEnv:AWS_SECRET_ACCESS_KEY}",
 	},
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
