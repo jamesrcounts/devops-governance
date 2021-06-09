@@ -7,14 +7,12 @@ module "azure_devops_pipelines" {
   project           = local.project
   repository        = local.repository
   service_principal = module.azure_credentials.service_principal
-  terraform_version = "0.15.1"
 
-  pipelines = {
-    terraform-root = "projects/azure-pipelines.yml"
+  azure_env = {
+    AZURE_ENV_RG = module.azure_env.resource_group.name
   }
 
-  azuredevops = {
-    pat = var.azuredevops_pat
-    url = var.azuredevops_url
+  pipelines = {
+    agw-vm = "infrastructure/azure-pipelines.yml"
   }
 }
