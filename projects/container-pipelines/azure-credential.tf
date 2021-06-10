@@ -3,7 +3,7 @@ module "azure_credentials" {
 
   aad_roles       = ["Directory Readers", "Groups Administrator"]
   aad_script_name = var.aad_script_name
-  active_password = "primary"
+  active_password = "secondary"
   project         = var.project
 
   owner_scope = {
