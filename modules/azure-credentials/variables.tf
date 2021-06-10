@@ -9,10 +9,10 @@ variable "active_password" {
   type        = string
 }
 
-variable "aad_script_name" {
-  default     = null
-  description = "(Optional) When provided a filename this module will write a powershell script to assign AAD roles to these credentials.  Defaults to null.  When using this option, `aad_roles` must also be set."
-  type        = string
+variable "generate_scripts" {
+  default     = false
+  description = "(Optional) A flag to indicate whether to generate run-once scripts."
+  type        = bool
 }
 
 variable "owner_scope" {
