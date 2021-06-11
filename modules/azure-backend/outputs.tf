@@ -15,6 +15,7 @@ output "resource_group" {
   value = {
     id   = azurerm_resource_group.state.id
     name = azurerm_resource_group.state.name
+    tags = azurerm_resource_group.state.tags
   }
 }
 
