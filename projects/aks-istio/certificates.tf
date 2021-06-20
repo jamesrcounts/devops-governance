@@ -50,3 +50,27 @@ resource "azurerm_key_vault_certificate" "certificate" {
     }
   }
 }
+
+resource "azurerm_key_vault_secret" "certificate" {
+  for_each = acme_certificate.certificate
+
+  name         = "${replace(each.value.common_name, ".", "-")}-cert"
+  key_vault_id = module.azure_backend.key_vault.id
+  value        = "${each.value.certificate_pem}${each.value.issuer_pem}"
+}
+
+resource "azurerm_key_vault_secret" "ca" {
+  for_each = acme_certificate.certificate
+
+  name         = "${replace(each.value.common_name, ".", "-")}-ca"
+  key_vault_id = module.azure_backend.key_vault.id
+  value        = each.value.issuer_pem
+}
+
+resource "azurerm_key_vault_secret" "key" {
+  for_each = acme_certificate.certificate
+
+  name         = "${replace(each.value.common_name, ".", "-")}-key"
+  key_vault_id = module.azure_backend.key_vault.id
+  value        = each.value.private_key_pem
+}
