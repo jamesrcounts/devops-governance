@@ -25,6 +25,7 @@ output "resource_group" {
 
 output "key_vault" {
   value = {
+    id = azurerm_key_vault.config.id
     name = azurerm_key_vault.config.name
   }
 }

@@ -1,9 +1,9 @@
 resource "azurerm_key_vault" "config" {
   enable_rbac_authorization   = true
-  enabled_for_disk_encryption = true
+  enabled_for_disk_encryption = false
   location                    = azurerm_resource_group.state.location
   name                        = "kv-${local.project_id}"
-  purge_protection_enabled    = true
+  purge_protection_enabled    = false
   resource_group_name         = azurerm_resource_group.state.name
   sku_name                    = "standard"
   soft_delete_retention_days  = 7
