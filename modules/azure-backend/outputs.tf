@@ -17,6 +17,7 @@ output "log_analytics_workspace" {
 output "resource_group" {
   value = {
     id   = azurerm_resource_group.state.id
+    location   = azurerm_resource_group.state.location
     name = azurerm_resource_group.state.name
     tags = azurerm_resource_group.state.tags
   }
