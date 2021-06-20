@@ -3,7 +3,7 @@ module "azure_credentials" {
 
   aad_roles       = ["Directory Readers", "Groups Administrator"]
   aad_script_name = var.aad_script_name
-  active_password = "secondary"
+  active_password = "primary"
   project         = var.project
 
   owner_scope = {
@@ -12,7 +12,7 @@ module "azure_credentials" {
   }
 
   update_triggers = {
-    primary   = "2021-05-30T00:00:00Z"
-    secondary = "2021-06-05T00:00:00Z"
+    primary   = "2021-06-20T00:00:00Z"
+    secondary = "2021-06-14T00:00:00Z"
   }
 }
