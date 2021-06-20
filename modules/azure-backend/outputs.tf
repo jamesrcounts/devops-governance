@@ -7,8 +7,11 @@ output "backend_config" {
   }
 }
 
-output "log_analytics_workspace_id" {
-  value = azurerm_log_analytics_workspace.diagnostics.id
+output "log_analytics_workspace" {
+  value = {
+    id = azurerm_log_analytics_workspace.diagnostics.id
+    name = azurerm_log_analytics_workspace.diagnostics.name
+  }
 }
 
 output "resource_group" {
