@@ -3,7 +3,7 @@ resource "azurerm_key_vault" "config" {
   enabled_for_disk_encryption = false
   location                    = azurerm_resource_group.state.location
   name                        = "kv-${local.project_id}"
-  purge_protection_enabled    = false
+  purge_protection_enabled    = true //todo disable
   resource_group_name         = azurerm_resource_group.state.name
   sku_name                    = "standard"
   soft_delete_retention_days  = 7
