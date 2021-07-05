@@ -18,7 +18,7 @@ resource "local_file" "azurerm_backend_tfvars" {
 }
 
 resource "azurerm_key_vault_secret" "backend_config" {
-  key_vault_id = module.azure_backend.key_vault.id
+  key_vault_id = azurerm_key_vault.config.id
   name         = "azurerm-backend-tfvars"
   value        = local.backend_config
 }
