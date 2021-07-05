@@ -24,5 +24,9 @@ terraform {
       source  = "hashicorp/random"
       version = "~> 3"
     }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0"
+    }
   }
 }

@@ -1,7 +1,7 @@
-// module "terraform_pipelines" {
-//   source = "./terraform-pipelines"
+module "terraform_pipelines" {
+  source = "./terraform-pipelines"
 
-//   github_pat = var.github_pat
-//   project    = "terraform-pipelines"
-//   repository = "jamesrcounts/terraform-getting-started-azure"
-// }
+  github_pat = var.github_pat
+  project    = "terraform-pipelines"
+  repository = "jamesrcounts/terraform-getting-started-azure"
+}
