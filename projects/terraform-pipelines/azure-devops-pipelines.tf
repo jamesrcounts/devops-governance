@@ -7,6 +7,7 @@ module "azure_devops_pipelines" {
   project           = local.project
   repository        = local.repository
   service_principal = module.azure_credentials.service_principal
+  terraform_version = "1.0.1"
 
   azure_env = {
     AZURE_ENV_RG = module.azure_env.resource_group.name
