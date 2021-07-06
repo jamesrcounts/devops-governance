@@ -23,6 +23,6 @@ module "azure_devops_pipelines" {
   }
 
   pipelines = {
-    infrastructure = "infrastructure/azure-pipelines.yml"
+    azure = "stages/azure/azure-pipelines.yml"
   }
 }
