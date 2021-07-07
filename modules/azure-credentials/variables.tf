@@ -32,3 +32,10 @@ variable "update_triggers" {
     secondary = string
   })
 }
+
+variable "key_vault" {
+  description = "(Required) The configuration Key Vault."
+  type = object({
+    id = string
+  })
+}
