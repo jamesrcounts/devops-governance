@@ -5,6 +5,7 @@ module "azure_credentials" {
   active_password  = "secondary"
   generate_scripts = var.generate_scripts
   project          = var.project
+  key_vault        = module.azure_backend.key_vault
 
   owner_scope = {
     backend = module.azure_backend.resource_group.id
