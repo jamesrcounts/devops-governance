@@ -19,3 +19,12 @@ variable "repository" {
   description = "(Required) The repository id for the Terraform project."
   type        = string
 }
+
+variable "aws" {
+  description = "(Required) Specifies the credentials for the AWS Terraform provider."
+  sensitive   = true
+  type = object({
+    id  = string
+    key = string
+  })
+}
