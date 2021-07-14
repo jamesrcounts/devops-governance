@@ -24,9 +24,10 @@ variable "azuredevops_url" {
   type        = string
 }
 
-variable "backend_config_filename" {
-  default     = null
-  description = "(Optional) When provided a filename this module will write the backend config to that file in tfvars format.  Defaults to null."
+variable "generate_scripts" {
+  default     = false
+  description = "(Optional) A flag to indicate whether to generate run-once scripts."
+  type        = bool
 }
 
 variable "github_pat" {

@@ -1,8 +1,7 @@
 module "azure_backend" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-backend?ref=azure-backend-0.0.5"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-backend?ref=aks-istio"
 
-  backend_config_filename = var.backend_config_filename
-  location                = "centralus"
+  location = "centralus"
 
   required_tags = {
     project    = local.project
