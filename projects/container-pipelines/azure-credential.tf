@@ -1,9 +1,9 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=azure-credentials-0.0.4"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=aks-istio"
 
   aad_roles       = ["Directory Readers", "Groups Administrator"]
-  aad_script_name = var.aad_script_name
   active_password = "primary"
+  key_vault       = module.azure_backend.key_vault
   project         = var.project
 
   owner_scope = {
@@ -12,7 +12,19 @@ module "azure_credentials" {
   }
 
   update_triggers = {
-    primary   = "2021-06-20T00:00:00Z"
-    secondary = "2021-06-14T00:00:00Z"
+    primary   = time_rotating.primary.rfc3339
+    secondary = time_rotating.secondary.rfc3339
   }
 }
+
+resource "time_rotating" "primary" {
+  rfc3339        = time_static.now.rfc3339
+  rotation_hours = 120
+}
+
+resource "time_rotating" "secondary" {
+  rfc3339        = timeadd(time_static.now.rfc3339, "120h")
+  rotation_hours = 120
+}
+
+resource "time_static" "now" {}
