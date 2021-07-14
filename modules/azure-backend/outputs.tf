@@ -9,23 +9,23 @@ output "backend_config" {
 
 output "log_analytics_workspace" {
   value = {
-    id = azurerm_log_analytics_workspace.diagnostics.id
+    id   = azurerm_log_analytics_workspace.diagnostics.id
     name = azurerm_log_analytics_workspace.diagnostics.name
   }
 }
 
 output "resource_group" {
   value = {
-    id   = azurerm_resource_group.state.id
-    location   = azurerm_resource_group.state.location
-    name = azurerm_resource_group.state.name
-    tags = azurerm_resource_group.state.tags
+    id       = azurerm_resource_group.state.id
+    location = azurerm_resource_group.state.location
+    name     = azurerm_resource_group.state.name
+    tags     = azurerm_resource_group.state.tags
   }
 }
 
 output "key_vault" {
   value = {
-    id = azurerm_key_vault.config.id
+    id   = azurerm_key_vault.config.id
     name = azurerm_key_vault.config.name
   }
 }

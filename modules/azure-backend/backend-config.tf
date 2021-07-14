@@ -1,4 +1,4 @@
-locals{
+locals {
   backend_config = templatefile(
     "${path.module}/templates/backend-config.tfvars.hcl",
     {
@@ -8,13 +8,6 @@ locals{
       storage_account_name = azurerm_storage_account.state.name
     }
   )
-}
-
-resource "local_file" "azurerm_backend_tfvars" {
-  for_each = toset(var.backend_config_filename[*])
-
-  content = local.backend_config
-  filename = each.key
 }
 
 resource "azurerm_key_vault_secret" "backend_config" {
