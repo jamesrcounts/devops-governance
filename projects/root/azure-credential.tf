@@ -2,7 +2,7 @@ module "azure_credentials" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=aks-istio"
 
   aad_roles        = ["Application Administrator"]
-  active_password  = "primary"
+  active_password  = "secondary"
   generate_scripts = var.generate_scripts
   key_vault        = module.azure_backend.key_vault
   project          = local.project
@@ -20,7 +20,6 @@ module "azure_credentials" {
 data "azurerm_subscription" "current" {}
 
 resource "time_rotating" "primary" {
-  rfc3339        = time_static.now.rfc3339
   rotation_hours = 120
 }
 
