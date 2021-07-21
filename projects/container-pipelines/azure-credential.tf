@@ -5,7 +5,7 @@ module "azure_credentials" {
   }
 
   aad_roles       = ["Directory Readers", "Groups Administrator"]
-  active_password = "primary"
+  active_password = "secondary"
   key_vault       = module.azure_backend.key_vault
   project         = var.project
 
@@ -21,7 +21,6 @@ module "azure_credentials" {
 }
 
 resource "time_rotating" "primary" {
-  rfc3339        = time_static.now.rfc3339
   rotation_hours = 120
 }
 

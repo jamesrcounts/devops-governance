@@ -19,7 +19,6 @@ module "azure_credentials" {
 }
 
 resource "time_rotating" "primary" {
-  rfc3339        = time_static.now.rfc3339
   rotation_hours = 120
 }
 

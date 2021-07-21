@@ -10,6 +10,7 @@ module "azure_devops_pipelines" {
 
   azure_env = {
     AZURE_ENV_RG = module.azure_env.resource_group.name
+    instance_id  = module.azure_env.resource_group.tags["instance_id"]
   }
 
   config_keyvault = {
