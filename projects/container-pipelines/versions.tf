@@ -1,8 +1,9 @@
 terraform {
   required_providers {
     acme = {
-      source  = "vancluever/acme"
-      version = "~> 2"
+      configuration_aliases = [acme.prd, acme.stg]
+      source                = "vancluever/acme"
+      version               = "~> 2"
     }
     azuredevops = {
       source  = "microsoft/azuredevops"
