@@ -48,5 +48,5 @@ all: init plan
 
 login:
 	az login
-	az account set --subscription "Jim Counts (personal)"
+	az account set --subscription "Jim Counts (Personal)"
 	az account show --output table
