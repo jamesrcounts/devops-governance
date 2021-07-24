@@ -1,6 +1,10 @@
 module "aks_istio" {
   source = "./aks-istio"
 
+  providers = {
+    acme = acme.stg
+  }
+
   github_pat = var.github_pat
   aws        = local.aws
   project    = "aks-istio"
