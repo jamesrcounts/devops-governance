@@ -35,7 +35,7 @@ module "azure_devops_pipelines" {
     nodebrady-docker   = "nodebrady/azure-pipelines.docker.yml"
     parrot-deploy      = "parrot/azure-pipelines.deploy.yaml"
     parrot-docker      = "parrot/azure-pipelines.docker.yaml"
-    parrot-chart        = "parrot/azure-pipelines.helm.yaml"
+    parrot-chart       = "parrot/azure-pipelines.helm.yaml"
     phippy-chart       = "phippy/azure-pipelines.helm.yml"
     phippy-deploy      = "phippy/azure-pipelines.deploy.yml"
     phippy-docker      = "phippy/azure-pipelines.docker.yml"
