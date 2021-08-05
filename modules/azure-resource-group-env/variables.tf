@@ -8,8 +8,8 @@ variable "required_tags" {
   type = object({
     backend_instance_id = string
     project             = string
+    purpose             = string
     repository          = string
-    role                = string
   })
 }
 
