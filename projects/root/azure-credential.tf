@@ -24,8 +24,5 @@ resource "time_rotating" "primary" {
 }
 
 resource "time_rotating" "secondary" {
-  rfc3339        = timeadd(time_static.now.rfc3339, "120h")
   rotation_hours = 120
 }
-
-resource "time_static" "now" {}
