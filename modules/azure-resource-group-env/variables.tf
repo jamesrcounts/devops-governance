@@ -6,8 +6,10 @@ variable "location" {
 variable "required_tags" {
   description = "(Required) Tags to assign to each resource."
   type = object({
-    repository = string
-    project    = string
+    backend_instance_id = string
+    project             = string
+    repository          = string
+    role                = string
   })
 }
 
