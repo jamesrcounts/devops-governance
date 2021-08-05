@@ -1,7 +1,9 @@
 module "azure_env" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-resource-group-env?ref=aks-istio"
 
-  location = local.location
+  config_key_vault_id = module.azure_backend.key_vault.id
+  location            = local.location
+
   required_tags = merge(
     local.env_tags,
     {
@@ -13,7 +15,9 @@ module "azure_env" {
 module "azure_hub" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-resource-group-env?ref=aks-istio"
 
-  location = local.location
+  config_key_vault_id = module.azure_backend.key_vault.id
+  location            = local.location
+
   required_tags = merge(
     local.env_tags,
     {
