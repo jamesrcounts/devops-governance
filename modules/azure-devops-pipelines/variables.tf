@@ -76,8 +76,8 @@ variable "service_principal" {
 }
 
 variable "terraform_version" {
-  default     = "1.0.1"
-  description = "(Optional) The version of terraform to use.  Valid values are: '[0.15.1, 0.15.3, 0.15.4, 1.0.0, 1.0.1]'.  Defaults to '1.0.1'."
+  default     = "1.0.4"
+  description = "(Optional) The version of terraform to use.  Valid values are: '[0.15.1, 0.15.3, 0.15.4, 1.0.0, 1.0.1, 1.0.4]'.  Defaults to '1.0.4'."
   type        = string
 }
 
