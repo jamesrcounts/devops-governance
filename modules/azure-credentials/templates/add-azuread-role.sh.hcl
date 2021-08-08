@@ -75,7 +75,7 @@ add_azuread_directory_role_member () {
     AAD_ROLE_ID=$${1}
     MEMBER_ID=$${2}
 
-    URL=$(printf "%s" $(endpoint_directory_roles) '/' $${AAD_ROLE_ID} '/members/$$ref')
+    URL=$(printf "%s" $(endpoint_directory_roles) '/' $${AAD_ROLE_ID} '/members/$ref')
     ENDPOINT_BODY=$(add_directory_role_member_body $${MEMBER_ID})
 
     az rest --method post \
