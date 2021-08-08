@@ -1,10 +1,15 @@
 module "azure_credentials" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=aks-istio"
 
-  aad_roles       = ["Directory Readers", "Groups Administrator"]
   active_password = "secondary"
   key_vault       = module.azure_backend.key_vault
   project         = var.project
+
+  aad_roles = [
+    "Application Administrator",
+    "Directory Readers",
+    "Groups Administrator"
+  ]
 
   owner_scope = {
     backend = module.azure_backend.resource_group.id
