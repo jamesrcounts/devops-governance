@@ -26,9 +26,9 @@ endpoint_directory_roles () {
 odata_filter () {
     RAW_FILTER=$${1}
 
-    FILTER=$$(printf "$${RAW_FILTER}" | jq -sRr @uri)
+    FILTER=$(printf "$${RAW_FILTER}" | jq -sRr @uri)
 
-    printf '$$filter=%s' $${FILTER}
+    printf '$filter=%s' $${FILTER}
 }
 
 # Query the Graph API activated roles and returns the ID for the role matching
@@ -36,11 +36,11 @@ odata_filter () {
 get_azuread_directory_role () {
     DISPLAY_NAME="$${1}"
 
-    SELECT='$$select=id'
-    FILTER=$$(odata_filter "displayName eq '$${DISPLAY_NAME}'")
+    SELECT='$select=id'
+    FILTER=$(odata_filter "displayName eq '$${DISPLAY_NAME}'")
 
-    URL=$$(printf "%s" $$(endpoint_directory_roles) '?' $${SELECT} '&' $${FILTER})
-    ROLE_ID=$$(az rest --method get --url $${URL} | jq -r '.value | first | .id')
+    URL=$(printf "%s" $(endpoint_directory_roles) '?' $${SELECT} '&' $${FILTER})
+    ROLE_ID=$(az rest --method get --url $${URL} | jq -r '.value | first | .id')
 
     printf $${ROLE_ID}
 }
@@ -50,9 +50,9 @@ get_azuread_directory_role () {
 get_azuread_directory_role_template () {
     DISPLAY_NAME="$${1}"
 
-    URL=$$(printf "%s" $${BASE_URL} '/directoryRoleTemplates')
+    URL=$(printf "%s" $${BASE_URL} '/directoryRoleTemplates')
 
-    ROLE_TEMPLATE_ID=$$(az rest --method get --url $${URL} | \
+    ROLE_TEMPLATE_ID=$(az rest --method get --url $${URL} | \
                         jq -r ".value | map(select(.displayName == \"$${DISPLAY_NAME}\")) | first | .id")
     
     printf $${ROLE_TEMPLATE_ID}
@@ -62,8 +62,8 @@ get_azuread_directory_role_template () {
 enable_azuread_directory_role () {
     ROLE_TEMPLATE_ID=$${1}
 
-    URL=$$(endpoint_directory_roles)
-    BODY=$$(activate_directory_role_body $${ROLE_TEMPLATE_ID})
+    URL=$(endpoint_directory_roles)
+    BODY=$(activate_directory_role_body $${ROLE_TEMPLATE_ID})
 
     az rest --method post \
         --url $${URL} \
@@ -75,8 +75,8 @@ add_azuread_directory_role_member () {
     AAD_ROLE_ID=$${1}
     MEMBER_ID=$${2}
 
-    URL=$$(printf "%s" $$(endpoint_directory_roles) '/' $${AAD_ROLE_ID} '/members/$$ref')
-    ENDPOINT_BODY=$$(add_directory_role_member_body $${MEMBER_ID})
+    URL=$(printf "%s" $(endpoint_directory_roles) '/' $${AAD_ROLE_ID} '/members/$$ref')
+    ENDPOINT_BODY=$(add_directory_role_member_body $${MEMBER_ID})
 
     az rest --method post \
         --url $${URL} \
@@ -88,10 +88,10 @@ check_principal_directory_role () {
     MEMBER_ID=$${1}
     AAD_ROLE_ID=$${2}
 
-    ENDPOINT_URL=$$(printf "%s" $${BASE_URL} '/servicePrincipals/' $${MEMBER_ID} '/memberOf/microsoft.graph.directoryRole')
-    SELECT='$$select=id'
-    URL=$$(printf "%s" $${ENDPOINT_URL} '?' $${SELECT})
-    ROLE_COUNT=$$(az rest --method get \
+    ENDPOINT_URL=$(printf "%s" $${BASE_URL} '/servicePrincipals/' $${MEMBER_ID} '/memberOf/microsoft.graph.directoryRole')
+    SELECT='$select=id'
+    URL=$(printf "%s" $${ENDPOINT_URL} '?' $${SELECT})
+    ROLE_COUNT=$(az rest --method get \
                     --url $${URL} | \
                     jq -r ".value | map(select(.id == \"$${AAD_ROLE_ID}\")) | length")
 
@@ -103,12 +103,12 @@ check_principal_directory_role () {
 ensure_azuread_role () {
     DISPLAY_NAME=$${1}
 
-    AAD_ROLE_ID=$$(get_azuread_directory_role "$${DISPLAY_NAME}")
+    AAD_ROLE_ID=$(get_azuread_directory_role "$${DISPLAY_NAME}")
     if [ -z "$${AAD_ROLE_ID}" ]
     then
-        ROLE_TEMPLATE_ID=$$(get_azuread_directory_role_template "$${DISPLAY_NAME}")
+        ROLE_TEMPLATE_ID=$(get_azuread_directory_role_template "$${DISPLAY_NAME}")
         enable_azuread_directory_role $${ROLE_TEMPLATE_ID}
-        AAD_ROLE_ID=$$(get_azuread_directory_role "$${DISPLAY_NAME}")
+        AAD_ROLE_ID=$(get_azuread_directory_role "$${DISPLAY_NAME}")
     fi
 
     printf $${AAD_ROLE_ID}
@@ -121,7 +121,7 @@ ensure_azuread_role_membership () {
     AAD_ROLE_ID=$${2}
     DISPLAY_NAME=$${3}
     
-    ROLE_COUNT=$$(check_principal_directory_role $${MEMBER_ID} $${AAD_ROLE_ID})
+    ROLE_COUNT=$(check_principal_directory_role $${MEMBER_ID} $${AAD_ROLE_ID})
     if [ 0 == "$${ROLE_COUNT}" ]
     then
         add_azuread_directory_role_member $${AAD_ROLE_ID} $${MEMBER_ID}
@@ -140,6 +140,6 @@ ROLE_NAMES=(
 )
 for ROLE_NAME in "$${ROLE_NAMES[@]}"
 do
-    ROLE_ID=$$(ensure_azuread_role "$${ROLE_NAME}")
+    ROLE_ID=$(ensure_azuread_role "$${ROLE_NAME}")
     ensure_azuread_role_membership $${PRINCIPAL_ID} $${ROLE_ID} "$${ROLE_NAME}"
 done
