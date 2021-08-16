@@ -20,5 +20,6 @@ module "azure_devops_pipelines" {
 
   pipelines = {
     infrastructure = "infrastructure/azure/azure-pipelines.yml"
+    networking     = "infrastructure/networking/azure-pipelines.yml"
   }
 }
