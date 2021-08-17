@@ -19,6 +19,7 @@ module "azure_devops_pipelines" {
   }
 
   pipelines = {
+    appenv         = "infrastructure/appenv/azure-pipelines.yml"
     infrastructure = "infrastructure/azure/azure-pipelines.yml"
     networking     = "infrastructure/networking/azure-pipelines.yml"
   }
