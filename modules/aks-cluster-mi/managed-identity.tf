@@ -13,7 +13,7 @@ resource "azurerm_role_assignment" "networking" {
   scope                = var.scopes["networking"]
 }
 
-resource "azurerm_role_assignment" "aks_metrics_publisher" {
+resource "azurerm_role_assignment" "aks" {
   for_each = toset(["Monitoring Metrics Publisher"])
 
   principal_id         = azurerm_user_assigned_identity.aks.principal_id
