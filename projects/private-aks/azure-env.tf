@@ -7,7 +7,7 @@ module "azure_env" {
   required_tags = merge(
     local.env_tags,
     {
-      purpose = "spoke"
+      purpose = "appenv"
     }
   )
 }
@@ -21,7 +21,7 @@ module "azure_hub" {
   required_tags = merge(
     local.env_tags,
     {
-      purpose = "hub"
+      purpose = "networking"
     }
   )
 }
