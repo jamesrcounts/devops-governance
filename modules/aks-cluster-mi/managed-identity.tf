@@ -5,21 +5,18 @@ resource "azurerm_user_assigned_identity" "aks" {
   tags                = var.resource_group.tags
 }
 
-resource "azurerm_role_assignment" "aks_vnet_contributor" {
-  principal_id         = azurerm_user_assigned_identity.aks.principal_id
-  role_definition_name = "Network Contributor"
-  scope                = var.scope
-}
+resource "azurerm_role_assignment" "networking" {
+  for_each = toset(["Network Contributor", "Private DNS Zone Contributor"])
 
-resource "azurerm_role_assignment" "aks_dns_zone_contributor" {
-  scope                = var.scope
-  role_definition_name = "Private DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.aks.principal_id
+  role_definition_name = each.key
+  scope                = var.scopes["networking"]
 }
-
 
 resource "azurerm_role_assignment" "aks_metrics_publisher" {
-  scope                = var.resource_group.id
-  role_definition_name = "Monitoring Metrics Publisher"
+  for_each = toset(["Monitoring Metrics Publisher"])
+
   principal_id         = azurerm_user_assigned_identity.aks.principal_id
+  role_definition_name = each.key
+  scope                = var.scopes["aks"]
 }

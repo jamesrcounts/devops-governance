@@ -8,7 +8,10 @@ variable "resource_group" {
   })
 }
 
-variable "scope" {
-  description = "(Required) The scope at which the role assignments apply to."
-  type        = string
+variable "scopes" {
+  description = "(Required) The scopes the role assignments apply to."
+  type = object({
+    aks        = string
+    networking = string
+  })
 }

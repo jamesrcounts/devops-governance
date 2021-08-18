@@ -1,16 +1,23 @@
-module "test" {
+module "aks_cluster_identity" {
   source = "../"
 
-  resource_group = data.azurerm_resource_group.net
-  scope          = data.azurerm_resource_group.net.id
+  resource_group = azurerm_resource_group.rgs["backend"]
+  scopes = {
+    aks        = azurerm_resource_group.rgs["aks"].id
+    networking = azurerm_resource_group.rgs["networking"].id
+  }
 }
 
 output "test" {
-  value = module.test.msi_resource_id
+  value = module.aks_cluster_identity.msi_resource_id
 }
 
-data "azurerm_resource_group" "net" {
-  name = "rg-${var.instance_id}"
+resource "azurerm_resource_group" "rgs" {
+  for_each = toset(["backend", "aks", "networking"])
+
+  name     = "rg-${each.key}"
+  location = "centralus"
+  tags     = { instance_id = var.instance_id }
 }
 
 provider "azurerm" {
