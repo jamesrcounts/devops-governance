@@ -1,11 +1,16 @@
 module "azure_credentials" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=aks-istio"
 
-  aad_roles        = ["Application Administrator"]
   active_password  = "secondary"
   generate_scripts = var.generate_scripts
   key_vault        = module.azure_backend.key_vault
   project          = local.project
+
+  aad_roles = [
+    "Application Administrator",
+    "Directory Readers",
+    "Groups Administrator"
+  ]
 
   owner_scope = {
     subscription = data.azurerm_subscription.current.id

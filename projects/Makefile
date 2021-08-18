@@ -10,10 +10,9 @@ backend_config:
 
 aad_script:
 	az keyvault secret download \
-		--name add-azureadroles-ps1 \
+		--name add-azuread-roles-sh \
 		--vault-name kv-$(backend_instance_id) \
-		--file Add-AzureAdRoles.terraform-root.ps1
-
+		--file add-azuread-roles.sh
 
 config:
 	@echo "github_pat=\"${AZDO_GITHUB_SERVICE_CONNECTION_PAT}\"" > github.secrets.auto.tfvars
