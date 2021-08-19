@@ -2,7 +2,7 @@ module "azure_devops_pipelines" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=aks-istio"
 
   backend           = module.azure_backend.backend_config
-  branch_name       = "lz"
+  branch_name       = "main"
   github_pat        = var.github_pat
   project           = var.project
   repository        = var.repository
@@ -19,8 +19,7 @@ module "azure_devops_pipelines" {
   }
 
   pipelines = {
-    appenv         = "infrastructure/appenv/azure-pipelines.yml"
-    infrastructure = "infrastructure/azure/azure-pipelines.yml"
-    networking     = "infrastructure/networking/azure-pipelines.yml"
+    appenv     = "infrastructure/appenv/azure-pipelines.yml"
+    networking = "infrastructure/networking/azure-pipelines.yml"
   }
 }
