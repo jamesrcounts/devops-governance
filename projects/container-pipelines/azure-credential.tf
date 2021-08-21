@@ -1,5 +1,5 @@
 module "azure_credentials" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=aks-istio"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=main"
   providers = {
     azurerm = azurerm.bo
   }

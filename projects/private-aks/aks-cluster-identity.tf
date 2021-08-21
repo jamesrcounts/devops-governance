@@ -1,5 +1,5 @@
 module "aks_cluster_identity" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/aks-cluster-mi?ref=aks-istio"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/aks-cluster-mi?ref=main"
 
   resource_group = module.azure_backend.resource_group
   scopes = {

@@ -1,5 +1,5 @@
 module "azure_env" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-resource-group-env?ref=aks-istio"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-resource-group-env?ref=main"
 
   config_key_vault_id = module.azure_backend.key_vault.id
   location            = local.location
@@ -13,7 +13,7 @@ module "azure_env" {
 }
 
 module "azure_hub" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-resource-group-env?ref=aks-istio"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-resource-group-env?ref=main"
 
   config_key_vault_id = module.azure_backend.key_vault.id
   location            = local.location

@@ -1,5 +1,5 @@
 module "azure_env" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-resource-group-env?ref=aks-istio"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-resource-group-env?ref=main"
   providers = {
     azurerm = azurerm.bo
   }
