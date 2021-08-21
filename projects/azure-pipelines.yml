@@ -5,6 +5,7 @@ trigger:
   branches:
     include:
       - main
+      - aks-istio
   paths:
     include:
       - projects
@@ -104,6 +105,8 @@ stages:
                     ARM_TENANT_ID: $(AZURE_TENANT_ID)
                     AZDO_PERSONAL_ACCESS_TOKEN: $(AZUREDEVOPS_PAT)
                     AZDO_ORG_SERVICE_URL: $(AZUREDEVOPS_URL)
+                    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+                    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
                   inputs:
                     targetType: 'inline'
                     workingDirectory: $(project_folder)

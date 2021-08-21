@@ -1,5 +1,5 @@
 module "azure_devops_pipelines" {
-  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=azure-devops-pipelines-0.0.5"
+  source = "github.com/jamesrcounts/devops-governance.git//modules/azure-devops-pipelines?ref=main"
 
   backend           = module.azure_backend.backend_config
   branch_name       = "main"
@@ -10,6 +10,7 @@ module "azure_devops_pipelines" {
 
   azure_env = {
     AZURE_ENV_RG = module.azure_env.resource_group.name
+    instance_id  = module.azure_env.instance_id
   }
 
   config_keyvault = {
@@ -34,7 +35,7 @@ module "azure_devops_pipelines" {
     nodebrady-docker   = "nodebrady/azure-pipelines.docker.yml"
     parrot-deploy      = "parrot/azure-pipelines.deploy.yaml"
     parrot-docker      = "parrot/azure-pipelines.docker.yaml"
-    parrot-helm        = "parrot/azure-pipelines.helm.yaml"
+    parrot-chart       = "parrot/azure-pipelines.helm.yaml"
     phippy-chart       = "phippy/azure-pipelines.helm.yml"
     phippy-deploy      = "phippy/azure-pipelines.deploy.yml"
     phippy-docker      = "phippy/azure-pipelines.docker.yml"
