@@ -4,8 +4,6 @@ module "container_pipelines" {
   providers = {
     azurerm.bo  = azurerm
     azurerm.env = azurerm.env
-    acme.stg    = acme.stg
-    acme.prd    = acme
   }
 
   aws        = local.aws

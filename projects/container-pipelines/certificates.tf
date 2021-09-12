@@ -2,40 +2,12 @@ resource "tls_private_key" "private_key" {
   algorithm = "RSA"
 }
 
-resource "acme_registration" "reg" {
-  provider = acme.stg
-
-  account_key_pem = tls_private_key.private_key.private_key_pem
-  email_address   = "jamesrcounts@outlook.com"
-}
-
-resource "acme_certificate" "certificate" {
-  provider = acme.stg
-
-  for_each = {
-    dev = "dev.jamesrcounts.com"
-    prd = "prd.jamesrcounts.com"
-  }
-
-  account_key_pem           = acme_registration.reg.account_key_pem
-  common_name               = each.value
-  subject_alternative_names = [each.value]
-
-  dns_challenge {
-    provider = "route53"
-  }
-}
-
 resource "acme_registration" "reg_prd" {
-  provider = acme.prd
-
   account_key_pem = tls_private_key.private_key.private_key_pem
   email_address   = "jamesrcounts@outlook.com"
 }
 
 resource "acme_certificate" "certificate_prd" {
-  provider = acme.prd
-
   for_each = {
     dev = "dev.jamesrcounts.com"
     prd = "prd.jamesrcounts.com"
