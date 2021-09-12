@@ -9,7 +9,7 @@ terraform {
       version = "~> 0"
     }
     azurerm = {
-      configuration_aliases = [azurerm.bo, azurerm.env]
+      configuration_aliases = [azurerm, azurerm.bo, azurerm.env]
       source                = "hashicorp/azurerm"
       version               = "~> 2"
     }

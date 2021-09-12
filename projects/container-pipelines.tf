@@ -2,6 +2,7 @@ module "container_pipelines" {
   source = "./container-pipelines"
 
   providers = {
+    azurerm     = azurerm
     azurerm.bo  = azurerm
     azurerm.env = azurerm.env
   }
