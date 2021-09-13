@@ -34,7 +34,8 @@ resource "azurerm_role_assignment" "cmk_crypto_user" {
 
 resource "azurerm_storage_account_customer_managed_key" "state" {
   depends_on = [
-    azurerm_role_assignment.cmk_crypto_user
+    azurerm_key_vault_key.generated,
+    azurerm_role_assignment.cmk_crypto_user,
   ]
 
   storage_account_id = azurerm_storage_account.state.id
