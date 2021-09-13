@@ -10,7 +10,18 @@ module "azure_credentials" {
   }
 
   update_triggers = {
-    primary   = "2021-06-08T00:00:00Z"
-    secondary = "2021-06-08T00:00:00Z"
+    primary   = time_rotating.primary.rfc3339
+    secondary = time_rotating.secondary.rfc3339
   }
 }
+
+resource "time_rotating" "primary" {
+  rotation_hours = 120
+}
+
+resource "time_rotating" "secondary" {
+  rfc3339        = timeadd(time_static.now.rfc3339, "120h")
+  rotation_hours = 120
+}
+
+resource "time_static" "now" {}
