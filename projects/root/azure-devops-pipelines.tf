@@ -7,7 +7,7 @@ module "azure_devops_pipelines" {
   project           = local.project
   repository        = local.repository
   service_principal = module.azure_credentials.service_principal
-  terraform_version = "1.0.1"
+  terraform_version = "1.0.11"
 
   pipelines = {
     terraform-root = "projects/azure-pipelines.yml"

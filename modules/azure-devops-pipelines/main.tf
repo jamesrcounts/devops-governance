@@ -6,6 +6,7 @@ locals {
     "1.0.0"  = "8be33cc3be8089019d95eb8f546f35d41926e7c1e5deff15792e969dde573eb5"
     "1.0.1"  = "da94657593636c8d35a96e4041136435ff58bb0061245b7d0f82db4a7728cef3"
     "1.0.4"  = "5c0be4d52de72143e2cd78e417ee2dd582ce229d73784fd19444445fa6e1335e"
+    "1.0.11" = "eeb46091a42dc303c3a3c300640c7774ab25cbee5083dafa5fd83b54c8aca664"
   }
 
   pipelines = var.pipelines != null ? var.pipelines : { "infrastructure" = "azure-pipelines.yml" }
