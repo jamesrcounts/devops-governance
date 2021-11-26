@@ -13,7 +13,8 @@ module "azure_credentials" {
   ]
 
   owner_scope = {
-    subscription = data.azurerm_subscription.current.id
+    ops = data.azurerm_subscription.current.id
+    app = data.azurerm_subscription.apps.id
   }
 
   update_triggers = {
@@ -23,6 +24,10 @@ module "azure_credentials" {
 }
 
 data "azurerm_subscription" "current" {}
+
+data "azurerm_subscription" "apps" {
+  subscription_id = "77fc5cff-a120-47a1-83bc-5c64163f872d"
+}
 
 resource "time_rotating" "primary" {
   rotation_hours = 120
