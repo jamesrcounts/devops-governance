@@ -7,3 +7,10 @@ provider "azuredevops" {}
 provider "azurerm" {
   features {}
 }
+
+provider "azurerm" {
+  alias           = "apps"
+  subscription_id = local.arm_apps_subscription_id
+
+  features {}
+}
