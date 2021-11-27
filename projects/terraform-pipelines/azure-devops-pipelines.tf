@@ -9,10 +9,15 @@ module "azure_devops_pipelines" {
   service_principal = module.azure_credentials.service_principal
 
   azure_env = {
-    AZURE_ENV_RG = module.azure_env.resource_group.name
+    AZURE_ENV_RG              = module.azure_env.resource_group.name
+    AZURE_ENV_SUBSCRIPTION_ID = data.azurerm_client_config.env.subscription_id
   }
 
   pipelines = {
     infrastructure = "infrastructure/azure-pipelines.yml"
   }
+}
+
+data "azurerm_client_config" "env" {
+  provider = azurerm.env
 }
