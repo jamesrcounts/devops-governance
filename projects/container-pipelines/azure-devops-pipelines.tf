@@ -9,9 +9,10 @@ module "azure_devops_pipelines" {
   service_principal = module.azure_credentials.service_principal
 
   azure_env = {
-    AZURE_ENV_RG              = module.azure_env.resource_group.name
+    AZURE_ENV_INSTANCE_ID     = module.azure_env.instance_id
     AZURE_ENV_SUBSCRIPTION_ID = data.azurerm_client_config.env.subscription_id
-    instance_id               = module.azure_env.instance_id
+    AZURE_OPS_INSTANCE_ID     = module.azure_backend.resource_group.tags["instance_id"]
+    AZURE_OPS_SUBSCRIPTION_ID = data.azurerm_client_config.ops.subscription_id
   }
 
   config_keyvault = {
@@ -45,4 +46,7 @@ module "azure_devops_pipelines" {
 
 data "azurerm_client_config" "env" {
   provider = azurerm.env
+}
+
+data "azurerm_client_config" "ops" {
 }
