@@ -4,6 +4,7 @@ module "azure_credentials" {
   active_password = "primary"
   project         = var.project
 
+  // TODO: split permissions after getting it working with full owner
   owner_scope = {
     backend = module.azure_backend.resource_group.id
     env     = module.azure_env.resource_group.id
