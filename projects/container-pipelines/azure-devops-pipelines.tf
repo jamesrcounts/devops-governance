@@ -44,9 +44,3 @@ module "azure_devops_pipelines" {
   }
 }
 
-data "azurerm_client_config" "env" {
-  provider = azurerm.env
-}
-
-data "azurerm_client_config" "ops" {
-}
