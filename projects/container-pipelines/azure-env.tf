@@ -5,8 +5,7 @@ module "azure_env" {
     azurerm = azurerm.env
   }
 
-  config_key_vault_id = module.azure_backend.key_vault.id
-  location            = local.location
+  location = local.location
   required_tags = merge(
     local.required_tags,
     {
