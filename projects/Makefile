@@ -4,7 +4,7 @@ CONFIG := github.secrets.auto.tfvars azdo.secrets.auto.tfvars aws.secrets.auto.t
 
 backend_instance_id := grateful-aphid
 
-backend_config:
+azurerm.backend.tfvars:
 	az keyvault secret download \
 		--name azurerm-backend-tfvars \
 		--vault-name kv-$(backend_instance_id) \
@@ -33,7 +33,7 @@ terraform.auto.tfvars:
 fmt:
 	terraform fmt -recursive
 
-init:
+init: azurerm.backend.tfvars
 	terraform init --upgrade -backend-config azurerm.backend.tfvars
 	terraform -v
 	terraform providers
