@@ -9,6 +9,10 @@ module "azure_devops_pipelines" {
   service_principal = module.azure_credentials.service_principal
   terraform_version = "1.0.11"
 
+  azure_env = {
+    AZURE_ENV_SUBSCRIPTION_ID = var.arm_env_subscription_id
+  }
+
   pipelines = {
     terraform-root = "projects/azure-pipelines.yml"
   }
