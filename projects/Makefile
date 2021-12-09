@@ -2,7 +2,8 @@ default: all
 
 CONFIG := github.secrets.auto.tfvars azdo.secrets.auto.tfvars aws.secrets.auto.tfvars terraform.auto.tfvars
 
-backend_instance_id := grateful-aphid
+backend_instance_id     := unique-troll
+ARM_ENV_SUBSCRIPTION_ID := bbb80ca8-cf8a-4d13-8fa4-6027d7e5b71d
 
 azurerm.backend.tfvars:
 	az keyvault secret download \
@@ -28,7 +29,7 @@ aws.secrets.auto.tfvars:
 	@echo "aws_secret_access_key=\"${AWS_SECRET_ACCESS_KEY}\"" >> aws.secrets.auto.tfvars
 
 terraform.auto.tfvars:
-	@echo "generate_scripts=\"true\"" > terraform.auto.tfvars
+	@echo "arm_env_subscription_id=\"$(ARM_ENV_SUBSCRIPTION_ID)\"" > terraform.auto.tfvars
 
 fmt:
 	terraform fmt -recursive
@@ -55,5 +56,5 @@ all: init plan
 
 login:
 	az login --use-device-code
-	az account set --subscription "Jim Counts (Personal)"
+	az account set --subscription "Jim Counts (VS)"
 	az account show --output table

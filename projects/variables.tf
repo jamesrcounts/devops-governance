@@ -20,10 +20,9 @@ variable "aws_secret_access_key" {
   type        = string
 }
 
-variable "generate_scripts" {
-  default     = false
-  description = "(Optional) A flag to indicate whether to generate run-once scripts."
-  type        = bool
+variable "arm_env_subscription_id" {
+  description = "(Required) An Azure subscription ID for the runtime environment."
+  type        = string
 }
 
 variable "github_pat" {

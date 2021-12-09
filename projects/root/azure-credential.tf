@@ -1,10 +1,9 @@
 module "azure_credentials" {
   source = "github.com/jamesrcounts/devops-governance.git//modules/azure-credentials?ref=azure-credentials-0.0.5"
 
-  active_password  = "secondary"
-  generate_scripts = var.generate_scripts
-  key_vault        = module.azure_backend.key_vault
-  project          = local.project
+  active_password = "secondary"
+  key_vault       = module.azure_backend.key_vault
+  project         = local.project
 
   aad_roles = [
     "Application Administrator",
@@ -14,7 +13,7 @@ module "azure_credentials" {
 
   owner_scope = {
     ops = data.azurerm_subscription.current.id
-    app = data.azurerm_subscription.apps.id
+    env = data.azurerm_subscription.env.id
   }
 
   update_triggers = {
@@ -25,8 +24,8 @@ module "azure_credentials" {
 
 data "azurerm_subscription" "current" {}
 
-data "azurerm_subscription" "apps" {
-  subscription_id = "77fc5cff-a120-47a1-83bc-5c64163f872d"
+data "azurerm_subscription" "env" {
+  subscription_id = var.arm_env_subscription_id
 }
 
 resource "time_rotating" "primary" {
