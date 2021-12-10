@@ -6,4 +6,5 @@ module "root" {
   azuredevops_pat         = var.azuredevops_pat
   azuredevops_url         = var.azuredevops_url
   github_pat              = var.github_pat
+  tfe_token               = var.tfe_token
 }

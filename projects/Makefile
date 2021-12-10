@@ -1,6 +1,6 @@
 default: all
 
-CONFIG := github.secrets.auto.tfvars azdo.secrets.auto.tfvars aws.secrets.auto.tfvars terraform.auto.tfvars
+CONFIG := terraform.secrets.auto.tfvars github.secrets.auto.tfvars azdo.secrets.auto.tfvars aws.secrets.auto.tfvars terraform.auto.tfvars
 
 backend_instance_id     := unique-troll
 ARM_ENV_SUBSCRIPTION_ID := bbb80ca8-cf8a-4d13-8fa4-6027d7e5b71d
@@ -16,6 +16,9 @@ aad_script:
 		--name add-azuread-roles-sh \
 		--vault-name kv-$(backend_instance_id) \
 		--file add-azuread-roles.sh
+
+terraform.secrets.auto.tfvars:
+	@echo "tfe_token=\"${TFE_TOKEN}\"" > terraform.secrets.auto.tfvars
 
 github.secrets.auto.tfvars:
 	@echo "github_pat=\"${AZDO_GITHUB_SERVICE_CONNECTION_PAT}\"" > github.secrets.auto.tfvars
