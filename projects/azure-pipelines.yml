@@ -27,6 +27,7 @@ variables:
   - group: azuredevops
   - group: azure-env
   - group: github
+  - group: terraform-cloud
   - group: terraform-backend
   - group: terraform-version
   - name: tf_in_automation
@@ -60,6 +61,7 @@ stages:
               GITHUB_PAT: $(GITHUB_PAT)
               AWS_KEY_ID: $(AWS_ACCESS_KEY_ID)
               AWS_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              TFE_TOKEN: $(TFE_TOKEN)
             inputs:
               targetType: 'inline'
               workingDirectory: $(project_folder)
@@ -78,6 +80,7 @@ stages:
                   -var="aws_access_key_id=${AWS_KEY_ID}" \
                   -var="aws_secret_access_key=${AWS_ACCESS_KEY}" \
                   -var="arm_env_subscription_id=${AZURE_ENV_SUBSCRIPTION_ID}" \
+                  -var="tfe_token=${TFE_TOKEN}" \
                   -out ${BUILD_BUILDNUMBER}.tfplan
 
           - template: '../pipeline-templates/publish-plan.yml'

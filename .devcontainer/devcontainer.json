@@ -31,6 +31,7 @@
 		"AZDO_GITHUB_SERVICE_CONNECTION_PAT":"${localEnv:AZDO_GITHUB_SERVICE_CONNECTION_PAT}",
 		"AWS_ACCESS_KEY_ID":"${localEnv:AWS_ACCESS_KEY_ID}",
 		"AWS_SECRET_ACCESS_KEY":"${localEnv:AWS_SECRET_ACCESS_KEY}",
+		"TFE_TOKEN": "${localEnv:TFE_TOKEN}",
 	},
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 

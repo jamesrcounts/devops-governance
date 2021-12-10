@@ -34,3 +34,9 @@ variable "github_pat" {
   sensitive   = true
   type        = string
 }
+
+variable "tfe_token" {
+  description = "(Required) A Terraform cloud API token. Used to configure an Azure DevOps variable group."
+  sensitive   = true
+  type        = string
+}
