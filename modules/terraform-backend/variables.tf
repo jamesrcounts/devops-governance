@@ -4,6 +4,6 @@ variable "project" {
 }
 
 variable "admin_email" {
-    description = "(Required) The org administrator email."
-    type = string
+  description = "(Required) The org administrator email."
+  type        = string
 }

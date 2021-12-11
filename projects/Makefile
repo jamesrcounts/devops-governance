@@ -36,6 +36,7 @@ terraform.auto.tfvars:
 
 fmt:
 	terraform fmt -recursive
+	cd ../modules && terraform fmt -recursive
 
 init: azurerm.backend.tfvars
 	terraform init --upgrade -backend-config azurerm.backend.tfvars
