@@ -107,10 +107,11 @@ stages:
                     ARM_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
                     ARM_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
                     ARM_TENANT_ID: $(AZURE_TENANT_ID)
-                    AZDO_PERSONAL_ACCESS_TOKEN: $(AZUREDEVOPS_PAT)
-                    AZDO_ORG_SERVICE_URL: $(AZUREDEVOPS_URL)
                     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
                     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+                    AZDO_ORG_SERVICE_URL: $(AZUREDEVOPS_URL)
+                    AZDO_PERSONAL_ACCESS_TOKEN: $(AZUREDEVOPS_PAT)
+                    TFE_TOKEN: $(TFE_TOKEN)
                   inputs:
                     targetType: 'inline'
                     workingDirectory: $(project_folder)
