@@ -9,6 +9,11 @@ resource "tfe_workspace" "ws" {
   organization   = tfe_organization.org.name
 }
 
-resource "tfe_organization_token" "token" {
+data "tfe_team" "owners" {
+  name         = "owners"
   organization = tfe_organization.org.name
+}
+
+resource "tfe_team_token" "token" {
+  team_id = data.tfe_team.owners.id
 }
