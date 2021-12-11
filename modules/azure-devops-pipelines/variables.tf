@@ -14,15 +14,15 @@ variable "azure_env" {
   type        = map(string)
 }
 
-variable "backend" {
-  description = "(Required) The AzureRM backend configuration for this Terraform pipeline."
-  type = object({
-    blob_name            = string
-    container_name       = string
-    storage_account_name = string
-    resource_group_name  = string
-  })
-}
+// variable "backend" {
+//   description = "(Required) The AzureRM backend configuration for this Terraform pipeline."
+//   type = object({
+//     blob_name            = string
+//     container_name       = string
+//     storage_account_name = string
+//     resource_group_name  = string
+//   })
+// }
 
 variable "branch_name" {
   default     = "main"
