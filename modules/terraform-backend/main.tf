@@ -5,7 +5,7 @@ resource "tfe_organization" "org" {
 
 resource "tfe_workspace" "ws" {
   execution_mode = "local"
-  name           = "default"
+  name           = "prd"
   organization   = tfe_organization.org.name
 }
 
