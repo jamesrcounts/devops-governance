@@ -10,7 +10,7 @@ provider "azurerm" {
 
 provider "azurerm" {
   alias           = "env"
-  subscription_id = local.arm_apps_subscription_id
+  subscription_id = var.arm_env_subscription_id
 
   features {}
 }
