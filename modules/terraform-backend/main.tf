@@ -6,6 +6,7 @@ resource "tfe_organization" "org" {
 resource "tfe_workspace" "ws" {
   execution_mode = "local"
   name           = "prd"
+  tag_names      = ["prd"]
   organization   = tfe_organization.org.name
 }
 
