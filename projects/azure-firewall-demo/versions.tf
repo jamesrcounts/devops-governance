@@ -2,6 +2,10 @@ terraform {
   required_version = ">= 1"
 
   required_providers {
+    acme = {
+      source  = "vancluever/acme"
+      version = "~> 2"
+    }
     azurerm = {
       source                = "hashicorp/azurerm"
       version               = "~> 2"
