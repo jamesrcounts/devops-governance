@@ -1,6 +1,4 @@
-locals {
-  host_name = "firewall.jamesrcounts.com"
-}
+
 
 resource "tls_private_key" "root_ca" {
   algorithm = "RSA"
