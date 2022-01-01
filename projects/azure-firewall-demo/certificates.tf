@@ -45,6 +45,16 @@ resource "azurerm_key_vault_certificate" "ca_certificate" {
   }
 }
 
+resource "azurerm_key_vault_certificate" "rootca_certificate" {
+  name         = "RootCA"
+  key_vault_id = module.azure_backend.key_vault.id
+
+  certificate {
+    contents = pkcs12_from_pem.root_pkcs12.result
+    password = ""
+  }
+}
+
 resource "azurerm_key_vault_secret" "ca" {
   for_each = acme_certificate.certificate
 

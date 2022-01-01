@@ -61,3 +61,9 @@ resource "pkcs12_from_pem" "inter_pkcs12" {
   cert_pem        = tls_locally_signed_cert.intermediate_ca.cert_pem
   private_key_pem = tls_private_key.intermediate_ca.private_key_pem
 }
+
+resource "pkcs12_from_pem" "root_pkcs12" {
+  password        = ""
+  cert_pem        = tls_self_signed_cert.root_ca.cert_pem
+  private_key_pem = tls_private_key.root_ca.private_key_pem
+}
