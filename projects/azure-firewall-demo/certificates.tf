@@ -1,3 +1,7 @@
+locals {
+  host_name = "firewall.jamesrcounts.com"
+}
+
 resource "azurerm_key_vault_certificate" "certificate" {
   for_each = acme_certificate.certificate
 
@@ -40,9 +44,15 @@ resource "azurerm_key_vault_certificate" "ca_certificate" {
   key_vault_id = module.azure_backend.key_vault.id
 
   certificate {
-    contents = pkcs12_from_pem.inter_pkcs12.result
+    contents = filebase64("${path.module}/templates/interCA.pfx")
     password = ""
   }
+}
+
+resource "azurerm_key_vault_secret" "rootca_certificate" {
+  name         = "RootCA"
+  key_vault_id = module.azure_backend.key_vault.id
+  value        = file("${path.module}/templates/rootCA.crt")
 }
 
 resource "azurerm_key_vault_secret" "ca" {

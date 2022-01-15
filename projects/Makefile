@@ -1,9 +1,14 @@
 default: all
 
+CERTS  := azure-firewall-demo/templates/interCA.pfx azure-firewall-demo/templates/rootCA.crt
 CONFIG := terraform.secrets.auto.tfvars github.secrets.auto.tfvars azdo.secrets.auto.tfvars aws.secrets.auto.tfvars terraform.auto.tfvars
 
 backend_instance_id     := unique-troll
 ARM_ENV_SUBSCRIPTION_ID := bbb80ca8-cf8a-4d13-8fa4-6027d7e5b71d
+
+$(CERTS):
+	cd ../scripts/firewall-ca && \
+		bash create-certs.sh ../../projects/azure-firewall-demo/templates
 
 azurerm.backend.tfvars:
 	az keyvault secret download \
@@ -49,7 +54,7 @@ clean:
 validate:
 	terraform validate
 
-plan: $(CONFIG) fmt validate
+plan: $(CONFIG) $(CERTS) fmt validate
 	terraform plan -out plan.tfplan
 	
 apply:
