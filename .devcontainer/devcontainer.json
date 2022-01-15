@@ -52,7 +52,8 @@
 		"ms-azuretools.vscode-docker",
 		"ms-vscode.azurecli",
 		"tyriar.sort-lines",
-		"mhutchie.git-graph"
+		"mhutchie.git-graph",
+		"geeksharp.openssl-configuration-file",
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

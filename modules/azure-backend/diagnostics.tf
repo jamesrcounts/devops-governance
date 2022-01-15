@@ -1,8 +1,9 @@
 locals {
   monitored_services = {
-    kv = azurerm_key_vault.backend.id
-    la = azurerm_log_analytics_workspace.diagnostics.id
-    sa = "${azurerm_storage_account.state.id}/blobServices/default/"
+    kv  = azurerm_key_vault.backend.id
+    kvc = azurerm_key_vault.config.id
+    la  = azurerm_log_analytics_workspace.diagnostics.id
+    sa  = "${azurerm_storage_account.state.id}/blobServices/default/"
   }
 }
 
