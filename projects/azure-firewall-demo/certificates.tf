@@ -52,7 +52,7 @@ resource "azurerm_key_vault_certificate" "ca_certificate" {
 resource "azurerm_key_vault_secret" "rootca_certificate" {
   name         = "RootCA"
   key_vault_id = module.azure_backend.key_vault.id
-  value        = filebase64("${path.module}/templates/rootCA.crt")
+  value        = file("${path.module}/templates/rootCA.crt")
 }
 
 resource "azurerm_key_vault_secret" "ca" {
