@@ -1,0 +1,41 @@
+resource "azurerm_security_center_subscription_pricing" "ops" {
+  for_each = toset([
+    "AppServices",
+    "ContainerRegistry",
+    "KeyVaults",
+    "KubernetesService",
+    "SqlServers",
+    "SqlServerVirtualMachines",
+    "StorageAccounts",
+    "VirtualMachines",
+    "Arm",
+    "OpenSourceRelationalDatabases",
+    "Containers",
+    "Dns",
+  ])
+
+  tier          = "Standard"
+  resource_type = each.value
+}
+
+resource "azurerm_security_center_auto_provisioning" "ops" {
+  auto_provision = "Off"
+}
+
+resource "azurerm_security_center_setting" "ops" {
+  for_each = toset([
+    "MCAS",
+    "WDATP"
+  ])
+
+  setting_name = each.value
+  enabled      = true
+}
+
+resource "azurerm_security_center_contact" "ops" {
+  email = "jamesrcounts@outlook.com"
+  phone = "+1-555-555-5555"
+
+  alert_notifications = true
+  alerts_to_admins    = true
+}
