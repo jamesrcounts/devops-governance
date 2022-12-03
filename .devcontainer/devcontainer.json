@@ -4,8 +4,8 @@
 	"name": "Azure Terraform (Community)",
 	"build": {
 		"dockerfile": "Dockerfile",
-		"args": { 
-			"TERRAFORM_VERSION": "1.0.11",
+		"args": {
+			"TERRAFORM_VERSION": "1.3.6",
 			"TFLINT_VERSION": "0.28.0",
 			"TERRAGRUNT_VERSION": "0.29.1",
 			"INSTALL_AZURE_CLI": "true",
@@ -23,18 +23,19 @@
 		"TF_BACKEND_KEY" : "${containerEnv:TF_BACKEND_KEY}",
 		"TF_BACKEND_LOCATION": "${containerEnv:TF_BACKEND_LOCATION}",
 		"TF_BACKEND_RESOURCE_GROUP" : "${containerEnv:TF_BACKEND_RESOURCE_GROUP}",
-		"TF_BACKEND_STORAGE_ACCOUNT" : "${containerEnv:TF_BACKEND_STORAGE_ACCOUNT}",             
+		"TF_BACKEND_STORAGE_ACCOUNT" : "${containerEnv:TF_BACKEND_STORAGE_ACCOUNT}",
 
 		// Use 'TF_VAR' prefix to set input variables for terraform templates
 		// "TF_VAR_rg_name":  "${containerEnv:TF_VAR_RG_NAME}"
 		"AZDO_PERSONAL_ACCESS_TOKEN":"${localEnv:AZDO_PERSONAL_ACCESS_TOKEN}",
 		"AZDO_GITHUB_SERVICE_CONNECTION_PAT":"${localEnv:AZDO_GITHUB_SERVICE_CONNECTION_PAT}",
+		"GH_TOKEN":"${localEnv:AZDO_GITHUB_SERVICE_CONNECTION_PAT}",
 		"AWS_ACCESS_KEY_ID":"${localEnv:AWS_ACCESS_KEY_ID}",
 		"AWS_SECRET_ACCESS_KEY":"${localEnv:AWS_SECRET_ACCESS_KEY}",
 		"TFE_TOKEN": "${localEnv:TFE_TOKEN}",
 	},
 	// Set *default* container specific settings.json values on container create.
-	"settings": { 
+	"settings": {
 		"terminal.integrated.defaultProfile.linux": "zsh",
 		"terraform.languageServer": {
 			"enabled": true,
