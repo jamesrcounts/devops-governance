@@ -1,4 +1,5 @@
 resource "tfe_workspace" "ws" {
+  force_delete      = true
   name              = local.name
   organization      = var.organization_name
   tag_names         = ["terraform", "pipelines"]
