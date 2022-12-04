@@ -17,6 +17,7 @@ data "azurerm_subscription" "current" {}
 module "administrator" {
   source = "./modules/azure-credential"
 
+  roles        = ["Global Administrator"]
   scope        = data.azurerm_subscription.current.id
   subscription = data.azurerm_subscription.current
   workspace    = "root"
@@ -102,8 +103,11 @@ resource "tfe_workspace_variable_set" "workspace_variables" {
 # Project Workspaces
 locals {
   workspace = {
-    terraform-gs = {
-      enabled = false
+    terraform-pipelines-demo = {
+      enabled = true
+    }
+    container-pipelines-demo = {
+      enabled = true
     }
   }
 }
@@ -115,5 +119,6 @@ module "workspace" {
 
   oauth_token_id    = tfe_oauth_client.github.oauth_token_id
   organization_name = tfe_organization.org.name
+  roles             = lookup(each.value, "roles", [])
   subscription      = data.azurerm_subscription.current
 }

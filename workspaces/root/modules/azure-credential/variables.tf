@@ -1,3 +1,9 @@
+variable "roles" {
+  default     = []
+  description = "AzureAD Roles to Assing to the credentials."
+  type        = list(string)
+}
+
 variable "scope" {
   description = "The ownership scope for these credentials."
   type        = string
@@ -17,3 +23,4 @@ variable "workspace" {
   description = "The workspace that will use the credential."
   type        = string
 }
+

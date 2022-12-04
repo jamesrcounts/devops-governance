@@ -12,6 +12,7 @@ resource "azurerm_resource_group" "rg" {
 module "rg_credentials" {
   source = "../azure-credential"
 
+  roles        = var.roles
   scope        = azurerm_resource_group.rg.id
   subscription = var.subscription
   workspace    = local.name

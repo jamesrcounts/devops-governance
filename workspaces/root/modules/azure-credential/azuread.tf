@@ -1,7 +1,3 @@
-resource "azuread_directory_role" "administrator" {
-  display_name = "Global Administrator"
-}
-
 resource "azuread_application" "app" {
   display_name                   = "${upper(var.workspace)} (Managed by Terraform)"
   fallback_public_client_enabled = false
@@ -26,7 +22,14 @@ resource "azuread_service_principal" "sp" {
   application_id               = azuread_application.app.application_id
 }
 
+resource "azuread_directory_role" "role" {
+  for_each     = toset(var.roles)
+  display_name = each.key
+}
+
 resource "azuread_directory_role_assignment" "assignments" {
-  role_id             = azuread_directory_role.administrator.template_id
+  for_each = azuread_directory_role.role
+
+  role_id             = each.value.template_id
   principal_object_id = azuread_service_principal.sp.object_id
 }
