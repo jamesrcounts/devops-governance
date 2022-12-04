@@ -20,7 +20,7 @@ resource "tfe_variable_set" "credentials" {
   organization = tfe_organization.org.name
 }
 
-resource "tfe_variable" "github_pat" {
+resource "tfe_variable" "credentials" {
   for_each = {
     github = {
       name        = "github_pat"
@@ -37,6 +37,7 @@ resource "tfe_variable" "github_pat" {
   category        = "terraform"
   description     = each.value.description
   key             = each.value.name
+  sensitive       = true
   value           = each.value.value
   variable_set_id = tfe_variable_set.credentials[each.key].id
 }
