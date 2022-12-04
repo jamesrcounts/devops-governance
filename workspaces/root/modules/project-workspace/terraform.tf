@@ -44,12 +44,14 @@ module "variable" {
 resource "tfe_workspace" "ws" {
   depends_on = [module.variable]
 
+  for_each = toset(var.workspace_directories)
+
   force_delete      = true
   name              = local.name
   organization      = var.organization_name
   tag_names         = ["terraform", "pipelines"]
   terraform_version = "~> 1.3.6"
-  working_directory = "/${local.repository_working_directory}"
+  working_directory = "/${each.value}"
 
   vcs_repo {
     identifier     = github_repository.repository.full_name
@@ -57,9 +59,11 @@ resource "tfe_workspace" "ws" {
   }
 }
 
-resource "tfe_workspace_variable_set" "workspace_variables" {
-  for_each = module.variable
+module "workspace_variables" {
+  source   = "../workspace-variables"
+  for_each = tfe_workspace.ws
 
-  variable_set_id = each.value.id
-  workspace_id    = tfe_workspace.ws.id
+  variables    = module.variable
+  workspace_id = each.value.id
 }
+

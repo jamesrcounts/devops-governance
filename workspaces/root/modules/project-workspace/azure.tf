@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "rg" {
 
   tags = {
     instance_id = local.namespace
-    repository  = "${github_repository.repository.full_name}/${local.repository_working_directory}"
+    repository  = github_repository.repository.full_name
     workspace   = local.name
   }
 }

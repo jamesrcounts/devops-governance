@@ -25,9 +25,15 @@ variable "subscription" {
 }
 
 variable "template_repository" {
-  description = "The repository to copie seed code from."
+  description = "The repository to copy seed code from."
   type = object({
     owner      = string
     repository = string
   })
+}
+
+variable "workspace_directories" {
+  default     = []
+  description = "The terraform directories that include deployable terraform modules."
+  type        = list(string)
 }

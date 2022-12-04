@@ -16,9 +16,8 @@
  */
 
 locals {
-  name                         = "tf-gs-${local.namespace}"
-  namespace                    = random_pet.instance_id.id
-  repository_working_directory = "infrastructure"
+  name      = "tf-gs-${local.namespace}"
+  namespace = random_pet.instance_id.id
 }
 
 data "azurerm_subscription" "current" {}
