@@ -111,7 +111,7 @@ locals {
       }
     }
     container-pipelines-demo = {
-      enabled = false
+      enabled = true
       template_repository = {
         owner      = "jamesrcounts"
         repository = "phippyandfriends"
