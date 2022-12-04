@@ -25,7 +25,7 @@ module "variable" {
       }
     }
     azure_env = {
-      description = "Azure Environment Configuration for ${local.name}"
+      description = "Azure Environment Configuration for ${local.namespace}"
       variables = {
         resource_group_name = {
           description = "The resource group this workspace will manage."
@@ -36,7 +36,7 @@ module "variable" {
   }
 
   description       = each.value.description
-  name              = "${replace(each.key, "_", "-")}-${local.name}"
+  name              = "${replace(each.key, "_", "-")}-${local.namespace}"
   organization_name = var.organization_name
   variables         = each.value.variables
 }
@@ -44,10 +44,10 @@ module "variable" {
 resource "tfe_workspace" "ws" {
   depends_on = [module.variable]
 
-  for_each = toset(var.workspace_directories)
+  for_each = var.workspace_directories
 
   force_delete      = true
-  name              = local.name
+  name              = "${each.key}-${local.namespace}"
   organization      = var.organization_name
   tag_names         = ["terraform", "pipelines"]
   terraform_version = "~> 1.3.6"
@@ -66,4 +66,3 @@ module "workspace_variables" {
   variables    = module.variable
   workspace_id = each.value.id
 }
-

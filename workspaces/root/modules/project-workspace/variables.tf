@@ -33,7 +33,7 @@ variable "template_repository" {
 }
 
 variable "workspace_directories" {
-  default     = []
+  default     = {}
   description = "The terraform directories that include deployable terraform modules."
-  type        = list(string)
+  type        = map(string)
 }

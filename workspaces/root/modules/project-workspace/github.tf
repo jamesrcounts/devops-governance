@@ -5,7 +5,7 @@ resource "github_repository" "repository" {
   has_issues             = false
   has_projects           = false
   has_wiki               = false
-  name                   = local.name
+  name                   = "tf-{local.namespace}"
   visibility             = "public"
 
   template {

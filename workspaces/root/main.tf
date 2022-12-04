@@ -104,8 +104,12 @@ resource "tfe_workspace_variable_set" "workspace_variables" {
 locals {
   workspace = {
     terraform-pipelines-demo = {
-      enabled               = true
-      workspace_directories = ["infrastructure"]
+      enabled = true
+
+      workspace_directories = {
+        iac = "infrastructure"
+      }
+
       template_repository = {
         owner      = "jamesrcounts"
         repository = "terraform-getting-started-azure"
@@ -114,11 +118,11 @@ locals {
     container-pipelines-demo = {
       enabled = true
 
-      workspace_directories = [
-        "infrastructure/stages/base",
-        "infrastructure/stages/kubernetes-dev",
-        "infrastructure/stages/kubernetes-prd",
-      ]
+      workspace_directories = {
+        base = "infrastructure/stages/base",
+        dev  = "infrastructure/stages/kubernetes-dev",
+        prd  = "infrastructure/stages/kubernetes-prd",
+      }
 
       template_repository = {
         owner      = "jamesrcounts"
