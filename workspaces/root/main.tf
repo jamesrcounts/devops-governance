@@ -111,10 +111,11 @@ locals {
       }
     }
     container-pipelines-demo = {
-      enabled = true
+      enabled = false
       template_repository = {
         owner      = "jamesrcounts"
         repository = "phippyandfriends"
+        roles      = ["Directory Readers", "Groups Administrator"]
       }
     }
   }
