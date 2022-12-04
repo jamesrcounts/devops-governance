@@ -12,8 +12,14 @@ resource "tfe_oauth_client" "github" {
   service_provider = "github"
 }
 
+data "azurerm_subscription" "current" {}
+
 module "administrator" {
   source = "./modules/azure-credential"
+
+  scope        = data.azurerm_subscription.current.id
+  subscription = data.azurerm_subscription.current
+  workspace    = tfe_workspace.root.name
 }
 
 module "variable" {
@@ -99,4 +105,5 @@ module "terraform_pipelines" {
 
   oauth_token_id    = tfe_oauth_client.github.oauth_token_id
   organization_name = tfe_organization.org.name
+  subscription      = data.azurerm_subscription.current
 }

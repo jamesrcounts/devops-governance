@@ -39,6 +39,14 @@ resource "azurerm_resource_group" "rg" {
   }
 }
 
+module "rg_credentials" {
+  source = "../azure-credential"
+
+  scope        = azurerm_resource_group.rg.id
+  subscription = var.subscription
+  workspace    = local.name
+}
+
 # Workspace (Backend and Pipelines) in TFC.
 resource "tfe_workspace" "ws" {
   name              = local.name
@@ -57,6 +65,28 @@ module "variable" {
   source = "../variables"
 
   for_each = {
+    azure = {
+      description = "Azure service principal credentials."
+      variables = {
+        client_id = {
+          description = "The AzureAD Appication Client ID"
+          value       = module.rg_credentials.client_id
+        }
+        client_secret = {
+          description = "The AzureAD Application Password"
+          sensitive   = true
+          value       = module.rg_credentials.client_secret
+        }
+        subscription_id = {
+          description = "The Azure subscription ID"
+          value       = module.rg_credentials.subscription_id
+        }
+        tenant_id = {
+          description = "The Azure AD tenant ID"
+          value       = module.rg_credentials.tenant_id
+        }
+      }
+    }
     azure_env = {
       description = "Azure Environment Configuration for ${local.name}"
       variables = {

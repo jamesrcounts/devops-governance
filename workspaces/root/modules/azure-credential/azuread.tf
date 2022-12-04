@@ -3,7 +3,7 @@ resource "azuread_directory_role" "administrator" {
 }
 
 resource "azuread_application" "app" {
-  display_name                   = "Terraform Root (Managed by Terraform)"
+  display_name                   = "${upper(var.workspace)} (Managed by Terraform)"
   fallback_public_client_enabled = false
   prevent_duplicate_names        = true
   sign_in_audience               = "AzureADMyOrg"
