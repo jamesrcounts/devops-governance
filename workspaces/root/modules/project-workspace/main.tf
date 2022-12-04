@@ -1,18 +1,5 @@
-# resource "tfe_workspace" "ws" {
-#   name              = "root"
-#   organization      = tfe_organization.org.name
-#   tag_names         = ["workspaces", "root"]
-#   terraform_version = "~> 1.3.6"
-#   working_directory = "workspaces/root"
-#   # execution_mode    = "local"
-
-#   vcs_repo {
-#     identifier     = "jamesrcounts/devops-governance"
-#     oauth_token_id = tfe_oauth_client.github.oauth_token_id
-#   }
-# }
-
 locals {
+  name      = "tf-gs-${local.namespace}"
   namespace = random_pet.instance_id.id
 }
 
@@ -25,12 +12,25 @@ resource "github_repository" "repository" {
   has_issues             = false
   has_projects           = false
   has_wiki               = false
-  name                   = "tf-gs-${local.namespace}"
+  name                   = local.name
   visibility             = "public"
 
   template {
     owner                = "jamesrcounts"
     repository           = "terraform-getting-started-azure"
     include_all_branches = true
+  }
+}
+
+resource "tfe_workspace" "ws" {
+  name              = local.name
+  organization      = var.organization_name
+  tag_names         = ["terraform", "pipelines"]
+  terraform_version = "~> 1.3.6"
+  working_directory = "/infrastructure"
+
+  vcs_repo {
+    identifier     = github_repository.repository.full_name
+    oauth_token_id = var.oauth_token_id
   }
 }

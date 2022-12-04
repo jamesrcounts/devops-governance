@@ -98,4 +98,6 @@ resource "tfe_workspace_variable_set" "github" {
 module "terraform_pipelines" {
   source = "./modules/project-workspace"
 
+  oauth_token_id    = tfe_oauth_client.github.oauth_token_id
+  organization_name = tfe_organization.org.name
 }

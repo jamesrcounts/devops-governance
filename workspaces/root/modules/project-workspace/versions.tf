@@ -14,10 +14,10 @@ terraform {
       source  = "hashicorp/random"
       version = "~> 3.4"
     }
-    # tfe = {
-    #   source  = "hashicorp/tfe"
-    #   version = "~> 0.39"
-    # }
+    tfe = {
+      source  = "hashicorp/tfe"
+      version = "~> 0.39"
+    }
     # time = {
     #   source  = "hashicorp/time"
     #   version = "~> 0.9"
