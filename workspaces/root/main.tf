@@ -12,59 +12,8 @@ resource "tfe_oauth_client" "github" {
   service_provider = "github"
 }
 
-resource "azuread_application" "app" {
-  display_name                   = "Terraform Root (Managed by Terraform)"
-  fallback_public_client_enabled = false
-  prevent_duplicate_names        = true
-  sign_in_audience               = "AzureADMyOrg"
-
-  web {
-    implicit_grant {
-      access_token_issuance_enabled = false
-    }
-  }
-}
-
-resource "time_static" "now" {}
-
-resource "azuread_application_password" "password" {
-  application_object_id = azuread_application.app.id
-  display_name          = "Managed by Terraform"
-  end_date              = timeadd(time_static.now.rfc3339, "240h")
-}
-
-data "azurerm_subscription" "current" {}
-
-resource "azuread_service_principal" "sp" {
-  app_role_assignment_required = false
-  application_id               = azuread_application.app.application_id
-}
-
-resource "azuread_directory_role" "administrator" {
-  display_name = "Global Administrator"
-}
-
-resource "azuread_directory_role_assignment" "assignments" {
-  role_id             = azuread_directory_role.administrator.object_id
-  principal_object_id = azuread_service_principal.sp.object_id
-}
-
-resource "azurerm_role_assignment" "owner" {
-  principal_id         = azuread_service_principal.sp.object_id
-  role_definition_name = "Owner"
-  scope                = data.azurerm_subscription.current.id
-}
-
-resource "azurerm_role_assignment" "keyvault_manager" {
-  principal_id         = azuread_service_principal.sp.object_id
-  role_definition_name = "Key Vault Administrator"
-  scope                = data.azurerm_subscription.current.id
-}
-
-resource "azurerm_role_assignment" "blob_owner" {
-  principal_id         = azuread_service_principal.sp.object_id
-  role_definition_name = "Storage Blob Data Owner"
-  scope                = data.azurerm_subscription.current.id
+module "administrator" {
+  source = "./modules/azure-credential"
 }
 
 module "variable" {
@@ -76,24 +25,20 @@ module "variable" {
       variables = {
         client_id = {
           description = "The AzureAD Appication Client ID"
-          value       = azuread_application.app.application_id
+          value       = module.administrator.client_id
         }
         client_secret = {
           description = "The AzureAD Application Password"
           sensitive   = true
-          value       = azuread_application_password.password.value
+          value       = module.administrator.client_secret
         }
         subscription_id = {
           description = "The Azure subscription ID"
-          value       = data.azurerm_subscription.current.subscription_id
-        }
-        subscription_name = {
-          description = "The Azure subscription name."
-          value       = data.azurerm_subscription.current.display_name
+          value       = module.administrator.subscription_id
         }
         tenant_id = {
           description = "The Azure AD tenant ID"
-          value       = data.azurerm_subscription.current.tenant_id
+          value       = module.administrator.tenant_id
         }
       }
     }
@@ -134,7 +79,7 @@ resource "tfe_workspace" "root" {
   tag_names         = ["workspaces", "root"]
   terraform_version = "~> 1.3.6"
   working_directory = "workspaces/root"
-  execution_mode    = "local"
+  # execution_mode    = "local"
 
   vcs_repo {
     identifier     = "jamesrcounts/devops-governance"
