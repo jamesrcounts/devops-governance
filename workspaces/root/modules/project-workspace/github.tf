@@ -9,8 +9,8 @@ resource "github_repository" "repository" {
   visibility             = "public"
 
   template {
-    owner                = "jamesrcounts"
-    repository           = "terraform-getting-started-azure"
+    owner                = var.template_repository.owner
+    repository           = var.template_repository.repository
     include_all_branches = true
   }
 }

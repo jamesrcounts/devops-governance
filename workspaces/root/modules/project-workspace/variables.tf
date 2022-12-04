@@ -23,3 +23,11 @@ variable "subscription" {
     tenant_id       = string
   })
 }
+
+variable "template_repository" {
+  description = "The repository to copie seed code from."
+  type = object({
+    owner      = string
+    repository = string
+  })
+}

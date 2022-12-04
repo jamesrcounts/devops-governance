@@ -105,9 +105,17 @@ locals {
   workspace = {
     terraform-pipelines-demo = {
       enabled = true
+      template_repository = {
+        owner      = "jamesrcounts"
+        repository = "terraform-getting-started-azure"
+      }
     }
     container-pipelines-demo = {
       enabled = true
+      template_repository = {
+        owner      = "jamesrcounts"
+        repository = "phippyandfriends"
+      }
     }
   }
 }
@@ -117,8 +125,9 @@ module "workspace" {
 
   for_each = { for k, v in local.workspace : k => v if v.enabled }
 
-  oauth_token_id    = tfe_oauth_client.github.oauth_token_id
-  organization_name = tfe_organization.org.name
-  roles             = lookup(each.value, "roles", [])
-  subscription      = data.azurerm_subscription.current
+  oauth_token_id      = tfe_oauth_client.github.oauth_token_id
+  organization_name   = tfe_organization.org.name
+  roles               = lookup(each.value, "roles", [])
+  subscription        = data.azurerm_subscription.current
+  template_repository = each.value.template_repository
 }
