@@ -19,7 +19,7 @@ locals {
 resource "random_pet" "instance_id" {}
 
 resource "github_repository" "repository" {
-  archive_on_destroy     = true
+  archive_on_destroy     = false
   delete_branch_on_merge = true
   has_downloads          = false
   has_issues             = false
