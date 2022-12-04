@@ -13,6 +13,11 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
 }
 
+provider "github" {
+  owner = "olive-mercury"
+  token = var.github_pat
+}
+
 provider "tfe" {
   token = var.tfe_token
 }

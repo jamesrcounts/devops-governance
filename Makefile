@@ -12,8 +12,11 @@ fmt:
 init:
 	cd $(module) && terraform init
 
-plan: fmt $(SECRETS)
+validate:
+	cd $(module) && terraform validate
+
+plan: validate fmt $(SECRETS)
 	cd $(module) && terraform plan
 
-apply: fmt $(SECRETS)
+apply: validate fmt $(SECRETS)
 	cd $(module) && terraform apply

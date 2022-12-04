@@ -70,7 +70,7 @@ module "variable" {
   variables         = each.value.variables
 }
 
-## Workspace
+## Root Workspace
 
 resource "tfe_workspace" "root" {
   description       = "Use the root worksapce to create additional workspaces."
@@ -92,4 +92,10 @@ resource "tfe_workspace_variable_set" "github" {
 
   variable_set_id = each.value.id
   workspace_id    = tfe_workspace.root.id
+}
+
+# Project Workspaces
+module "terraform_pipelines" {
+  source = "./modules/project-workspace"
+
 }
