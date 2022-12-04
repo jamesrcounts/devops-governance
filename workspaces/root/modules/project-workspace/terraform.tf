@@ -1,17 +1,3 @@
-resource "tfe_workspace" "ws" {
-  force_delete      = true
-  name              = local.name
-  organization      = var.organization_name
-  tag_names         = ["terraform", "pipelines"]
-  terraform_version = "~> 1.3.6"
-  working_directory = "/${local.repository_working_directory}"
-
-  vcs_repo {
-    identifier     = github_repository.repository.full_name
-    oauth_token_id = var.oauth_token_id
-  }
-}
-
 module "variable" {
   source = "../variables"
 
@@ -53,6 +39,22 @@ module "variable" {
   name              = "${replace(each.key, "_", "-")}-${local.name}"
   organization_name = var.organization_name
   variables         = each.value.variables
+}
+
+resource "tfe_workspace" "ws" {
+  depends_on = [module.variable]
+
+  force_delete      = true
+  name              = local.name
+  organization      = var.organization_name
+  tag_names         = ["terraform", "pipelines"]
+  terraform_version = "~> 1.3.6"
+  working_directory = "/${local.repository_working_directory}"
+
+  vcs_repo {
+    identifier     = github_repository.repository.full_name
+    oauth_token_id = var.oauth_token_id
+  }
 }
 
 resource "tfe_workspace_variable_set" "workspace_variables" {

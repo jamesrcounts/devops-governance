@@ -103,7 +103,7 @@ resource "tfe_workspace_variable_set" "workspace_variables" {
 locals {
   workspace = {
     terraform-gs = {
-      enabled = true
+      enabled = false
     }
   }
 }
