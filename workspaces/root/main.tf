@@ -100,8 +100,18 @@ resource "tfe_workspace_variable_set" "workspace_variables" {
 }
 
 # Project Workspaces
-module "terraform_pipelines" {
+locals {
+  workspace = {
+    terraform-gs = {
+      enabled = true
+    }
+  }
+}
+
+module "workspace" {
   source = "./modules/project-workspace"
+
+  for_each = { for k, v in local.workspace : k => v if v.enabled }
 
   oauth_token_id    = tfe_oauth_client.github.oauth_token_id
   organization_name = tfe_organization.org.name
