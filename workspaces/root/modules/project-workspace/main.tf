@@ -28,18 +28,6 @@ resource "github_repository" "repository" {
   name                   = "tf-gs-${local.namespace}"
   visibility             = "public"
 
-  security_and_analysis {
-    advanced_security {
-      status = "enabled"
-    }
-    secret_scanning {
-      status = "enabled"
-    }
-    secret_scanning_push_protection {
-      status = "enabled"
-    }
-  }
-
   template {
     owner                = "jamesrcounts"
     repository           = "terraform-getting-started-azure"
