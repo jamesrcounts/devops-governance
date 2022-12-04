@@ -27,6 +27,6 @@ resource "azuread_service_principal" "sp" {
 }
 
 resource "azuread_directory_role_assignment" "assignments" {
-  role_id             = azuread_directory_role.administrator.object_id
+  role_id             = azuread_directory_role.administrator.template_id
   principal_object_id = azuread_service_principal.sp.object_id
 }
