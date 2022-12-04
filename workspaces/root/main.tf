@@ -95,7 +95,7 @@ resource "tfe_workspace_variable_set" "github" {
 }
 
 # Project Workspaces
-module "terraform_pipelines" {
-  source = "./modules/project-workspace"
+# module "terraform_pipelines" {
+#   source = "./modules/project-workspace"
 
-}
+# }
