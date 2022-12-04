@@ -79,7 +79,6 @@ resource "tfe_workspace" "root" {
   tag_names         = ["workspaces", "root"]
   terraform_version = "~> 1.3.6"
   working_directory = "workspaces/root"
-  # execution_mode    = "local"
 
   vcs_repo {
     identifier     = "jamesrcounts/devops-governance"
@@ -87,7 +86,7 @@ resource "tfe_workspace" "root" {
   }
 }
 
-resource "tfe_workspace_variable_set" "github" {
+resource "tfe_workspace_variable_set" "workspace_variables" {
   for_each = module.variable
 
   variable_set_id = each.value.id
