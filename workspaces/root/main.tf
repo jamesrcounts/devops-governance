@@ -12,34 +12,36 @@ resource "tfe_oauth_client" "github" {
   service_provider = "github"
 }
 
-resource "tfe_variable_set" "credentials" {
-  for_each = toset(["github", "tfe"])
+module "variable" {
+  source = "./modules/variables"
 
-  description  = "${each.key} credentials"
-  name         = each.key
-  organization = tfe_organization.org.name
-}
-
-resource "tfe_variable" "credentials" {
   for_each = {
     github = {
-      name        = "github_pat"
-      value       = var.github_pat
-      description = "GitHub Personal Access Token"
+      description = "GitHub credentials."
+      variables = {
+        github_pat = {
+          description = "GitHub Personal Access Token"
+          sensitive   = true
+          value       = var.github_pat
+        }
+      }
     }
     tfe = {
-      name        = "tfe_token"
-      value       = var.tfe_token
-      description = "Terraform Cloud API Token"
+      description = "Terraform Cloud credetials."
+      variables = {
+        tfe_token = {
+          sensitive   = true
+          description = "Terraform Cloud API Token"
+          value       = var.tfe_token
+        }
+      }
     }
   }
 
-  category        = "terraform"
-  description     = each.value.description
-  key             = each.value.name
-  sensitive       = true
-  value           = each.value.value
-  variable_set_id = tfe_variable_set.credentials[each.key].id
+  description       = each.value.description
+  name              = each.key
+  organization_name = tfe_organization.org.name
+  variables         = each.value.variables
 }
 
 
@@ -61,7 +63,7 @@ resource "tfe_workspace" "root" {
 }
 
 resource "tfe_workspace_variable_set" "github" {
-  for_each = tfe_variable_set.credentials
+  for_each = module.variable
 
   variable_set_id = each.value.id
   workspace_id    = tfe_workspace.root.id
