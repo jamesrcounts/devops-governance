@@ -34,8 +34,9 @@ resource "azurerm_resource_group" "rg" {
   location = "centralus"
 
   tags = {
-    repository = "${github_repository.repository.full_name}/${local.repository_working_directory}"
-    workspace  = local.name
+    instance_id = local.namespace
+    repository  = "${github_repository.repository.full_name}/${local.repository_working_directory}"
+    workspace   = local.name
   }
 }
 
@@ -93,10 +94,6 @@ module "variable" {
         resource_group_name = {
           description = "The resource group this workspace will manage."
           value       = azurerm_resource_group.rg.name
-        }
-        env_subscription_id = {
-          description = "The subscription containing the resource group this workspace will manage."
-          value       = data.azurerm_subscription.current.id
         }
       }
     }

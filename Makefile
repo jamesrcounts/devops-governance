@@ -2,6 +2,9 @@ default: plan
 
 SECRETS := ./$(module)/terraform.secrets.auto.tfvars
 
+# There is only one module here.
+module := workspaces/root
+
 $(SECRETS):
 	@echo "github_pat=\"${GH_TOKEN}\""  > $(SECRETS)
 	@echo "tfe_token=\"${TFE_TOKEN}\"" >> $(SECRETS)

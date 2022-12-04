@@ -29,11 +29,6 @@ variable "subscription_id" {
   type        = string
 }
 
-# variable "subscription_name" {
-#   description = "The Azure subscription name."
-#   type= string
-# }
-
 variable "tenant_id" {
   default     = null
   description = "The Azure AD tenant ID"

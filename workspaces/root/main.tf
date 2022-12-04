@@ -19,7 +19,7 @@ module "administrator" {
 
   scope        = data.azurerm_subscription.current.id
   subscription = data.azurerm_subscription.current
-  workspace    = tfe_workspace.root.name
+  workspace    = "root"
 }
 
 module "variable" {
