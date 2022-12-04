@@ -11,7 +11,7 @@ terraform {
   cloud {
     organization = "olive-mercury"
     workspaces {
-      name="root"
+      name = "root"
     }
   }
 }

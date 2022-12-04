@@ -12,19 +12,36 @@ resource "tfe_oauth_client" "github" {
   service_provider = "github"
 }
 
-resource "tfe_variable_set" "github" {
-  name         = "github"
-  description  = "GitHub Credentials."
+resource "tfe_variable_set" "credentials" {
+  for_each = toset(["github", "tfe"])
+
+  description  = "${each.key} credentials"
+  name         = each.key
   organization = tfe_organization.org.name
 }
 
 resource "tfe_variable" "github_pat" {
-  key             = "github_pat"
-  value           = var.github_pat
+  for_each = {
+    github = {
+      name        = "github_pat"
+      value       = var.github_pat
+      description = "GitHub Personal Access Token"
+    }
+    tfe = {
+      name        = "tfe_token"
+      value       = var.tfe_token
+      description = "Terraform Cloud API Token"
+    }
+  }
+
   category        = "terraform"
-  description     = "GitHub Personal Access Token"
-  variable_set_id = tfe_variable_set.github.id
+  description     = each.value.description
+  key             = each.value.name
+  value           = each.value.value
+  variable_set_id = tfe_variable_set.credentials[each.key].id
 }
+
+
 
 ## Workspace
 
@@ -43,6 +60,8 @@ resource "tfe_workspace" "root" {
 }
 
 resource "tfe_workspace_variable_set" "github" {
-  variable_set_id = tfe_variable_set.github.id
+  for_each = tfe_variable_set.credentials
+
+  variable_set_id = each.value.id
   workspace_id    = tfe_workspace.root.id
 }

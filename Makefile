@@ -1,9 +1,10 @@
 default: plan
 
-SECRETS := terraform.secrets.auto.tfvars
+SECRETS := ./$(module)/terraform.secrets.auto.tfvars
 
 $(SECRETS):
-	@cd $(module) && echo "github_pat=\"${GH_TOKEN}\"" > $(SECRETS)
+	@echo "github_pat=\"${GH_TOKEN}\""  > $(SECRETS)
+	@echo "tfe_token=\"${TFE_TOKEN}\"" >> $(SECRETS)
 
 fmt:
 	cd $(module) && terraform fmt -recursive
