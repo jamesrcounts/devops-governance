@@ -52,7 +52,8 @@ module "root" {
 module "terraform_pipelines_demo" {
   source = "./modules/terraform-pipelines-demo"
 
-  subscription = data.azurerm_subscription.current
+  organization_name = module.root.tfc_organization.name
+  subscription      = data.azurerm_subscription.current
 }
 
 # module "workspace" {

@@ -37,3 +37,25 @@ module "rg_credentials" {
   subscription = var.subscription
   workspace    = local.namespace
 }
+
+module "variable" {
+  source = "../variables"
+
+  for_each = {
+    azure = module.rg_credentials.service_principal
+    azure_env = {
+      description = "Azure Environment Configuration for ${local.namespace}"
+      variables = {
+        resource_group_name = {
+          description = "The resource group this workspace will manage."
+          value       = azurerm_resource_group.rg.name
+        }
+      }
+    }
+  }
+
+  description       = each.value.description
+  name              = "${replace(each.key, "_", "-")}-${local.namespace}"
+  organization_name = var.organization_name
+  variables         = each.value.variables
+}

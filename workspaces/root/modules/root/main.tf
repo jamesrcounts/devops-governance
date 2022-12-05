@@ -1,27 +1,6 @@
 locals {
   variable = {
-    azure = {
-      description = "Azure service principal credentials."
-      variables = {
-        client_id = {
-          description = "The AzureAD Appication Client ID"
-          value       = module.administrator.client_id
-        }
-        client_secret = {
-          description = "The AzureAD Application Password"
-          sensitive   = true
-          value       = module.administrator.client_secret
-        }
-        subscription_id = {
-          description = "The Azure subscription ID"
-          value       = module.administrator.subscription_id
-        }
-        tenant_id = {
-          description = "The Azure AD tenant ID"
-          value       = module.administrator.tenant_id
-        }
-      }
-    }
+    azure = module.administrator.service_principal
     github = {
       description = "GitHub credentials."
       variables = {
@@ -33,7 +12,7 @@ locals {
       }
     }
     tfe = {
-      description = "Terraform Cloud credetials."
+      description = "Terraform Cloud credentials."
       variables = {
         tfe_token = {
           sensitive   = true
