@@ -19,3 +19,21 @@ resource "github_repository" "repository" {
     repository = "terraform-getting-started-azure"
   }
 }
+
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-${local.namespace}"
+  location = "centralus"
+
+  tags = {
+    instance_id = local.namespace
+    repository  = "${github_repository.repository.full_name}/infrastructure"
+  }
+}
+
+module "rg_credentials" {
+  source = "../azure-credential"
+
+  scope        = azurerm_resource_group.rg.id
+  subscription = var.subscription
+  workspace    = local.namespace
+}

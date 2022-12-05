@@ -51,6 +51,8 @@ module "root" {
 # Project Repositories
 module "terraform_pipelines_demo" {
   source = "./modules/terraform-pipelines-demo"
+
+  subscription = data.azurerm_subscription.current
 }
 
 # module "workspace" {
