@@ -76,3 +76,10 @@ resource "tfe_workspace" "ws" {
     oauth_token_id = var.oauth_token_id
   }
 }
+
+resource "tfe_workspace_variable_set" "workspace_variables" {
+  for_each = module.variable
+
+  variable_set_id = each.value.id
+  workspace_id    = tfe_workspace.ws.id
+}
