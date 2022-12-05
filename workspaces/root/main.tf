@@ -11,6 +11,30 @@ locals {
       repository = "phippyandfriends"
     }
   }
+  # environments
+  workspace = {
+    terraform-pipelines = {
+      enabled             = true
+      repository          = "terraform-pipelines"
+      workspace_directory = "infrastructure"
+    }
+    container-pipelines-base = {
+      enabled             = false
+      roles               = ["Directory Readers", "Groups Administrator"]
+      repository          = "container-pipelines"
+      workspace_directory = "infrastructure/stages/base"
+    }
+    container-pipelines-dev = {
+      enabled             = false
+      repository          = "container-pipelines"
+      workspace_directory = "infrastructure/stages/kubernetes-dev"
+    }
+    container-pipelines-prd = {
+      enabled             = false
+      repository          = "container-pipelines"
+      workspace_directory = "infrastructure/stages/kubernetes-prd"
+    }
+  }
 }
 
 data "azurerm_subscription" "current" {}
@@ -25,54 +49,9 @@ module "root" {
 }
 
 # Project Repositories
-resource "github_repository" "repository" {
-  for_each = { for k, v in local.repository : k => v if v.enabled }
-
-  archive_on_destroy     = true
-  delete_branch_on_merge = true
-  has_downloads          = false
-  has_issues             = false
-  has_projects           = false
-  has_wiki               = false
-  name                   = each.key
-  visibility             = "public"
-
-  template {
-    owner      = each.value.owner
-    repository = each.value.repository
-  }
+module "terraform_pipelines_demo" {
+  source = "./modules/terraform-pipelines-demo"
 }
-
-
-# locals {
-#   workspace = {
-#     terraform-pipelines-demo = {
-#       enabled = false
-
-#       workspace_directories = {
-#         iac = "infrastructure"
-#       }
-
-#       template_repository = {
-
-#       }
-#     }
-#     container-pipelines-demo = {
-#       enabled = false
-
-#       workspace_directories = {
-#         base = "infrastructure/stages/base",
-#         dev  = "infrastructure/stages/kubernetes-dev",
-#         prd  = "infrastructure/stages/kubernetes-prd",
-#       }
-
-#       template_repository = {
-
-#         roles      = ["Directory Readers", "Groups Administrator"]
-#       }
-#     }
-#   }
-# }
 
 # module "workspace" {
 #   source = "./modules/project-workspace"
@@ -83,6 +62,6 @@ resource "github_repository" "repository" {
 #   organization_name     = module.root.tfc_organization.name
 #   roles                 = lookup(each.value, "roles", [])
 #   subscription          = data.azurerm_subscription.current
-#   template_repository   = each.value.template_repository
-#   workspace_directories = each.value.workspace_directories
+#   repository            = github_repository.repository[each.value.repository]
+#   workspace_directory = each.value.workspace_directory
 # }

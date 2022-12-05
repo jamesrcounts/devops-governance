@@ -1,0 +1,15 @@
+resource "github_repository" "repository" {
+  archive_on_destroy     = true
+  delete_branch_on_merge = true
+  has_downloads          = false
+  has_issues             = false
+  has_projects           = false
+  has_wiki               = false
+  name                   = "terraform-pipelines"
+  visibility             = "public"
+
+  template {
+    owner      = "jamesrcounts"
+    repository = "terraform-getting-started-azure"
+  }
+}
