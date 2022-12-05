@@ -5,7 +5,7 @@ resource "tfe_variable_set" "vs" {
 }
 
 resource "tfe_variable" "variable" {
-  for_each = var.variables
+  for_each = nonsensitive(var.variables)
 
   category        = "terraform"
   description     = each.value.description

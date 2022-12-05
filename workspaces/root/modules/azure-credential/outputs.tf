@@ -1,5 +1,6 @@
 output "service_principal" {
   description = "The module service principal configuration, formatted for easy integration into the variables module."
+  sensitive   = true
   value = {
     description = "Azure service principal credentials."
     variables = {

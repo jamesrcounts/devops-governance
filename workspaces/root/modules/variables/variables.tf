@@ -15,6 +15,7 @@ variable "organization_name" {
 
 variable "variables" {
   description = "The terraform variables to add to the variable set."
+  sensitive   = true
   type = map(object({
     description = string
     sensitive   = optional(bool, false)
