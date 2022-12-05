@@ -104,7 +104,7 @@ resource "tfe_workspace_variable_set" "workspace_variables" {
 locals {
   workspace = {
     terraform-pipelines-demo = {
-      enabled = true
+      enabled = false
 
       workspace_directories = {
         iac = "infrastructure"
@@ -116,7 +116,7 @@ locals {
       }
     }
     container-pipelines-demo = {
-      enabled = true
+      enabled = false
 
       workspace_directories = {
         base = "infrastructure/stages/base",
