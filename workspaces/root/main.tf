@@ -1,3 +1,18 @@
+locals {
+  repository = {
+    terraform-pipelines = {
+      enabled    = true
+      owner      = "jamesrcounts"
+      repository = "terraform-getting-started-azure"
+    }
+    container-pipelines = {
+      enabled    = true
+      owner      = "jamesrcounts"
+      repository = "phippyandfriends"
+    }
+  }
+}
+
 data "azurerm_subscription" "current" {}
 
 ## Root Organization & Workspace
@@ -9,7 +24,26 @@ module "root" {
   tfe_token    = var.tfe_token
 }
 
-# # Project Workspaces
+# Project Repositories
+resource "github_repository" "repository" {
+  for_each = { for k, v in local.repository : k => v if v.enabled }
+
+  archive_on_destroy     = true
+  delete_branch_on_merge = true
+  has_downloads          = false
+  has_issues             = false
+  has_projects           = false
+  has_wiki               = false
+  name                   = each.key
+  visibility             = "public"
+
+  template {
+    owner      = each.value.owner
+    repository = each.value.repository
+  }
+}
+
+
 # locals {
 #   workspace = {
 #     terraform-pipelines-demo = {
@@ -20,8 +54,7 @@ module "root" {
 #       }
 
 #       template_repository = {
-#         owner      = "jamesrcounts"
-#         repository = "terraform-getting-started-azure"
+
 #       }
 #     }
 #     container-pipelines-demo = {
@@ -34,8 +67,7 @@ module "root" {
 #       }
 
 #       template_repository = {
-#         owner      = "jamesrcounts"
-#         repository = "phippyandfriends"
+
 #         roles      = ["Directory Readers", "Groups Administrator"]
 #       }
 #     }
