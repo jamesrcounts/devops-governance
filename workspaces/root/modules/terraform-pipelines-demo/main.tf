@@ -1,3 +1,9 @@
+locals {
+  namespace = random_pet.instance_id.id
+}
+
+resource "random_pet" "instance_id" {}
+
 resource "github_repository" "repository" {
   archive_on_destroy     = true
   delete_branch_on_merge = true
@@ -5,7 +11,7 @@ resource "github_repository" "repository" {
   has_issues             = false
   has_projects           = false
   has_wiki               = false
-  name                   = "terraform-pipelines"
+  name                   = "terraform-pipelines-${local.namespace}"
   visibility             = "public"
 
   template {
