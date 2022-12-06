@@ -46,13 +46,13 @@ module "terraform_pipelines_demo" {
   subscription      = data.azurerm_subscription.current
 }
 
-# module "container_pipelines_demo" {
-#   source = "./modules/container-pipelines-demo"
+module "container_pipelines_demo" {
+  source = "./modules/container-pipelines-demo"
 
-#   oauth_token_id    = module.root.oauth_token_id
-#   organization_name = module.root.tfc_organization.name
-#   subscription      = data.azurerm_subscription.current
-# }
+  oauth_token_id    = module.root.oauth_token_id
+  organization_name = module.root.tfc_organization.name
+  subscription      = data.azurerm_subscription.current
+}
 
 # module "workspace" {
 #   source = "./modules/project-workspace"
