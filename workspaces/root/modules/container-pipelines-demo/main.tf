@@ -3,7 +3,7 @@ locals {
     azure_ops_env = {
       description = "Azure Ops Environment Configuration for ${module.workspace.namespace}"
       variables = {
-        resource_group_name = {
+        ops_resource_group_name = {
           description = "The ops resource group associated with this workspace."
           value       = module.rg_ops.name
         }
