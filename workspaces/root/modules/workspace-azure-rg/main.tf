@@ -49,7 +49,6 @@ module "rg" {
     name                = module.repository.full_name
     workspace_directory = var.workspace_directory
   }
-
 }
 
 module "rg_credentials" {
