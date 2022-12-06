@@ -44,6 +44,7 @@ module "terraform_pipelines_demo" {
   oauth_token_id      = module.root.oauth_token_id
   organization_name   = module.root.tfc_organization.name
   subscription        = data.azurerm_subscription.current
+  tags                = ["terraform", "pipelines"]
   workspace_directory = "infrastructure"
   workspace_prefix    = "terraform-pipelines"
 

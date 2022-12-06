@@ -18,6 +18,11 @@ variable "subscription" {
   })
 }
 
+variable "tags" {
+  description = "The workspace tag names."
+  type        = list(string)
+}
+
 variable "template" {
   description = "The module will seed this repository from the specified GitHub template repository."
   type = object({

@@ -73,7 +73,7 @@ resource "tfe_workspace" "ws" {
   force_delete      = true
   name              = local.workspace_name
   organization      = var.organization_name
-  tag_names         = ["terraform", "pipelines"]
+  tag_names         = var.tags
   terraform_version = "~> 1.3.6"
   working_directory = "/${var.workspace_directory}"
 
