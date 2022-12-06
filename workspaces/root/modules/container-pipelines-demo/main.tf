@@ -1,7 +1,7 @@
 locals {
   variable = {
     azure_ops_env = {
-      description = "Azure Ops Environment Configuration for ${module.terraform_pipelines_demo.namespace}"
+      description = "Azure Ops Environment Configuration for ${module.workspace.namespace}"
       variables = {
         resource_group_name = {
           description = "The ops resource group associated with this workspace."
@@ -16,7 +16,7 @@ locals {
   }
 }
 
-module "terraform_pipelines_demo" {
+module "workspace" {
   source = "../workspace-azure-rg"
 
   oauth_token_id      = var.oauth_token_id
@@ -35,11 +35,11 @@ module "terraform_pipelines_demo" {
 module "rg_ops" {
   source = "../resource-group"
 
-  namespace = "ops-${module.terraform_pipelines_demo.namespace}"
+  namespace = "ops-${module.workspace.namespace}"
 
   repository = {
-    name                = module.terraform_pipelines_demo.repository_full_name
-    workspace_directory = module.terraform_pipelines_demo.workspace_directory
+    name                = module.workspace.repository_full_name
+    workspace_directory = module.workspace.workspace_directory
   }
 }
 
@@ -48,7 +48,14 @@ module "variable" {
   for_each = local.variable
 
   description       = each.value.description
-  name              = "${replace(each.key, "_", "-")}-${module.terraform_pipelines_demo.namespace}"
+  name              = "${replace(each.key, "_", "-")}-${module.workspace.namespace}"
   organization_name = var.organization_name
   variables         = each.value.variables
+}
+
+resource "tfe_workspace_variable_set" "workspace_variables" {
+  for_each = module.variable
+
+  variable_set_id = each.value.id
+  workspace_id    = module.workspace.id
 }

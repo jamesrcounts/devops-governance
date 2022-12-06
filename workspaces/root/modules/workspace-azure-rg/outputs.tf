@@ -1,3 +1,7 @@
+output "id" {
+  description = "The Terraform cloud workspace ID."
+  value       = tfe_workspace.ws.id
+}
 output "workspace_directory" {
   description = "The directory containing the workspace Terraform module."
   value       = var.workspace_directory
