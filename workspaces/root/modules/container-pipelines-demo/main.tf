@@ -35,7 +35,7 @@ module "terraform_pipelines_demo" {
 module "rg_ops" {
   source = "../resource-group"
 
-  namespace = module.terraform_pipelines_demo.namespace
+  namespace = "ops-${module.terraform_pipelines_demo.namespace}"
 
   repository = {
     name                = module.terraform_pipelines_demo.repository_full_name
