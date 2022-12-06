@@ -1,16 +1,5 @@
 locals {
-  repository = {
-    terraform-pipelines = {
-      enabled    = true
-      owner      = "jamesrcounts"
-      repository = "terraform-getting-started-azure"
-    }
-    container-pipelines = {
-      enabled    = true
-      owner      = "jamesrcounts"
-      repository = "phippyandfriends"
-    }
-  }
+
   # environments
   workspace = {
     terraform-pipelines = {
@@ -56,6 +45,14 @@ module "terraform_pipelines_demo" {
   organization_name = module.root.tfc_organization.name
   subscription      = data.azurerm_subscription.current
 }
+
+# module "container_pipelines_demo" {
+#   source = "./modules/container-pipelines-demo"
+
+#   oauth_token_id    = module.root.oauth_token_id
+#   organization_name = module.root.tfc_organization.name
+#   subscription      = data.azurerm_subscription.current
+# }
 
 # module "workspace" {
 #   source = "./modules/project-workspace"

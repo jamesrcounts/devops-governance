@@ -33,17 +33,12 @@ locals {
 
 resource "random_pet" "instance_id" {}
 
-resource "github_repository" "repository" {
-  archive_on_destroy     = true
-  delete_branch_on_merge = true
-  has_downloads          = false
-  has_issues             = false
-  has_projects           = false
-  has_wiki               = false
-  name                   = local.workspace_name
-  visibility             = "public"
+module "repository" {
+  source = "../github-repository"
 
-  template {
+  name = local.workspace_name
+
+  template = {
     owner      = "jamesrcounts"
     repository = "terraform-getting-started-azure"
   }
@@ -55,7 +50,7 @@ resource "azurerm_resource_group" "rg" {
 
   tags = {
     instance_id = local.namespace
-    repository  = "${github_repository.repository.full_name}/${local.workspace_directory}"
+    repository  = "${module.repository.full_name}/${local.workspace_directory}"
   }
 }
 
@@ -86,7 +81,7 @@ resource "tfe_workspace" "ws" {
   working_directory = "/${local.workspace_directory}"
 
   vcs_repo {
-    identifier     = github_repository.repository.full_name
+    identifier     = module.repository.full_name
     oauth_token_id = var.oauth_token_id
   }
 }
