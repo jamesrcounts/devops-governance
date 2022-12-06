@@ -44,15 +44,6 @@ module "repository" {
   }
 }
 
-# resource "azurerm_resource_group" "rg" {
-#   name     = "rg-${local.namespace}"
-#   location = "centralus"
-
-#   tags = {
-#     instance_id = local.namespace
-#     repository  = "${module.repository.full_name}/${local.workspace_directory}"
-#   }
-# }
 module "rg" {
   source = "../resource-group"
 
