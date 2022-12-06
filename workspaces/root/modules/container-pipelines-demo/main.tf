@@ -9,6 +9,6 @@ module "terraform_pipelines_demo" {
 
   template = {
     owner      = "jamesrcounts"
-    repository = "terraform-getting-started-azure"
+    repository = "phippyandfriends"
   }
 }
