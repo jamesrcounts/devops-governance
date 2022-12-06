@@ -17,3 +17,21 @@ variable "subscription" {
     tenant_id       = string
   })
 }
+
+variable "template" {
+  description = "The module will seed this repository from the specified GitHub template repository."
+  type = object({
+    owner      = string
+    repository = string
+  })
+}
+
+variable "workspace_directory" {
+  description = "The directory containing a Terraform module to deploy."
+  type        = string
+}
+
+variable "workspace_prefix" {
+  description = "Used to generate workspace names."
+  type        = string
+}

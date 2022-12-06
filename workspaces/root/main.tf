@@ -41,9 +41,16 @@ module "root" {
 module "terraform_pipelines_demo" {
   source = "./modules/workspace-azure-rg"
 
-  oauth_token_id    = module.root.oauth_token_id
-  organization_name = module.root.tfc_organization.name
-  subscription      = data.azurerm_subscription.current
+  oauth_token_id      = module.root.oauth_token_id
+  organization_name   = module.root.tfc_organization.name
+  subscription        = data.azurerm_subscription.current
+  workspace_directory = "infrastructure"
+  workspace_prefix    = "terraform-pipelines"
+
+  template = {
+    owner      = "jamesrcounts"
+    repository = "terraform-getting-started-azure"
+  }
 }
 
 module "container_pipelines_demo" {

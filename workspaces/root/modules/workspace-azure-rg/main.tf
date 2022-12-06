@@ -13,9 +13,8 @@
  */
 
 locals {
-  workspace_directory = "infrastructure"
-  workspace_name      = "terraform-pipelines-${local.namespace}"
-  namespace           = random_pet.instance_id.id
+  workspace_name = "${var.workspace_prefix}-${local.namespace}"
+  namespace      = random_pet.instance_id.id
 
   variable = {
     azure = module.rg_credentials.service_principal
@@ -38,10 +37,7 @@ module "repository" {
 
   name = local.workspace_name
 
-  template = {
-    owner      = "jamesrcounts"
-    repository = "terraform-getting-started-azure"
-  }
+  template = var.template
 }
 
 module "rg" {
@@ -51,7 +47,7 @@ module "rg" {
 
   repository = {
     name                = module.repository.full_name
-    workspace_directory = local.workspace_directory
+    workspace_directory = var.workspace_directory
   }
 
 }
@@ -80,7 +76,7 @@ resource "tfe_workspace" "ws" {
   organization      = var.organization_name
   tag_names         = ["terraform", "pipelines"]
   terraform_version = "~> 1.3.6"
-  working_directory = "/${local.workspace_directory}"
+  working_directory = "/${var.workspace_directory}"
 
   vcs_repo {
     identifier     = module.repository.full_name
