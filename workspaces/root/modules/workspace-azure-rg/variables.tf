@@ -8,6 +8,12 @@ variable "organization_name" {
   type        = string
 }
 
+variable "roles" {
+  default     = []
+  description = "AzureAD Roles to Assing to the credentials."
+  type        = list(string)
+}
+
 variable "subscription" {
   description = "The subscription scope for this workspace."
   type = object({

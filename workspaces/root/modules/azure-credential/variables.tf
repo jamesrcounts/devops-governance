@@ -23,4 +23,3 @@ variable "workspace" {
   description = "The workspace that will use the credential."
   type        = string
 }
-

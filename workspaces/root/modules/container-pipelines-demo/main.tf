@@ -21,6 +21,7 @@ module "workspace" {
 
   oauth_token_id      = var.oauth_token_id
   organization_name   = var.organization_name
+  roles               = ["Directory Readers", "Groups Administrator"]
   subscription        = var.subscription
   tags                = ["container", "pipelines", "base"]
   workspace_directory = "infrastructure/stages/base"

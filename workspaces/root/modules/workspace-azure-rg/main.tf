@@ -54,6 +54,7 @@ module "rg" {
 module "rg_credentials" {
   source = "../azure-credential"
 
+  roles        = var.roles
   scope        = module.rg.id
   subscription = var.subscription
   workspace    = local.namespace
