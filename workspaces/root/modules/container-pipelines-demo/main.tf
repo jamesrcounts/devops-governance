@@ -60,3 +60,12 @@ resource "tfe_workspace_variable_set" "workspace_variables" {
   variable_set_id = each.value.id
   workspace_id    = module.workspace.id
 }
+
+resource "tfe_workspace_variable_set" "shared_workspace_variables" {
+  for_each = {
+    aws = var.aws_credentials
+  }
+
+  variable_set_id = each.value
+  workspace_id    = module.workspace.id
+}

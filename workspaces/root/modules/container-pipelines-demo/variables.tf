@@ -1,3 +1,8 @@
+variable "aws_credentials" {
+  description = "The ID for the variable set that contains AWS credentials."
+  type        = string
+}
+
 variable "oauth_token_id" {
   description = "The TFC OAUTH token ID for the token that allows access to GitHub."
   type        = string

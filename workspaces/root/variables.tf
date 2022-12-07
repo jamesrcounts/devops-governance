@@ -1,3 +1,14 @@
+variable "aws_access_key_id" {
+  description = "Specifies the AWS access key ID for the AWS Terraform provider."
+  type        = string
+}
+
+variable "aws_secret_access_key" {
+  description = "Specifies the AWS access key secret for the AWS Terraform provider."
+  sensitive   = true
+  type        = string
+}
+
 variable "github_pat" {
   description = "A github personal access token to create the VCS connection."
   sensitive   = true

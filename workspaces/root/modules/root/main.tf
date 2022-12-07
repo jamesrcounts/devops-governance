@@ -1,5 +1,19 @@
 locals {
   variable = {
+    aws = {
+      description = "AWS Credentials"
+      variables = {
+        aws_access_key_id = {
+          description = "The AWS Secret Access Key identifier."
+          value       = var.aws.access_key_id
+        }
+        aws_secret_access_key = {
+          description = "The AWS Secret Access Key"
+          sensitive   = true
+          value       = var.aws.secret_access_key
+        }
+      }
+    }
     azure = module.administrator.service_principal
     github = {
       description = "GitHub credentials."
@@ -15,8 +29,8 @@ locals {
       description = "Terraform Cloud credentials."
       variables = {
         tfe_token = {
-          sensitive   = true
           description = "Terraform Cloud API Token"
+          sensitive   = true
           value       = var.tfe_token
         }
       }

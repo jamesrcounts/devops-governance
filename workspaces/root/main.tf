@@ -35,6 +35,11 @@ module "root" {
   github_pat   = var.github_pat
   subscription = data.azurerm_subscription.current
   tfe_token    = var.tfe_token
+
+  aws = {
+    access_key_id     = var.aws_access_key_id
+    secret_access_key = var.aws_secret_access_key
+  }
 }
 
 # Project Repositories
@@ -57,20 +62,8 @@ module "terraform_pipelines_demo" {
 module "container_pipelines_demo" {
   source = "./modules/container-pipelines-demo"
 
+  aws_credentials   = module.root.variable_set["aws"]
   oauth_token_id    = module.root.oauth_token_id
   organization_name = module.root.tfc_organization.name
   subscription      = data.azurerm_subscription.current
 }
-
-# module "workspace" {
-#   source = "./modules/project-workspace"
-
-#   for_each = { for k, v in local.workspace : k => v if v.enabled }
-
-#   oauth_token_id        = module.root.oauth_token_id
-#   organization_name     = module.root.tfc_organization.name
-#   roles                 = lookup(each.value, "roles", [])
-#   subscription          = data.azurerm_subscription.current
-#   repository            = github_repository.repository[each.value.repository]
-#   workspace_directory = each.value.workspace_directory
-# }

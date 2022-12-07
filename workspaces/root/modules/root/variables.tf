@@ -1,3 +1,12 @@
+variable "aws" {
+  description = "The AWS credentials."
+  sensitive   = true
+
+  type = object({
+    access_key_id     = string
+    secret_access_key = string
+  })
+}
 variable "github_pat" {
   description = "A github personal access token to create the VCS connection."
   sensitive   = true

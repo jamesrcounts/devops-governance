@@ -9,3 +9,8 @@ output "tfc_organization" {
     name = tfe_organization.org.name
   }
 }
+
+output "variable_set" {
+  description = "Root variable sets that can be reused by child workspaces."
+  value       = { for k, v in module.variable : k => v.id if contains(["aws"], k) }
+}
