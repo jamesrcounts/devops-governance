@@ -77,7 +77,7 @@ resource "tfe_workspace_variable_set" "shared_workspace_variables" {
 
 # OPS Resources
 resource "azurerm_log_analytics_workspace" "diagnostics" {
-  name                = "la-${module.workspace.namespace}"
+  name                = "la-ops-${module.workspace.namespace}"
   location            = local.location
   resource_group_name = module.rg_ops.name
   sku                 = "PerGB2018"
@@ -89,7 +89,7 @@ resource "azurerm_key_vault" "config" {
   enable_rbac_authorization   = true
   enabled_for_disk_encryption = false
   location                    = local.location
-  name                        = "kv-${module.workspace.namespace}"
+  name                        = "kv-ops-${module.workspace.namespace}"
   purge_protection_enabled    = false
   resource_group_name         = module.rg_ops.name
   sku_name                    = "standard"
