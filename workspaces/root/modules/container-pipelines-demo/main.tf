@@ -9,7 +9,7 @@ locals {
         }
         ops_subscription_id = {
           description = "The subscription ID containing this project's ops resources"
-          value       = var.subscription.id
+          value       = var.subscription.subscription_id
         }
       }
     }
