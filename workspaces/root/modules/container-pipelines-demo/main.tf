@@ -1,4 +1,6 @@
 locals {
+  location = "centralus"
+
   variable = {
     azure_ops_env = {
       description = "Azure Ops Environment Configuration for ${module.workspace.namespace}"
@@ -26,6 +28,7 @@ module "workspace" {
   tags                = ["container", "pipelines", "base"]
   workspace_directory = "infrastructure/stages/base"
   workspace_prefix    = "container-pipelines"
+  location            = local.location
 
   template = {
     owner      = "jamesrcounts"
@@ -38,6 +41,7 @@ module "rg_ops" {
   source = "../resource-group"
 
   namespace = "ops-${module.workspace.namespace}"
+  location  = local.location
 
   repository = {
     name                = module.workspace.repository_full_name
@@ -69,4 +73,27 @@ resource "tfe_workspace_variable_set" "shared_workspace_variables" {
 
   variable_set_id = each.value
   workspace_id    = module.workspace.id
+}
+
+# OPS Resources
+resource "azurerm_log_analytics_workspace" "diagnostics" {
+  name                = "la-${module.workspace.namespace}"
+  location            = local.location
+  resource_group_name = module.rg_ops.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+  tags                = module.rg_ops.tags
+}
+
+resource "azurerm_key_vault" "config" {
+  enable_rbac_authorization   = true
+  enabled_for_disk_encryption = false
+  location                    = local.location
+  name                        = "kv-${module.workspace.namespace}"
+  purge_protection_enabled    = false
+  resource_group_name         = module.rg_ops.name
+  sku_name                    = "standard"
+  soft_delete_retention_days  = 7
+  tags                        = module.rg_ops.tags
+  tenant_id                   = var.subscription.tenant_id
 }

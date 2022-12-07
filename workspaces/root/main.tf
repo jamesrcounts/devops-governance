@@ -52,6 +52,7 @@ module "terraform_pipelines_demo" {
   tags                = ["terraform", "pipelines"]
   workspace_directory = "infrastructure"
   workspace_prefix    = "terraform-pipelines"
+  location            = "centralus"
 
   template = {
     owner      = "jamesrcounts"

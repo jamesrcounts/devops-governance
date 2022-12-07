@@ -43,6 +43,7 @@ module "repository" {
 module "rg" {
   source = "../resource-group"
 
+  location  = var.location
   namespace = local.namespace
 
   repository = {

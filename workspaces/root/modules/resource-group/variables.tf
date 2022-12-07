@@ -1,3 +1,8 @@
+variable "location" {
+  description = "The Azure region to deploy to."
+  type        = string
+}
+
 variable "namespace" {
   description = "The resource group namespace."
   type        = string

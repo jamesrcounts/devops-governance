@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg" {
   name     = "rg-${var.namespace}"
-  location = "centralus"
+  location = var.location
 
   tags = {
     instance_id = var.namespace

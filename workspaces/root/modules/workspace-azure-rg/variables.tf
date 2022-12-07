@@ -1,3 +1,8 @@
+variable "location" {
+  description = "The Azure region to deploy to."
+  type        = string
+}
+
 variable "oauth_token_id" {
   description = "The TFC OAUTH token ID for the token that allows access to GitHub."
   type        = string
