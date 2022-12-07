@@ -77,11 +77,11 @@ resource "tfe_workspace_variable_set" "shared_workspace_variables" {
 
 # OPS Resources
 resource "azurerm_log_analytics_workspace" "diagnostics" {
-  name                = "la-ops-${module.workspace.namespace}"
   location            = local.location
+  name                = "la-ops-${module.workspace.namespace}"
   resource_group_name = module.rg_ops.name
-  sku                 = "PerGB2018"
   retention_in_days   = 30
+  sku                 = "PerGB2018"
   tags                = module.rg_ops.tags
 }
 
