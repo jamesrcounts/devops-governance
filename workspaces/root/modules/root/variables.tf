@@ -7,6 +7,7 @@ variable "aws" {
     secret_access_key = string
   })
 }
+
 variable "github_pat" {
   description = "A github personal access token to create the VCS connection."
   sensitive   = true

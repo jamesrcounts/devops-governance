@@ -1,3 +1,9 @@
+variable "aws_region" {
+  description = "The AWS region for Route53"
+  default     = "us-west-1"
+  type        = string
+}
+
 variable "aws_access_key_id" {
   description = "Specifies the AWS access key ID for the AWS Terraform provider."
   type        = string

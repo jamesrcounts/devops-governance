@@ -1,3 +1,14 @@
+variable "aws" {
+  description = "The AWS credentials."
+  sensitive   = true
+
+  type = object({
+    access_key_id     = string
+    region            = string
+    secret_access_key = string
+  })
+}
+
 variable "aws_credentials" {
   description = "The ID for the variable set that contains AWS credentials."
   type        = string

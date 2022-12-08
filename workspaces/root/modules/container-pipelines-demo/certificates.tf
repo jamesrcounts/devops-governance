@@ -19,6 +19,11 @@ resource "acme_certificate" "certificate_prd" {
 
   dns_challenge {
     provider = "route53"
+    config = {
+      AWS_ACCESS_KEY_ID     = var.aws.access_key_id
+      AWS_SECRET_ACCESS_KEY = var.aws.secret_access_key
+      AWS_DEFAULT_REGION    = var.aws.region
+    }
   }
 }
 

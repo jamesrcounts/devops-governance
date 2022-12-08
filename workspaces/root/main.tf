@@ -67,4 +67,10 @@ module "container_pipelines_demo" {
   oauth_token_id    = module.root.oauth_token_id
   organization_name = module.root.tfc_organization.name
   subscription      = data.azurerm_subscription.current
+
+  aws = {
+    access_key_id     = var.aws_access_key_id
+    secret_access_key = var.aws_secret_access_key
+    region            = var.aws_region
+  }
 }
