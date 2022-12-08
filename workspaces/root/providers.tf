@@ -1,3 +1,7 @@
+provider "acme" {
+  server_url = "https://acme-v02.api.letsencrypt.org/directory"
+}
+
 provider "azuread" {
   client_id     = var.client_id
   client_secret = var.client_secret

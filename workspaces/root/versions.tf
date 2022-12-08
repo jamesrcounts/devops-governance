@@ -2,6 +2,10 @@ terraform {
   required_version = "~> 1.3.6"
 
   required_providers {
+    acme = {
+      source  = "vancluever/acme"
+      version = "~> 2"
+    }
     azuread = {
       source  = "hashicorp/azuread"
       version = "~> 2.31"
