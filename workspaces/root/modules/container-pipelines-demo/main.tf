@@ -49,3 +49,10 @@ module "kubernetes-workspace" {
   workspace_directory  = "infrastructure/stages/kubernetes-${each.key}"
   workspace_prefix     = "kubernetes-${each.key}"
 }
+
+module "azure-devops-project" {
+  source = "../azure-devops-project"
+
+  namespace        = module.workspace.namespace
+  workspace_prefix = "container-pipelines"
+}
