@@ -40,13 +40,12 @@ module "kubernetes-workspace" {
   source   = "../workspace-kubernetes"
   for_each = toset(["dev"])
 
+  namespace            = module.workspace.namespace
+  oauth_token_id       = var.oauth_token_id
   organization_name    = var.organization_name
   repository_full_name = module.workspace.repository_full_name
   tags                 = ["container", "pipelines", "kubernetes"]
-  namespace            = module.workspace.namespace
-  workspace_prefix     = "kubernetes-${each.key}"
+  variables            = merge({ azure_ops_env = module.variable["azure_ops_env"].id }, module.workspace.variable_set)
   workspace_directory  = "infrastructure/stages/kubernetes-${each.key}"
-  oauth_token_id       = var.oauth_token_id
-
-  variables = module.workspace.variable_set
+  workspace_prefix     = "kubernetes-${each.key}"
 }
