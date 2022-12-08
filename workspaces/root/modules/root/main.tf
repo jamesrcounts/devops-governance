@@ -1,5 +1,19 @@
 locals {
   variable = {
+    ado = {
+      description = "Azure DevOps Credentials"
+      variables = {
+        azuredevops_pat = {
+          description = "An Azure DevOps personal access token."
+          sensitive   = true
+          value       = var.ado.token
+        }
+        azuredevops_url = {
+          description = "An Azure DevOps organization URL."
+          value       = var.ado.url
+        }
+      }
+    }
     aws = {
       description = "AWS Credentials"
       variables = {

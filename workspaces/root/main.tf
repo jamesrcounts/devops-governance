@@ -8,6 +8,11 @@ module "root" {
   subscription = data.azurerm_subscription.current
   tfe_token    = var.tfe_token
 
+  ado = {
+    token = var.azuredevops_pat
+    url   = var.azuredevops_url
+  }
+
   aws = {
     access_key_id     = var.aws_access_key_id
     secret_access_key = var.aws_secret_access_key

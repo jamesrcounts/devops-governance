@@ -1,3 +1,13 @@
+variable "ado" {
+  description = "The Azure DevOps credentials."
+  sensitive   = true
+
+  type = object({
+    token = string
+    url   = string
+  })
+}
+
 variable "aws" {
   description = "The AWS credentials."
   sensitive   = true

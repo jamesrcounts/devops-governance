@@ -10,7 +10,8 @@ $(SECRETS):
 	@echo "tfe_token=\"${TFE_TOKEN}\""                         >> $(SECRETS)
 	@echo "aws_access_key_id=\"${AWS_ACCESS_KEY_ID}\""         >> $(SECRETS)
 	@echo "aws_secret_access_key=\"${AWS_SECRET_ACCESS_KEY}\"" >> $(SECRETS)
-
+	@echo "azuredevops_pat=\"${AZDO_PERSONAL_ACCESS_TOKEN}\""  >> $(SECRETS)
+	@echo "azuredevops_url=\"${AZDO_ORG_SERVICE_URL}\""        >> $(SECRETS)
 
 fmt:
 	cd $(module) && terraform fmt -recursive
