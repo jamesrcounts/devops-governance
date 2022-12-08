@@ -67,3 +67,22 @@ resource "azuredevops_serviceendpoint_azurecr" "acr" {
   resource_group            = azurerm_container_registry.basic.resource_group_name
   service_endpoint_name     = "ACR"
 }
+
+resource "azuredevops_variable_group" "acr" {
+  project_id   = module.azure-devops-project.id
+  name         = "acr"
+  description  = "Specifies the name of the Azure Container Registry."
+  allow_access = false
+
+  dynamic "variable" {
+    for_each = {
+      "CONTAINER_REGISTRY_NAME" = azurerm_container_registry.basic.name
+      "LOGIN_SERVER"            = "${azurerm_container_registry.basic.name}.azurecr.io"
+    }
+
+    content {
+      name  = variable.key
+      value = variable.value
+    }
+  }
+}

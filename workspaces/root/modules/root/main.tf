@@ -84,7 +84,6 @@ module "variable" {
   variables         = each.value.variables
 }
 
-
 resource "tfe_workspace" "root" {
   description       = "Use the root worksapce to create additional workspaces."
   name              = "root"
