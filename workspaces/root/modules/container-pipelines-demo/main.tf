@@ -38,7 +38,7 @@ module "workspace" {
 
 module "kubernetes-workspace" {
   source   = "../workspace-kubernetes"
-  for_each = toset(["dev"])
+  for_each = toset(["dev", "prd"])
 
   namespace            = module.workspace.namespace
   oauth_token_id       = var.oauth_token_id
