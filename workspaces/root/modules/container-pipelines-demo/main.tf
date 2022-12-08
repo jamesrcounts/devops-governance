@@ -35,3 +35,16 @@ module "workspace" {
     repository = "phippyandfriends"
   }
 }
+
+module "kubernetes-workspace" {
+  source   = "../workspace-kubernetes"
+  for_each = toset(["dev"])
+
+  organization_name    = var.organization_name
+  repository_full_name = module.workspace.repository_full_name
+  tags                 = ["container", "pipelines", "kubernetes"]
+  namespace            = module.workspace.namespace
+  workspace_prefix     = "kubernetes-${each.key}"
+  workspace_directory  = "infrastructure/stages/kubernetes-${each.key}"
+  oauth_token_id       = var.oauth_token_id
+}

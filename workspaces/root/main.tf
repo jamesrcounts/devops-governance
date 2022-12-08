@@ -42,7 +42,7 @@ module "root" {
   }
 }
 
-# Project Repositories
+# Project Workspaces
 module "terraform_pipelines_demo" {
   source = "./modules/workspace-azure-rg"
 
