@@ -1,31 +1,3 @@
-locals {
-
-  # environments
-  workspace = {
-    terraform-pipelines = {
-      enabled             = true
-      repository          = "terraform-pipelines"
-      workspace_directory = "infrastructure"
-    }
-    container-pipelines-base = {
-      enabled             = false
-      roles               = ["Directory Readers", "Groups Administrator"]
-      repository          = "container-pipelines"
-      workspace_directory = "infrastructure/stages/base"
-    }
-    container-pipelines-dev = {
-      enabled             = false
-      repository          = "container-pipelines"
-      workspace_directory = "infrastructure/stages/kubernetes-dev"
-    }
-    container-pipelines-prd = {
-      enabled             = false
-      repository          = "container-pipelines"
-      workspace_directory = "infrastructure/stages/kubernetes-prd"
-    }
-  }
-}
-
 data "azurerm_subscription" "current" {}
 
 ## Root Organization & Workspace
