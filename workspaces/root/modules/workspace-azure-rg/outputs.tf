@@ -19,5 +19,5 @@ output "namespace" {
 
 output "variable_set" {
   description = "Root variable sets that can be reused by child workspaces."
-  value       = { for k, v in module.variable : k => v.id if contains(["azure_env"], k) }
+  value       = { for k, v in module.variable : k => v.id if contains(["azure","azure_env"], k) }
 }
