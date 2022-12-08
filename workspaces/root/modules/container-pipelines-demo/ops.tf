@@ -58,3 +58,11 @@ resource "azurerm_key_vault" "config" {
   tags                        = module.rg_ops.tags
   tenant_id                   = var.subscription.tenant_id
 }
+
+resource "azurerm_container_registry" "basic" {
+  location            = local.location
+  name                = replace("cr-${module.workspace.namespace}", "-", "")
+  resource_group_name = module.rg_ops.name
+  sku                 = "Basic"
+  tags                = module.rg_ops.tags
+}
