@@ -68,9 +68,9 @@ resource "tfe_workspace" "ws" {
   }
 }
 
-# resource "tfe_workspace_variable_set" "workspace_variables" {
-#   for_each = module.variable
+resource "tfe_workspace_variable_set" "workspace_variables" {
+  for_each = var.variables
 
-#   variable_set_id = each.value.id
-#   workspace_id    = tfe_workspace.ws.id
-# }
+  variable_set_id = each.value
+  workspace_id    = tfe_workspace.ws.id
+}

@@ -47,4 +47,6 @@ module "kubernetes-workspace" {
   workspace_prefix     = "kubernetes-${each.key}"
   workspace_directory  = "infrastructure/stages/kubernetes-${each.key}"
   oauth_token_id       = var.oauth_token_id
+
+  variables = module.workspace.variable_set
 }

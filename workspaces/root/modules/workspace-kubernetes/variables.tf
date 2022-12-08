@@ -53,3 +53,8 @@ variable "namespace" {
   description = "The project namespace."
   type        = string
 }
+
+variable "variables" {
+  description = "The variable sets to attach to this workspace."
+  type        = map(string)
+}
