@@ -56,3 +56,14 @@ module "azure-devops-project" {
   namespace        = module.workspace.namespace
   workspace_prefix = "container-pipelines"
 }
+
+resource "azuredevops_serviceendpoint_azurecr" "acr" {
+  azurecr_name              = azurerm_container_registry.basic.name
+  azurecr_spn_tenantid      = var.subscription.tenant_id
+  azurecr_subscription_id   = var.subscription.subscription_id
+  azurecr_subscription_name = var.subscription.display_name
+  description               = "Managed by Terraform"
+  project_id                = module.azure-devops-project.id
+  resource_group            = azurerm_container_registry.basic.resource_group_name
+  service_endpoint_name     = "ACR"
+}

@@ -6,6 +6,10 @@ terraform {
       source  = "vancluever/acme"
       version = "~> 2"
     }
+    azuredevops = {
+      source  = "microsoft/azuredevops"
+      version = "~> 0.3"
+    }
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 3.34"
