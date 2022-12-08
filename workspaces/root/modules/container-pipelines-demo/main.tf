@@ -68,11 +68,20 @@ resource "azuredevops_serviceendpoint_azurecr" "acr" {
   service_endpoint_name     = "ACR"
 }
 
+resource "azuredevops_serviceendpoint_github" "github" {
+  project_id            = module.azure-devops-project.id
+  service_endpoint_name = "GithHub Personal Access Token"
+
+  auth_personal {
+    personal_access_token = var.github_pat
+  }
+}
+
 resource "azuredevops_variable_group" "acr" {
-  project_id   = module.azure-devops-project.id
-  name         = "acr"
-  description  = "Specifies the name of the Azure Container Registry."
   allow_access = false
+  description  = "Specifies the name of the Azure Container Registry."
+  name         = "acr"
+  project_id   = module.azure-devops-project.id
 
   dynamic "variable" {
     for_each = {
@@ -86,3 +95,20 @@ resource "azuredevops_variable_group" "acr" {
     }
   }
 }
+
+# resource "azuredevops_build_definition" "pipeline" {
+#   name       = "parrot-docker"
+#   project_id   = module.azure-devops-project.id
+
+#   ci_trigger {
+#     use_yaml = true
+#   }
+
+#   repository {
+#     branch_name           = "main"
+#     repo_id               = module.workspace.repository_full_name
+#     repo_type             = "GitHub"
+#     service_connection_id = azuredevops_serviceendpoint_github.endpoint.id
+#     yml_path              = "parrot/azure-pipelines.docker.yaml"
+#   }
+# }

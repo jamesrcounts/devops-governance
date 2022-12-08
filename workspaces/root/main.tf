@@ -41,6 +41,7 @@ module "container_pipelines_demo" {
   source = "./modules/container-pipelines-demo"
 
   aws_credentials   = module.root.variable_set["aws"]
+  github_pat        = var.github_pat
   oauth_token_id    = module.root.oauth_token_id
   organization_name = module.root.tfc_organization.name
   subscription      = data.azurerm_subscription.current
