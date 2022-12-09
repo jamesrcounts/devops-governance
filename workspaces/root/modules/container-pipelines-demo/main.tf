@@ -97,7 +97,12 @@ resource "azuredevops_variable_group" "acr" {
 }
 
 resource "azuredevops_build_definition" "pipeline" {
-  name       = "parrot-docker"
+  for_each = {
+    parrot-docker = "parrot/azure-pipelines.docker.yaml"
+    parrot-chart  = "parrot/azure-pipelines.helm.yaml"
+  }
+
+  name       = each.key
   project_id = module.azure-devops-project.id
 
   ci_trigger {
@@ -109,6 +114,6 @@ resource "azuredevops_build_definition" "pipeline" {
     repo_id               = module.workspace.repository_full_name
     repo_type             = "GitHub"
     service_connection_id = azuredevops_serviceendpoint_github.github.id
-    yml_path              = "parrot/azure-pipelines.docker.yaml"
+    yml_path              = each.value
   }
 }
