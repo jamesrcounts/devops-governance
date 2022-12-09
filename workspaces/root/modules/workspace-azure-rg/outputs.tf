@@ -21,3 +21,7 @@ output "variable_set" {
   description = "Root variable sets that can be reused by child workspaces."
   value       = { for k, v in module.variable : k => v.id if contains(["azure", "azure_env"], k) }
 }
+
+output "rg_service_principal" {
+  value = module.rg_credentials.service_principal.variables
+}

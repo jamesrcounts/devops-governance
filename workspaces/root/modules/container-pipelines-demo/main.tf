@@ -77,6 +77,20 @@ resource "azuredevops_serviceendpoint_github" "github" {
   }
 }
 
+resource "azuredevops_serviceendpoint_azurerm" "ops" {
+  azurerm_spn_tenantid      = var.subscription.tenant_id
+  azurerm_subscription_id   = var.subscription.subscription_id
+  azurerm_subscription_name = var.subscription.display_name
+  description               = "Managed by Terraform"
+  project_id                = module.azure-devops-project.id
+  service_endpoint_name     = "AzureOps"
+
+  credentials {
+    serviceprincipalid  = module.workspace.rg_service_principal.client_id.value
+    serviceprincipalkey = module.workspace.rg_service_principal.client_secret.value
+  }
+}
+
 resource "azuredevops_variable_group" "acr" {
   allow_access = false
   description  = "Specifies the name of the Azure Container Registry."
