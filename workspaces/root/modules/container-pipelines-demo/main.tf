@@ -96,19 +96,19 @@ resource "azuredevops_variable_group" "acr" {
   }
 }
 
-# resource "azuredevops_build_definition" "pipeline" {
-#   name       = "parrot-docker"
-#   project_id   = module.azure-devops-project.id
+resource "azuredevops_build_definition" "pipeline" {
+  name       = "parrot-docker"
+  project_id = module.azure-devops-project.id
 
-#   ci_trigger {
-#     use_yaml = true
-#   }
+  ci_trigger {
+    use_yaml = true
+  }
 
-#   repository {
-#     branch_name           = "main"
-#     repo_id               = module.workspace.repository_full_name
-#     repo_type             = "GitHub"
-#     service_connection_id = azuredevops_serviceendpoint_github.endpoint.id
-#     yml_path              = "parrot/azure-pipelines.docker.yaml"
-#   }
-# }
+  repository {
+    branch_name           = "main"
+    repo_id               = module.workspace.repository_full_name
+    repo_type             = "GitHub"
+    service_connection_id = azuredevops_serviceendpoint_github.github.id
+    yml_path              = "parrot/azure-pipelines.docker.yaml"
+  }
+}
