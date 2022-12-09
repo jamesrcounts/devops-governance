@@ -112,8 +112,9 @@ resource "azuredevops_variable_group" "acr" {
 
 resource "azuredevops_build_definition" "pipeline" {
   for_each = {
-    parrot-docker = "parrot/azure-pipelines.docker.yaml"
     parrot-chart  = "parrot/azure-pipelines.helm.yaml"
+    parrot-deploy = "parrot/azure-pipelines.deploy.yaml"
+    parrot-docker = "parrot/azure-pipelines.docker.yaml"
   }
 
   name       = each.key
