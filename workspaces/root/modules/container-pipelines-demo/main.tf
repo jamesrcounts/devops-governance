@@ -99,10 +99,30 @@ resource "azuredevops_variable_group" "acr" {
 
   dynamic "variable" {
     for_each = {
-      "CONTAINER_REGISTRY_NAME" = azurerm_container_registry.basic.name
-      "LOGIN_SERVER"            = "${azurerm_container_registry.basic.name}.azurecr.io"
+      CONTAINER_REGISTRY_NAME = azurerm_container_registry.basic.name
+      LOGIN_SERVER            = "${azurerm_container_registry.basic.name}.azurecr.io"
     }
 
+    content {
+      name  = variable.key
+      value = variable.value
+    }
+  }
+}
+
+resource "azuredevops_variable_group" "azureenv" {
+  allow_access = false
+  description  = "Specifies the target environment for software deployment."
+  name         = "azure-env"
+  project_id   = module.azure-devops-project.id
+
+  dynamic "variable" {
+    for_each = {
+      AZURE_ENV_INSTANCE_ID = module.workspace.namespace
+    }
+    # AZURE_ENV_SUBSCRIPTION_ID = data.azurerm_client_config.env.subscription_id
+    # AZURE_OPS_INSTANCE_ID     = module.azure_backend.resource_group.tags["instance_id"]
+    # AZURE_OPS_SUBSCRIPTION_ID = data.azurerm_client_config.ops.subscription_id
     content {
       name  = variable.key
       value = variable.value
