@@ -130,6 +130,13 @@ resource "azuredevops_variable_group" "azureenv" {
   }
 }
 
+resource "azuredevops_environment" "env" {
+  for_each = toset(["dev", "prd"])
+
+  project_id = module.azure-devops-project.id
+  name       = "${each.key}.apps"
+}
+
 resource "azuredevops_build_definition" "pipeline" {
   for_each = {
     parrot-chart  = "parrot/azure-pipelines.helm.yaml"
