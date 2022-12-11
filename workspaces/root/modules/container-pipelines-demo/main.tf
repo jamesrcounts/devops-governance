@@ -134,7 +134,7 @@ resource "azuredevops_environment" "env" {
   for_each = toset(["dev", "prd"])
 
   project_id = module.azure-devops-project.id
-  name       = "${each.key}.apps"
+  name       = each.key
 }
 
 resource "azuredevops_build_definition" "pipeline" {
