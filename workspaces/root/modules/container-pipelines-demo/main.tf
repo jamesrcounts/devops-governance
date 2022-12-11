@@ -139,9 +139,9 @@ resource "azuredevops_variable_group" "azureenv" {
 
   dynamic "variable" {
     for_each = {
-      AZURE_ENV_INSTANCE_ID = module.workspace.namespace
+      AZURE_ENV_INSTANCE_ID     = module.workspace.namespace
+      AZURE_ENV_SUBSCRIPTION_ID = var.subscription.subscription_id
     }
-    # AZURE_ENV_SUBSCRIPTION_ID = data.azurerm_client_config.env.subscription_id
     # AZURE_OPS_INSTANCE_ID     = module.azure_backend.resource_group.tags["instance_id"]
     # AZURE_OPS_SUBSCRIPTION_ID = data.azurerm_client_config.ops.subscription_id
     content {
