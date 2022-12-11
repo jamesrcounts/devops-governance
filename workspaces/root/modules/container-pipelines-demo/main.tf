@@ -92,6 +92,14 @@ resource "azuredevops_serviceendpoint_azurerm" "azure" {
   }
 }
 
+resource "azuredevops_resource_authorization" "allow" {
+  for_each = azuredevops_serviceendpoint_azurerm.azure
+
+  project_id  = module.azure-devops-project.id
+  resource_id = each.value.id
+  authorized  = true
+}
+
 resource "azuredevops_variable_group" "acr" {
   allow_access = false
   description  = "Specifies the name of the Azure Container Registry."
