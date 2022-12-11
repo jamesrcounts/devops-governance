@@ -68,6 +68,12 @@ resource "azuredevops_serviceendpoint_azurecr" "acr" {
   service_endpoint_name     = "ACR"
 }
 
+resource "azuredevops_resource_authorization" "allow_acr" {
+  project_id  = module.azure-devops-project.id
+  resource_id = azuredevops_serviceendpoint_azurecr.acr.id
+  authorized  = true
+}
+
 resource "azuredevops_serviceendpoint_github" "github" {
   project_id            = module.azure-devops-project.id
   service_endpoint_name = "GithHub Personal Access Token"
@@ -75,6 +81,12 @@ resource "azuredevops_serviceendpoint_github" "github" {
   auth_personal {
     personal_access_token = var.github_pat
   }
+}
+
+resource "azuredevops_resource_authorization" "allow_github" {
+  project_id  = module.azure-devops-project.id
+  resource_id = azuredevops_serviceendpoint_github.github.id
+  authorized  = true
 }
 
 resource "azuredevops_serviceendpoint_azurerm" "azure" {
@@ -92,7 +104,7 @@ resource "azuredevops_serviceendpoint_azurerm" "azure" {
   }
 }
 
-resource "azuredevops_resource_authorization" "allow" {
+resource "azuredevops_resource_authorization" "allow_azure" {
   for_each = azuredevops_serviceendpoint_azurerm.azure
 
   project_id  = module.azure-devops-project.id
