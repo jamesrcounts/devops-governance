@@ -46,7 +46,7 @@ module "kubernetes-workspace" {
   repository_full_name = module.workspace.repository_full_name
   tags                 = ["container", "pipelines", "kubernetes"]
   variables            = merge({ azure_ops_env = module.variable["azure_ops_env"].id }, module.workspace.variable_set)
-  workspace_directory  = "infrastructure/stages/kubernetes-${each.key}"
+  workspace_directory  = "infrastructure/stages/kubernetes"
   workspace_prefix     = "kubernetes-${each.key}"
 }
 
