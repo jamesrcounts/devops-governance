@@ -9,10 +9,6 @@ locals {
           description = "The ops resource group associated with this workspace."
           value       = module.rg_ops.name
         }
-        ops_subscription_id = {
-          description = "The subscription ID containing this project's ops resources"
-          value       = var.subscription.subscription_id
-        }
       }
     }
   }
