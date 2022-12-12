@@ -51,7 +51,7 @@ module "kubernetes-workspace" {
   variables = merge(
     {
       azure_ops_env = module.variable["azure_ops_env"].id
-      environment   = each.key
+      env   = each.key
     },
     module.workspace.variable_set
   )
