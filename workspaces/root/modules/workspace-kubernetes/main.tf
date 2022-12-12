@@ -16,6 +16,23 @@ resource "tfe_workspace" "ws" {
   }
 }
 
+resource "tfe_variable" "variable" {
+  for_each = {
+    environment = {
+      description = "The environment tier."
+      sensitive   = false
+      value       = var.environment
+    }
+  }
+
+  category     = "terraform"
+  description  = each.value.description
+  key          = each.key
+  sensitive    = each.value.sensitive
+  value        = each.value.value
+  workspace_id = tfe_workspace.ws.id
+}
+
 resource "tfe_workspace_variable_set" "workspace_variables" {
   for_each = var.variables
 

@@ -40,6 +40,7 @@ module "kubernetes-workspace" {
   source   = "../workspace-kubernetes"
   for_each = toset(["dev", "prd"])
 
+  environment          = each.key
   namespace            = module.workspace.namespace
   oauth_token_id       = var.oauth_token_id
   organization_name    = var.organization_name
@@ -49,10 +50,7 @@ module "kubernetes-workspace" {
   workspace_prefix     = "kubernetes-${each.key}"
 
   variables = merge(
-    {
-      azure_ops_env = module.variable["azure_ops_env"].id
-      env   = each.key
-    },
+    { azure_ops_env = module.variable["azure_ops_env"].id },
     module.workspace.variable_set
   )
 }

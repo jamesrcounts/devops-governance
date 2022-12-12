@@ -1,3 +1,13 @@
+variable "environment" {
+  description = "The workspace environment tier."
+  type        = string
+
+  validation {
+    condition     = contains(["dev", "prd"], var.environment)
+    error_message = "Must be one of: dev, prd."
+  }
+}
+
 variable "namespace" {
   description = "The project namespace."
   type        = string
